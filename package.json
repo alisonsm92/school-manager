@@ -6,7 +6,7 @@
   "scripts": {
     "tsc:init": "tsc --init",
     "build": "tsc",
-    "test": "tsc && jest dist/"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",
-    "jest": "^27.0.4"
+    "jest": "^27.0.4",
+    "ts-jest": "^27.0.2"
   }
 }
