@@ -1,3 +1,4 @@
+import Cpf from "./cpf";
 import EnrollmentRequest from "./enrollment-request";
 
 export default class EnrollStudent {
@@ -10,6 +11,11 @@ export default class EnrollStudent {
     execute(enrollmentRequest: EnrollmentRequest) {
         if(!EnrollStudent.isValidName(enrollmentRequest.student.name)) {
             throw new Error('Invalid student name');
+        }
+
+        const cpf = new Cpf(enrollmentRequest.student.cpf);
+        if(!cpf.isValid()) {
+            throw new Error('Invalid student cpf');
         }
 
         return true;
