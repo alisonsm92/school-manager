@@ -1,0 +1,27 @@
+{
+  "name": "school-manager",
+  "version": "1.0.0",
+  "description": "Projeto para desenvolver os exercícios do curso de Clean Architecture do Rodrigo Branas",
+  "main": "index.js",
+  "scripts": {
+    "tsc:init": "tsc --init",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alisonsm92/school-manager.git"
+  },
+  "author": "alison.sm92@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alisonsm92/school-manager/issues"
+  },
+  "homepage": "https://github.com/alisonsm92/school-manager#readme",
+  "dependencies": {
+    "typescript": "^4.3.2"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.23",
+    "jest": "^27.0.4"
+  }
+}
