@@ -2,10 +2,9 @@
   "name": "school-manager",
   "version": "1.0.0",
   "description": "Projeto para desenvolver os exercícios do curso de Clean Architecture do Rodrigo Branas",
-  "main": "index.js",
   "scripts": {
     "tsc:init": "tsc --init",
-    "build": "tsc",
+    "build": "rimraf dist && tsc",
     "test": "jest"
   },
   "repository": {
@@ -24,6 +23,7 @@
   "devDependencies": {
     "@types/jest": "^26.0.23",
     "jest": "^27.0.4",
+    "rimraf": "^3.0.2",
     "ts-jest": "^27.0.2"
   }
 }
