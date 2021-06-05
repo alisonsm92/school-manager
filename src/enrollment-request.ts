@@ -1,9 +1,7 @@
+import Student from "./student";
+
 interface EnrollmentRequest {
     student: Student
-}
-
-interface Student {
-    name: string
 }
 
 export default EnrollmentRequest
