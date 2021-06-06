@@ -4,7 +4,7 @@ import Student from '../entities/student';
 
 const student: Student = {
     name: 'Ana Clara', 
-    cpf: '024.171.100-24' 
+    cpf: '832.081.519-34' 
 };
 
 describe('Testing enroll student', () => {
@@ -27,6 +27,14 @@ describe('Testing enroll student', () => {
         };
         const error = new Error('Invalid student cpf');
         const sut = new EnrollStudent();
+        expect(() => sut.execute(enrollmentRequest)).toThrow(error);
+    });
+
+    test('Should not enroll duplicated student', () => {
+        const enrollmentRequest: EnrollmentRequest = { student };
+        const error = new Error('Enrollment with duplicated student is not allowed');
+        const sut = new EnrollStudent();
+        expect(sut.execute(enrollmentRequest)).toBeTruthy();
         expect(() => sut.execute(enrollmentRequest)).toThrow(error);
     });
 });
