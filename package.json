@@ -5,7 +5,8 @@
   "scripts": {
     "tsc:init": "tsc --init",
     "build": "rimraf dist && tsc",
-    "test": "jest"
+    "test": "jest",
+    "test:coverage": "npm test -- --collect-coverage"
   },
   "repository": {
     "type": "git",
