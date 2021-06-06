@@ -1,6 +1,6 @@
-import Cpf from "./cpf";
-import EnrollmentRequest from "./enrollment-request";
-import Name from "./name";
+import Cpf from "../entities/cpf";
+import EnrollmentRequest from "../entities/enrollment-request";
+import Name from "../entities/name";
 
 export default class EnrollStudent {
     execute(enrollmentRequest: EnrollmentRequest) {
