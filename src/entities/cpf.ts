@@ -1,34 +1,53 @@
 export default class Cpf {
     private readonly digits: string;
+    private readonly FIRST_DIGIT_FACTOR = 10;
+    private readonly SECOND_DIGIT_FACTOR = 11;
 
     constructor(cpf: string) {
         this.digits = Cpf.extractDigits(cpf);
     }
 
-    private static extractDigits(cpf: string) {
+    private static extractDigits(cpf: string): string {
         return cpf.replace(/\D/g, '');
     }
 
     isValid() {
-        var Soma;
-        var Resto;
-        Soma = 0;
-        if (this.digits == "00000000000") return false;
+        if (this.isBlockedCpf()) return false;
 
-        this.digits // ?
+        const [firstCheckDigit, secondCheckDigit] = this.getCheckDigits();
 
-        for (let i=1; i<=9; i++) Soma = Soma + parseInt(this.digits.substring(i-1, i)) * (11 - i);
-        Resto = (Soma * 10) % 11;
+        const firstDigitCalculated = this.calculateCheckDigit(this.FIRST_DIGIT_FACTOR);
+        if (firstDigitCalculated != firstCheckDigit) return false;
 
-        if ((Resto == 10) || (Resto == 11))  Resto = 0;
-        if (Resto != parseInt(this.digits.substring(9, 10)) ) return false;
+        const secondDigitCalculated = this.calculateCheckDigit(this.SECOND_DIGIT_FACTOR);
+        if (secondDigitCalculated != secondCheckDigit) return false;
 
-        Soma = 0;
-        for (let i = 1; i <= 10; i++) Soma = Soma + parseInt(this.digits.substring(i-1, i)) * (12 - i);
-        Resto = (Soma * 10) % 11;
-
-        if ((Resto == 10) || (Resto == 11))  Resto = 0;
-        if (Resto != parseInt(this.digits.substring(10, 11) ) ) return false;
         return true;
+    }
+
+    private isBlockedCpf(): boolean {
+        const [firstDigit] = this.digits;
+        return this.digits.split('').every(digit => digit === firstDigit);
+    }
+
+    private calculateCheckDigit(factor: number) :number {
+        const digitsToConsider = factor - 1;
+        const digitsArray = this.getNumberDigitsArray(0, digitsToConsider);
+        const sum = digitsArray.reduce((sum, digit, index) => sum + digit * (factor - index), 0);
+        const checkDigit = (sum * 10) % 11;
+        if(checkDigit === 10 || checkDigit === 11) return 0;
+        
+        return checkDigit;
+    }
+
+    private getNumberDigitsArray(init = 0, end = 11) {
+        return this.digits
+            .slice(init, end)
+            .split('')
+            .map(digit => parseInt(digit));
+    }
+
+    private getCheckDigits() {
+        return this.getNumberDigitsArray(9);
     }
 }
