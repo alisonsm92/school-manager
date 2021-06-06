@@ -1,18 +1,13 @@
 import Cpf from "./cpf";
 import EnrollmentRequest from "./enrollment-request";
+import Name from "./name";
 
 export default class EnrollStudent {
-    private static readonly nameRule = /^([A-Za-z]+ )+([A-Za-z])+$/;
-
-    static isValidName(name: string): boolean {
-        return this.nameRule.test(name);
-    }
-
     execute(enrollmentRequest: EnrollmentRequest) {
-        if(!EnrollStudent.isValidName(enrollmentRequest.student.name)) {
+        const name = new Name(enrollmentRequest.student.name);
+        if(!name.isValid()) {
             throw new Error('Invalid student name');
         }
-
         const cpf = new Cpf(enrollmentRequest.student.cpf);
         if(!cpf.isValid()) {
             throw new Error('Invalid student cpf');
