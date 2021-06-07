@@ -11,7 +11,12 @@ describe('Testing enroll student', () => {
     test('Should fullfil successfully when provide a valid name and cpf', () => {
         const enrollmentRequest: EnrollmentRequest = { student  };
         const sut = new EnrollStudent();
-        expect(sut.execute(enrollmentRequest)).toBeTruthy();
+        expect(sut.execute(enrollmentRequest)).toEqual({
+            student: {
+                name: student.name,
+                cpf: student.cpf,
+            }
+        });
     });
     
     test('Should not enroll without valid student name', () => {
@@ -34,7 +39,7 @@ describe('Testing enroll student', () => {
         const enrollmentRequest: EnrollmentRequest = { student };
         const error = new Error('Enrollment with duplicated student is not allowed');
         const sut = new EnrollStudent();
-        expect(sut.execute(enrollmentRequest)).toBeTruthy();
+        sut.execute(enrollmentRequest);
         expect(() => sut.execute(enrollmentRequest)).toThrow(error);
     });
 });
