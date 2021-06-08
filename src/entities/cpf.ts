@@ -6,7 +6,7 @@ export default class Cpf {
     private readonly SECOND_DIGIT_FACTOR = 11;
 
     constructor(value: string) {
-        if(!this.isValid(value)) throw new InvalidCpfError('Invalid cpf');
+        if(!this.isValid(value)) throw new InvalidCpfError();
         this.value = value;
     }
 
