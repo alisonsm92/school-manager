@@ -1,11 +1,14 @@
-export default class Name {
-    private readonly name: string;
+import InvalidNameError from "../errors/invalid-name";
 
-    constructor(name: string) {
-        this.name = name;
+export default class Name {
+    readonly value: string;
+
+    constructor(value: string) {
+        if(!this.isValid(value)) throw new InvalidNameError();
+        this.value = value;
     }
 
-    isValid() {
-        return /^([A-Za-z]+ )+([A-Za-z])+$/.test(this.name);
+    private isValid(value: string) {
+        return /^([A-Za-z]+ )+([A-Za-z])+$/.test(value);
     }
 }
