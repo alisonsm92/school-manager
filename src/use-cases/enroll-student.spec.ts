@@ -1,6 +1,6 @@
 import EnrollStudent from './enroll-student';
-import EnrollmentRequest from '../entities/enrollment-request';
-import Student from '../entities/student';
+import EnrollmentRequest from './ports/enrollment-request';
+import Student from '../core/entities/student';
 
 const student: Student = {
     name: 'Ana Clara', 
