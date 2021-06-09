@@ -1,7 +1,9 @@
 import Student from "./student";
 
-interface Enrollment {
-    student: Student
+export default class Enrollment {
+    readonly student: Student;
+    
+    constructor(student: Student) {
+        this.student = student;
+    }
 }
-
-export default Enrollment
