@@ -1,3 +1,4 @@
+import ModuleRepository from '../adapters/output/repositories/module-repository';
 import EnrollStudent from './enroll-student';
 import EnrollmentRequest from './ports/enrollment-request';
 
@@ -10,11 +11,16 @@ const enrollmentRequest: EnrollmentRequest = {
     level: "EM",
     module: "1",
     classRoom: "A"
+};
+
+function makeSut() {
+    const moduleRepository = new ModuleRepository();
+    return new EnrollStudent(moduleRepository);
 }
 
 describe('Testing enroll student', () => {
     test('Should fullfil successfully when provide a valid name and cpf', () => {
-        const sut = new EnrollStudent();
+        const sut = makeSut();
         const enrollment = sut.execute(enrollmentRequest);
         expect(enrollment).toHaveProperty('student.name', enrollmentRequest.student.name);
         expect(enrollment).toHaveProperty('student.cpf', enrollmentRequest.student.cpf);
@@ -27,7 +33,7 @@ describe('Testing enroll student', () => {
     test('Should not enroll without valid student name', () => {
         const student: EnrollmentRequest['student'] = { ...enrollmentRequest.student, name: 'Ana' };
         const error = new Error('Invalid student name');
-        const sut = new EnrollStudent();
+        const sut = makeSut();
         expect(() => sut.execute({ ...enrollmentRequest, student })).toThrow(error);
     });
 
@@ -37,19 +43,29 @@ describe('Testing enroll student', () => {
             cpf: '123.456.789-99' 
         };
         const error = new Error('Invalid student cpf');
-        const sut = new EnrollStudent();
+        const sut = makeSut();
         expect(() => sut.execute({ ...enrollmentRequest, student })).toThrow(error);
     });
 
     test('Should not enroll duplicated student', () => {
         const error = new Error('Enrollment with duplicated student is not allowed');
-        const sut = new EnrollStudent();
+        const sut = makeSut();
         sut.execute(enrollmentRequest);
         expect(() => sut.execute(enrollmentRequest)).toThrow(error);
     });
 
     test('Should generate enrollment code', () => {
-        const sut = new EnrollStudent();
+        const sut = makeSut();
         expect(sut.execute(enrollmentRequest)).toHaveProperty('code', '2021EM1A0001');
+    });
+
+    test('Should not enroll student below minimum age', () => {
+        const student: EnrollmentRequest['student'] = { 
+            ...enrollmentRequest.student, 
+            birthDate: '2012-03-12' 
+        };
+        const error = new Error('Student below minimum age');
+        const sut = makeSut();
+        expect(() => sut.execute({ ...enrollmentRequest, student })).toThrow(error);
     });
 });
