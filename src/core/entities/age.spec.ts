@@ -8,7 +8,7 @@ describe('Testing Age', () => {
     beforeEach(() => mockDate());
 
     test('Should return the current age with the birth date provided', () => {
-        const birthDate = new Date('08-28-1992');
+        const birthDate = new Date('1992-08-28');
         const age = new Age(birthDate);
         expect(age.value).toBe(28);
     });
