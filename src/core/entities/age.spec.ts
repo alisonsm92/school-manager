@@ -1,10 +1,10 @@
 import Age from "./age";
 
-describe('Testing Age', () => {
-    function mockDate() {
-        Date.now = jest.fn(() => new Date(Date.UTC(2021, 6, 13)).valueOf());
-    }
+function mockDate() {
+    Date.now = jest.fn(() => new Date(Date.UTC(2021, 6, 13)).valueOf());
+}
 
+describe('Testing Age', () => {
     beforeEach(() => mockDate());
 
     test('Should return the current age with the birth date provided', () => {
