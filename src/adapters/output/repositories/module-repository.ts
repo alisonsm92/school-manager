@@ -6,7 +6,9 @@ type Module = {
     price: number
 }
 
-const byCode = (code: string) => (module:  Module) => module.code === code;
+const byLevelAndCode = (level: string, code: string) => (module:  Module) => {
+    return module.level === level && module.code === code
+};
 
 export default class ModuleRepository {
     readonly data: Module[] = [
@@ -95,8 +97,8 @@ export default class ModuleRepository {
                 price: 17000
             }
     ];
-    
-    getMinimumAge(code: string) {
-        return this.data.find(byCode(code))?.minimumAge;
+
+    find(level: string, code: string) {
+        return this.data.find(byLevelAndCode(level, code));
     }
 }

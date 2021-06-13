@@ -1,16 +1,17 @@
 import ModuleRepository from "./module-repository";
 
 describe('Testing ModuleRepository', () => {
-    describe('GetMinimumAge method', () => {
-        test('Should return the module minimum age when module with the code provided exists', 
-        () => {
+    describe('Find method', () => {
+        test('Should return the module with level and code provided when it exists', () => {
             const sut = new ModuleRepository();
-            expect(sut.getMinimumAge('1')).toBe(6);
+            const module = sut.find('EM', '1');
+            expect(module).toHaveProperty('level', 'EM');
+            expect(module).toHaveProperty('code', '1');
         });
     
         test('Should return undefined when module with the code provided not exists', () => {
             const sut = new ModuleRepository();
-            expect(sut.getMinimumAge('0')).toBeUndefined();
+            expect(sut.find('EM', '0')).toBeUndefined();
         });
-    })
+    });
 });
