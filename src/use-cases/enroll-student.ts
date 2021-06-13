@@ -2,10 +2,8 @@ import Enrollment from "../core/entities/enrollment";
 import EnrollmentRequest from "./ports/enrollment-request";
 import InvalidCpfError from "../core/errors/invalid-cpf";
 import InvalidNameError from "../core/errors/invalid-name";
-import Student from "../core/entities/student";
 
-const byCpf = (cpf: string) => (enrollmentRequest: EnrollmentRequest) => 
-  enrollmentRequest.student.cpf === cpf;
+const byCpf = (cpf: string) => (enrollment: Enrollment) => enrollment.student.cpf === cpf;
 
 export default class EnrollStudent {
     private enrollments: Enrollment[];
@@ -16,14 +14,10 @@ export default class EnrollStudent {
 
     execute(enrollmentRequest: EnrollmentRequest): Enrollment {
         try {
-            const student = new Student(
-                enrollmentRequest.student.name, 
-                enrollmentRequest.student.cpf
-            );
             if(this.enrollments.find(byCpf(enrollmentRequest.student.cpf))) {
                 throw new Error('Enrollment with duplicated student is not allowed');
             }
-            const enrollment = new Enrollment(student);
+            const enrollment = new Enrollment(enrollmentRequest, this.enrollments.length);
             this.enrollments.push(enrollment);
             return enrollment;
         } catch (error) {
