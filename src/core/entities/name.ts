@@ -1,4 +1,4 @@
-import InvalidNameError from "../errors/invalid-name";
+import InvalidNameError from '../errors/invalid-name';
 
 export default class Name {
     readonly value: string;

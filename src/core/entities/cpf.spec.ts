@@ -1,4 +1,4 @@
-import Cpf from "./cpf";
+import Cpf from './cpf';
 
 describe('Testing CPF', () => {
     const error = new Error('Invalid cpf');

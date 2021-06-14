@@ -1,4 +1,4 @@
-import InvalidCpfError from "../errors/invalid-cpf";
+import InvalidCpfError from '../errors/invalid-cpf';
 
 export default class Cpf {
     readonly value: string;

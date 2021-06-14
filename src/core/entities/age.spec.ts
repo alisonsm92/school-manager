@@ -1,4 +1,4 @@
-import Age from "./age";
+import Age from './age';
 
 function mockDate() {
     Date.now = jest.fn(() => new Date(Date.UTC(2021, 6, 13)).valueOf());

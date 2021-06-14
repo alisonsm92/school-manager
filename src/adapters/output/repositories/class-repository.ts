@@ -1,11 +1,11 @@
-import Class from "../../../core/entities/class";
+import Class from '../../../core/entities/class';
 
 export default class ClassRepository {
     private readonly data: Class[] = [
         {
-            level: "EM",
-            module: "1",
-            code: "A",
+            level: 'EM',
+            module: '1',
+            code: 'A',
             capacity: 10
         }
     ];

@@ -1,6 +1,6 @@
-import Age from "./age";
-import Cpf from "./cpf";
-import Name from "./name";
+import Age from './age';
+import Cpf from './cpf';
+import Name from './name';
 
 export default class Student {
     readonly name: string;

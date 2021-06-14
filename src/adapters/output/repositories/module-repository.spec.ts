@@ -1,4 +1,4 @@
-import ModuleRepository from "./module-repository";
+import ModuleRepository from './module-repository';
 
 describe('Testing ModuleRepository', () => {
     describe('Find method', () => {

@@ -1,10 +1,10 @@
-import Enrollment from "../core/entities/enrollment";
-import EnrollmentRequest from "./ports/enrollment-request";
-import InvalidCpfError from "../core/errors/invalid-cpf";
-import InvalidNameError from "../core/errors/invalid-name";
-import ModuleRepository from "../adapters/output/repositories/module-repository";
-import ClassRepository from "../adapters/output/repositories/class-repository";
-import Class from "../core/entities/class";
+import Enrollment from '../core/entities/enrollment';
+import EnrollmentRequest from './ports/enrollment-request';
+import InvalidCpfError from '../core/errors/invalid-cpf';
+import InvalidNameError from '../core/errors/invalid-name';
+import ModuleRepository from '../adapters/output/repositories/module-repository';
+import ClassRepository from '../adapters/output/repositories/class-repository';
+import Class from '../core/entities/class';
 
 const byCpf = (cpf: string) => (enrollment: Enrollment) => enrollment.student.cpf === cpf;
 const byClass = ({ module, level, code }: Class) => (enrollment: Enrollment) => {

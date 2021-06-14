@@ -1,4 +1,4 @@
-import ClassRepository from "./class-repository";
+import ClassRepository from './class-repository';
 
 describe('Testing ClassRepository', () => {
     describe('Find method', () => {

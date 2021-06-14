@@ -5,13 +5,13 @@ import EnrollmentRequest from './ports/enrollment-request';
 
 const enrollmentRequest: EnrollmentRequest = {
     student: {
-        name: "Maria Carolina Fonseca",
-        cpf: "755.525.774-26",
-        birthDate: "2002-03-12"
+        name: 'Maria Carolina Fonseca',
+        cpf: '755.525.774-26',
+        birthDate: '2002-03-12'
     },
-    level: "EM",
-    module: "1",
-    classRoom: "A"
+    level: 'EM',
+    module: '1',
+    classRoom: 'A'
 };
 
 function makeSut(moduleRepository?: ModuleRepository, classRepository?: ClassRepository) {
@@ -23,9 +23,9 @@ function makeSut(moduleRepository?: ModuleRepository, classRepository?: ClassRep
 
 function makeFakeClass({ capacity = 10 }) {
     return {
-        level: "EM",
-        module: "1",
-        code: "A",
+        level: 'EM',
+        module: '1',
+        code: 'A',
         capacity
     };
 }
