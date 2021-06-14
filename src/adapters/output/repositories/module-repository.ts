@@ -1,14 +1,4 @@
-type Module = {
-    level: string,
-    code: string,
-    description: string,
-    minimumAge: number,
-    price: number
-}
-
-const byLevelAndCode = (level: string, code: string) => (module:  Module) => {
-    return module.level === level && module.code === code
-};
+import Module from "../../../core/entities/module";
 
 export default class ModuleRepository {
     readonly data: Module[] = [
@@ -99,6 +89,6 @@ export default class ModuleRepository {
     ];
 
     find(level: string, code: string) {
-        return this.data.find(byLevelAndCode(level, code));
+        return this.data.find(module => module.level === level && module.code === code);
     }
 }
