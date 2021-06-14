@@ -3,15 +3,19 @@ import EnrollmentRequest from "./ports/enrollment-request";
 import InvalidCpfError from "../core/errors/invalid-cpf";
 import InvalidNameError from "../core/errors/invalid-name";
 import ModuleRepository from "../adapters/output/repositories/module-repository";
+import ClassRepository from "../adapters/output/repositories/class-repository";
 
 const byCpf = (cpf: string) => (enrollment: Enrollment) => enrollment.student.cpf === cpf;
+const byClass = (classRoom: string) => (enrollment: Enrollment) => enrollment.classRoom === classRoom;
 
 export default class EnrollStudent {
     private enrollments: Enrollment[];
     private readonly moduleRepository: ModuleRepository;
+    private readonly classRepository: ClassRepository;
 
-    constructor(moduleRepository: ModuleRepository) {
+    constructor(moduleRepository: ModuleRepository, classRepository: ClassRepository) {
         this.moduleRepository = moduleRepository;
+        this.classRepository = classRepository;
         this.enrollments = [];
     }
 
@@ -27,6 +31,13 @@ export default class EnrollStudent {
             }
             if(enrollment.student.age < module.minimumAge) {
                 throw new Error('Student below minimum age');
+            }
+            const classRoom = this.classRepository.find(enrollment.classRoom);
+            if(!classRoom) {
+                throw new Error('Class not found');
+            }
+            if(classRoom.capacity === this.enrollments.filter(byClass(enrollment.classRoom)).length) {
+                throw new Error('Class is over capacity');
             }
             this.enrollments.push(enrollment);
             return enrollment;

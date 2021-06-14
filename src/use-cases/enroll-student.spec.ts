@@ -1,3 +1,4 @@
+import ClassRepository from '../adapters/output/repositories/class-repository';
 import ModuleRepository from '../adapters/output/repositories/module-repository';
 import EnrollStudent from './enroll-student';
 import EnrollmentRequest from './ports/enrollment-request';
@@ -13,9 +14,20 @@ const enrollmentRequest: EnrollmentRequest = {
     classRoom: "A"
 };
 
-function makeSut() {
-    const moduleRepository = new ModuleRepository();
-    return new EnrollStudent(moduleRepository);
+function makeSut(moduleRepository?: ModuleRepository, classRepository?: ClassRepository) {
+    return new EnrollStudent(
+        moduleRepository || new ModuleRepository(), 
+        classRepository || new ClassRepository()
+    );
+}
+
+function makeFakeClass({ capacity = 10 }) {
+    return {
+        level: "EM",
+        module: "3",
+        code: "A",
+        capacity
+    };
 }
 
 describe('Testing enroll student', () => {
@@ -67,5 +79,19 @@ describe('Testing enroll student', () => {
         const error = new Error('Student below minimum age');
         const sut = makeSut();
         expect(() => sut.execute({ ...enrollmentRequest, student })).toThrow(error);
+    });
+
+    test('Should not enroll student over class capacity', () => {
+        const fakeClass = makeFakeClass({ capacity: 1 });
+        ClassRepository.prototype.find = jest.fn().mockImplementation(() => fakeClass);
+        const secondStudent: EnrollmentRequest['student'] = { 
+            ...enrollmentRequest.student, 
+            name: 'Pedro da Silva',
+            cpf: '151.906.420-97'
+        };
+        const error = new Error('Class is over capacity');
+        const sut = makeSut();
+        sut.execute(enrollmentRequest);
+        expect(() => sut.execute({ ...enrollmentRequest, student: secondStudent })).toThrow(error);
     });
 });
