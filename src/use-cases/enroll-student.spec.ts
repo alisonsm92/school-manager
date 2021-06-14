@@ -24,7 +24,7 @@ function makeSut(moduleRepository?: ModuleRepository, classRepository?: ClassRep
 function makeFakeClass({ capacity = 10 }) {
     return {
         level: "EM",
-        module: "3",
+        module: "1",
         code: "A",
         capacity
     };

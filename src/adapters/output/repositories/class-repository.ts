@@ -1,23 +1,20 @@
-type Class = {
-    level: string,
-    module: string,
-    code: string,
-    capacity: number
-}
-
-const byCode = (code: string) => (classRoom: Class) => classRoom.code === code;
+import Class from "../../../core/entities/class";
 
 export default class ClassRepository {
-    private readonly data = [
+    private readonly data: Class[] = [
         {
             level: "EM",
-            module: "3",
+            module: "1",
             code: "A",
             capacity: 10
         }
     ];
 
-    find(code: string) {
-        return this.data.find(byCode(code));
+    find(level: string, module: string, code: string) {
+        return this.data.find(classRoom => 
+            classRoom.level === level 
+            && classRoom.module === module
+            && classRoom.code === code
+        );
     }
 }
