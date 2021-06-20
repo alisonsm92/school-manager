@@ -19,11 +19,13 @@ const fakeModule: Module = {
     minimumAge: 15,
     price: 17000
 };
-const fakeClassRoom: Class = {
+const fakeClassRoom = {
     level: "EM",
     module: "1",
     code: "A",
     capacity: 10,
+    start_date: "2021-05-01",
+    end_date: "2021-06-30"
 };
 const enrollmentRequest: EnrollmentRequest = {
     student: {
@@ -61,7 +63,7 @@ function makeSut(dependencies?: SutDependencies) {
     }
     if(!classRepository) {
         classRepository = new ClassRepositoryInMemory();
-        classRepository.add(fakeClassRoom);
+        classRepository.add(new Class(fakeClassRoom));
     }
     return new EnrollStudent({
         enrollmentRepository,
@@ -69,15 +71,6 @@ function makeSut(dependencies?: SutDependencies) {
         moduleRepository, 
         classRepository,
     });
-}
-
-function makeFakeClass({ capacity = 10 }) {
-    return {
-        level: 'EM',
-        module: '1',
-        code: 'A',
-        capacity
-    };
 }
 
 describe('Testing enroll student', () => {
@@ -132,9 +125,9 @@ describe('Testing enroll student', () => {
     });
 
     test('Should not enroll student over class capacity', () => {
-        const fakeClass = makeFakeClass({ capacity: 1 });
+        const fakeClass = { ...fakeClassRoom, capacity: 1 };
         const classRepositoryInMemory = new ClassRepositoryInMemory();
-        classRepositoryInMemory.add(fakeClass);
+        classRepositoryInMemory.add(new Class(fakeClass));
         const secondStudent: EnrollmentRequest['student'] = { 
             ...enrollmentRequest.student, 
             name: 'Pedro da Silva',
@@ -144,5 +137,13 @@ describe('Testing enroll student', () => {
         const sut = makeSut({ classRepository: classRepositoryInMemory });
         sut.execute(enrollmentRequest);
         expect(() => sut.execute({ ...enrollmentRequest, student: secondStudent })).toThrow(error);
+    });
+
+    test('Should not enroll after que end of the class', () => {
+        const fakeClass = { ...fakeClassRoom, end_date: '2020-06-30' };
+        const classRepositoryInMemory = new ClassRepositoryInMemory();
+        classRepositoryInMemory.add(new Class(fakeClass));
+        const sut = makeSut({ classRepository: classRepositoryInMemory });
+        expect(() => sut.execute(enrollmentRequest)).toThrow(new Error('Class is already finished'));
     });
 });
