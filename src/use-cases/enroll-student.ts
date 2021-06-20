@@ -2,37 +2,36 @@ import Enrollment from '../core/entities/enrollment';
 import EnrollmentRequest from './ports/enrollment-request';
 import InvalidCpfError from '../core/errors/invalid-cpf';
 import InvalidNameError from '../core/errors/invalid-name';
+import EnrollmentRepository from '../adapters/output/repositories/enrollment-repository';
+import LevelRepository from '../adapters/output/repositories/level-repository';
 import ModuleRepository from '../adapters/output/repositories/module-repository';
 import ClassRepository from '../adapters/output/repositories/class-repository';
-import Class from '../core/entities/class';
-import LevelRepository from '../adapters/output/repositories/level-repository';
 
-const byCpf = (cpf: string) => (enrollment: Enrollment) => enrollment.student.cpf === cpf;
-const byClass = ({ module, level, code }: Class) => (enrollment: Enrollment) => {
-    return enrollment.module === module
-    && enrollment.level === level
-    && enrollment.classRoom === code;
+type Dependencies = {
+    enrollmentRepository: EnrollmentRepository,
+    levelRepository: LevelRepository, 
+    moduleRepository: ModuleRepository, 
+    classRepository: ClassRepository
 }
-
 export default class EnrollStudent {
-    private enrollments: Enrollment[];
+    private readonly enrollmentRepository: EnrollmentRepository;
     private readonly levelRepository: LevelRepository;
     private readonly moduleRepository: ModuleRepository;
     private readonly classRepository: ClassRepository;
 
-    constructor(levelRepository: LevelRepository, moduleRepository: ModuleRepository, classRepository: ClassRepository) {
-        this.levelRepository = levelRepository;
-        this.moduleRepository = moduleRepository;
-        this.classRepository = classRepository;
-        this.enrollments = [];
+    constructor(dependencies: Dependencies) {
+        this.enrollmentRepository = dependencies.enrollmentRepository;
+        this.levelRepository = dependencies.levelRepository;
+        this.moduleRepository = dependencies.moduleRepository;
+        this.classRepository = dependencies.classRepository;
     }
 
     execute(enrollmentRequest: EnrollmentRequest): Enrollment {
         try {
-            if(this.enrollments.find(byCpf(enrollmentRequest.student.cpf))) {
+            if(this.enrollmentRepository.findByCpf(enrollmentRequest.student.cpf)) {
                 throw new Error('Enrollment with duplicated student is not allowed');
             }
-            const enrollment = new Enrollment(enrollmentRequest, this.enrollments.length);
+            const enrollment = new Enrollment(enrollmentRequest, this.enrollmentRepository.count());
             const level = this.levelRepository.findByCode(enrollment.level);
             if(!level) {
                 throw new Error('Level not found');
@@ -50,10 +49,10 @@ export default class EnrollStudent {
             if(!classRoom) {
                 throw new Error('Class not found');
             }
-            if(classRoom.capacity === this.enrollments.filter(byClass(classRoom)).length) {
+            if(classRoom.capacity === this.enrollmentRepository.findAllByClass(classRoom).length) {
                 throw new Error('Class is over capacity');
             }
-            this.enrollments.push(enrollment);
+            this.enrollmentRepository.add(enrollment);
             return enrollment;
         } catch (error) {
             if(error instanceof InvalidCpfError) throw new Error('Invalid student cpf');

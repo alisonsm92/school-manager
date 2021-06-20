@@ -1,4 +1,5 @@
 import ClassRepository from '../adapters/output/repositories/class-repository';
+import EnrollmentRepository from '../adapters/output/repositories/enrollment-repository';
 import LevelRepository from '../adapters/output/repositories/level-repository';
 import ModuleRepository from '../adapters/output/repositories/module-repository';
 import EnrollStudent from './enroll-student';
@@ -16,17 +17,19 @@ const enrollmentRequest: EnrollmentRequest = {
 };
 
 type SutDependencies = {
+    enrollmentRepository?: EnrollmentRepository,
     levelRepository?: LevelRepository, 
     moduleRepository?: ModuleRepository, 
     classRepository?: ClassRepository 
 }
 
 function makeSut(dependencies?: SutDependencies) {
-    return new EnrollStudent(
-        dependencies?.levelRepository || new LevelRepository(),
-        dependencies?.moduleRepository || new ModuleRepository(), 
-        dependencies?.classRepository || new ClassRepository(),
-    );
+    return new EnrollStudent({
+        enrollmentRepository: dependencies?.enrollmentRepository || new EnrollmentRepository(),
+        levelRepository: dependencies?.levelRepository || new LevelRepository(),
+        moduleRepository: dependencies?.moduleRepository || new ModuleRepository(), 
+        classRepository: dependencies?.classRepository || new ClassRepository(),
+    });
 }
 
 function makeFakeClass({ capacity = 10 }) {
