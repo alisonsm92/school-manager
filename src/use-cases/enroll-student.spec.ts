@@ -133,14 +133,15 @@ describe('Testing enroll student', () => {
 
     test('Should not enroll student over class capacity', () => {
         const fakeClass = makeFakeClass({ capacity: 1 });
-        ClassRepositoryInMemory.prototype.find = jest.fn().mockImplementation(() => fakeClass);
+        const classRepositoryInMemory = new ClassRepositoryInMemory();
+        classRepositoryInMemory.add(fakeClass);
         const secondStudent: EnrollmentRequest['student'] = { 
             ...enrollmentRequest.student, 
             name: 'Pedro da Silva',
             cpf: '151.906.420-97'
         };
         const error = new Error('Class is over capacity');
-        const sut = makeSut();
+        const sut = makeSut({ classRepository: classRepositoryInMemory });
         sut.execute(enrollmentRequest);
         expect(() => sut.execute({ ...enrollmentRequest, student: secondStudent })).toThrow(error);
     });
