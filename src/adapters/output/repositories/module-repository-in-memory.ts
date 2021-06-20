@@ -1,6 +1,6 @@
 import Module from '../../../core/entities/module';
 
-export default class ModuleRepository {
+export default class ModuleRepositoryInMemory {
     readonly data: Module[] = [
             {
                 level: 'EF1',

@@ -1,7 +1,7 @@
-import ClassRepository from '../adapters/output/repositories/class-repository';
-import EnrollmentRepository from '../adapters/output/repositories/enrollment-repository';
-import LevelRepository from '../adapters/output/repositories/level-repository';
-import ModuleRepository from '../adapters/output/repositories/module-repository';
+import ClassRepositoryInMemory from '../adapters/output/repositories/class-repository-in-memory';
+import EnrollmentRepositoryInMemory from '../adapters/output/repositories/enrollment-repository-in-memory';
+import LevelRepositoryInMemory from '../adapters/output/repositories/level-repository-in-memory';
+import ModuleRepositoryInMemory from '../adapters/output/repositories/module-repository-in-memory';
 import EnrollStudent from './enroll-student';
 import EnrollmentRequest from './ports/enrollment-request';
 
@@ -17,18 +17,18 @@ const enrollmentRequest: EnrollmentRequest = {
 };
 
 type SutDependencies = {
-    enrollmentRepository?: EnrollmentRepository,
-    levelRepository?: LevelRepository, 
-    moduleRepository?: ModuleRepository, 
-    classRepository?: ClassRepository 
+    enrollmentRepository?: EnrollmentRepositoryInMemory,
+    levelRepository?: LevelRepositoryInMemory, 
+    moduleRepository?: ModuleRepositoryInMemory, 
+    classRepository?: ClassRepositoryInMemory 
 }
 
 function makeSut(dependencies?: SutDependencies) {
     return new EnrollStudent({
-        enrollmentRepository: dependencies?.enrollmentRepository || new EnrollmentRepository(),
-        levelRepository: dependencies?.levelRepository || new LevelRepository(),
-        moduleRepository: dependencies?.moduleRepository || new ModuleRepository(), 
-        classRepository: dependencies?.classRepository || new ClassRepository(),
+        enrollmentRepository: dependencies?.enrollmentRepository || new EnrollmentRepositoryInMemory(),
+        levelRepository: dependencies?.levelRepository || new LevelRepositoryInMemory(),
+        moduleRepository: dependencies?.moduleRepository || new ModuleRepositoryInMemory(), 
+        classRepository: dependencies?.classRepository || new ClassRepositoryInMemory(),
     });
 }
 
@@ -94,7 +94,7 @@ describe('Testing enroll student', () => {
 
     test('Should not enroll student over class capacity', () => {
         const fakeClass = makeFakeClass({ capacity: 1 });
-        ClassRepository.prototype.find = jest.fn().mockImplementation(() => fakeClass);
+        ClassRepositoryInMemory.prototype.find = jest.fn().mockImplementation(() => fakeClass);
         const secondStudent: EnrollmentRequest['student'] = { 
             ...enrollmentRequest.student, 
             name: 'Pedro da Silva',

@@ -2,22 +2,22 @@ import Enrollment from '../core/entities/enrollment';
 import EnrollmentRequest from './ports/enrollment-request';
 import InvalidCpfError from '../core/errors/invalid-cpf';
 import InvalidNameError from '../core/errors/invalid-name';
-import EnrollmentRepository from '../adapters/output/repositories/enrollment-repository';
-import LevelRepository from '../adapters/output/repositories/level-repository';
-import ModuleRepository from '../adapters/output/repositories/module-repository';
-import ClassRepository from '../adapters/output/repositories/class-repository';
+import EnrollmentRepositoryInMemory from '../adapters/output/repositories/enrollment-repository-in-memory';
+import LevelRepositoryInMemory from '../adapters/output/repositories/level-repository-in-memory';
+import ModuleRepositoryInMemory from '../adapters/output/repositories/module-repository-in-memory';
+import ClassRepositoryInMemory from '../adapters/output/repositories/class-repository-in-memory';
 
 type Dependencies = {
-    enrollmentRepository: EnrollmentRepository,
-    levelRepository: LevelRepository, 
-    moduleRepository: ModuleRepository, 
-    classRepository: ClassRepository
+    enrollmentRepository: EnrollmentRepositoryInMemory,
+    levelRepository: LevelRepositoryInMemory, 
+    moduleRepository: ModuleRepositoryInMemory, 
+    classRepository: ClassRepositoryInMemory
 }
 export default class EnrollStudent {
-    private readonly enrollmentRepository: EnrollmentRepository;
-    private readonly levelRepository: LevelRepository;
-    private readonly moduleRepository: ModuleRepository;
-    private readonly classRepository: ClassRepository;
+    private readonly enrollmentRepository: EnrollmentRepositoryInMemory;
+    private readonly levelRepository: LevelRepositoryInMemory;
+    private readonly moduleRepository: ModuleRepositoryInMemory;
+    private readonly classRepository: ClassRepositoryInMemory;
 
     constructor(dependencies: Dependencies) {
         this.enrollmentRepository = dependencies.enrollmentRepository;

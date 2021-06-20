@@ -1,7 +1,7 @@
 import Class from "../../../core/entities/class";
 import Enrollment from "../../../core/entities/enrollment";
 
-export default class EnrollmentRepository {
+export default class EnrollmentRepositoryInMemory {
     private data: Enrollment[];
 
     constructor() {
