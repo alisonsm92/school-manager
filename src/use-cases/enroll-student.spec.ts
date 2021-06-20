@@ -1,4 +1,5 @@
 import ClassRepository from '../adapters/output/repositories/class-repository';
+import LevelRepository from '../adapters/output/repositories/level-repository';
 import ModuleRepository from '../adapters/output/repositories/module-repository';
 import EnrollStudent from './enroll-student';
 import EnrollmentRequest from './ports/enrollment-request';
@@ -14,10 +15,17 @@ const enrollmentRequest: EnrollmentRequest = {
     classRoom: 'A'
 };
 
-function makeSut(moduleRepository?: ModuleRepository, classRepository?: ClassRepository) {
+type SutDependencies = {
+    levelRepository?: LevelRepository, 
+    moduleRepository?: ModuleRepository, 
+    classRepository?: ClassRepository 
+}
+
+function makeSut(dependencies?: SutDependencies) {
     return new EnrollStudent(
-        moduleRepository || new ModuleRepository(), 
-        classRepository || new ClassRepository()
+        dependencies?.levelRepository || new LevelRepository(),
+        dependencies?.moduleRepository || new ModuleRepository(), 
+        dependencies?.classRepository || new ClassRepository(),
     );
 }
 

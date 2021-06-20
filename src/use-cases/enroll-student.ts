@@ -5,6 +5,7 @@ import InvalidNameError from '../core/errors/invalid-name';
 import ModuleRepository from '../adapters/output/repositories/module-repository';
 import ClassRepository from '../adapters/output/repositories/class-repository';
 import Class from '../core/entities/class';
+import LevelRepository from '../adapters/output/repositories/level-repository';
 
 const byCpf = (cpf: string) => (enrollment: Enrollment) => enrollment.student.cpf === cpf;
 const byClass = ({ module, level, code }: Class) => (enrollment: Enrollment) => {
@@ -15,10 +16,12 @@ const byClass = ({ module, level, code }: Class) => (enrollment: Enrollment) => 
 
 export default class EnrollStudent {
     private enrollments: Enrollment[];
+    private readonly levelRepository: LevelRepository;
     private readonly moduleRepository: ModuleRepository;
     private readonly classRepository: ClassRepository;
 
-    constructor(moduleRepository: ModuleRepository, classRepository: ClassRepository) {
+    constructor(levelRepository: LevelRepository, moduleRepository: ModuleRepository, classRepository: ClassRepository) {
+        this.levelRepository = levelRepository;
         this.moduleRepository = moduleRepository;
         this.classRepository = classRepository;
         this.enrollments = [];
@@ -30,6 +33,10 @@ export default class EnrollStudent {
                 throw new Error('Enrollment with duplicated student is not allowed');
             }
             const enrollment = new Enrollment(enrollmentRequest, this.enrollments.length);
+            const level = this.levelRepository.findByCode(enrollment.level);
+            if(!level) {
+                throw new Error('Level not found');
+            }
             const module = this.moduleRepository.find(enrollment.level, enrollment.module);
             if(!module) {
                 throw new Error('Module not found');
