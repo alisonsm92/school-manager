@@ -1,6 +1,7 @@
 import Module from '../../../core/entities/module';
+import ModuleRepository from '../../../use-cases/ports/module-repository';
 
-export default class ModuleRepositoryInMemory {
+export default class ModuleRepositoryInMemory implements ModuleRepository {
     readonly data: Module[] = [
             {
                 level: 'EF1',

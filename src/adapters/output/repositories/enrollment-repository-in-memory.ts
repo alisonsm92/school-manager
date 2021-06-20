@@ -1,7 +1,8 @@
 import Class from "../../../core/entities/class";
 import Enrollment from "../../../core/entities/enrollment";
+import EnrollmentRepository from "../../../use-cases/ports/enrollment-repository";
 
-export default class EnrollmentRepositoryInMemory {
+export default class EnrollmentRepositoryInMemory implements EnrollmentRepository {
     private data: Enrollment[];
 
     constructor() {

@@ -1,6 +1,7 @@
 import Level from '../../../core/entities/level';
+import LevelRepository from '../../../use-cases/ports/level-repository';
 
-export default class LevelRepositoryInMemory {
+export default class LevelRepositoryInMemory implements LevelRepository {
     private readonly data: Level[] = [
         {
             code: 'EF1',

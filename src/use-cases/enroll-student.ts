@@ -2,22 +2,22 @@ import Enrollment from '../core/entities/enrollment';
 import EnrollmentRequest from './ports/enrollment-request';
 import InvalidCpfError from '../core/errors/invalid-cpf';
 import InvalidNameError from '../core/errors/invalid-name';
-import EnrollmentRepositoryInMemory from '../adapters/output/repositories/enrollment-repository-in-memory';
-import LevelRepositoryInMemory from '../adapters/output/repositories/level-repository-in-memory';
-import ModuleRepositoryInMemory from '../adapters/output/repositories/module-repository-in-memory';
-import ClassRepositoryInMemory from '../adapters/output/repositories/class-repository-in-memory';
+import ClassRepository from './ports/class-repository';
+import ModuleRepository from './ports/module-repository';
+import LevelRepository from './ports/level-repository';
+import EnrollmentRepository from './ports/enrollment-repository';
 
 type Dependencies = {
-    enrollmentRepository: EnrollmentRepositoryInMemory,
-    levelRepository: LevelRepositoryInMemory, 
-    moduleRepository: ModuleRepositoryInMemory, 
-    classRepository: ClassRepositoryInMemory
+    enrollmentRepository: EnrollmentRepository,
+    levelRepository: LevelRepository, 
+    moduleRepository: ModuleRepository, 
+    classRepository: ClassRepository
 }
 export default class EnrollStudent {
-    private readonly enrollmentRepository: EnrollmentRepositoryInMemory;
-    private readonly levelRepository: LevelRepositoryInMemory;
-    private readonly moduleRepository: ModuleRepositoryInMemory;
-    private readonly classRepository: ClassRepositoryInMemory;
+    private readonly enrollmentRepository: EnrollmentRepository;
+    private readonly levelRepository: LevelRepository;
+    private readonly moduleRepository: ModuleRepository;
+    private readonly classRepository: ClassRepository;
 
     constructor(dependencies: Dependencies) {
         this.enrollmentRepository = dependencies.enrollmentRepository;
