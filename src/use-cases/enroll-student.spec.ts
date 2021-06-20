@@ -2,21 +2,24 @@ import ClassRepositoryInMemory from '../adapters/output/repositories/class-repos
 import EnrollmentRepositoryInMemory from '../adapters/output/repositories/enrollment-repository-in-memory';
 import LevelRepositoryInMemory from '../adapters/output/repositories/level-repository-in-memory';
 import ModuleRepositoryInMemory from '../adapters/output/repositories/module-repository-in-memory';
+import Class from '../core/entities/class';
+import Level from '../core/entities/level';
+import Module from '../core/entities/module';
 import EnrollStudent from './enroll-student';
 import EnrollmentRequest from './ports/enrollment-request';
 
-const fakeLevel = {
+const fakeLevel: Level = {
     code: "EM",
     description: "Ensino Médio"
 };
-const fakeModule = {
+const fakeModule: Module = {
     level: "EM",
     code: "1",
     description: "1o Ano",
     minimumAge: 15,
     price: 17000
 };
-const fakeClassRoom = {
+const fakeClassRoom: Class = {
     level: "EM",
     module: "1",
     code: "A",

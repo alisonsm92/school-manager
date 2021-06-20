@@ -1,6 +1,7 @@
+import Class from '../../../core/entities/class';
 import ClassRepositoryInMemory from './class-repository-in-memory';
 
-const fakeClassRoom = {
+const fakeClassRoom: Class = {
     level: "EM",
     module: "1",
     code: "A",

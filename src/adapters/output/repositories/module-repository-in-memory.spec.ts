@@ -1,6 +1,7 @@
+import Module from '../../../core/entities/module';
 import ModuleRepositoryInMemory from './module-repository-in-memory';
 
-const fakeModule = {
+const fakeModule: Module = {
     level: "EM",
     code: "1",
     description: "1o Ano",

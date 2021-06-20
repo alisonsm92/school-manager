@@ -1,6 +1,7 @@
+import Level from '../../../core/entities/level';
 import LevelRepositoryInMemory from './level-repository-in-memory';
 
-const fakeLevel = {
+const fakeLevel: Level = {
     code: "EM",
     description: "Ensino Médio"
 };
