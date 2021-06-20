@@ -6,6 +6,7 @@ import ClassRepository from './ports/class-repository';
 import ModuleRepository from './ports/module-repository';
 import LevelRepository from './ports/level-repository';
 import EnrollmentRepository from './ports/enrollment-repository';
+import Student from '../core/entities/student';
 
 type Dependencies = {
     enrollmentRepository: EnrollmentRepository,
@@ -28,23 +29,24 @@ export default class EnrollStudent {
 
     execute(enrollmentRequest: EnrollmentRequest): Enrollment {
         try {
-            if(this.enrollmentRepository.findByCpf(enrollmentRequest.student.cpf)) {
-                throw new Error('Enrollment with duplicated student is not allowed');
-            }
-            const enrollment = new Enrollment(enrollmentRequest, this.enrollmentRepository.count());
-            const level = this.levelRepository.findByCode(enrollment.level);
+            const student = new Student(
+                enrollmentRequest.student.name, 
+                enrollmentRequest.student.cpf,
+                enrollmentRequest.student.birthDate
+            );
+            const level = this.levelRepository.findByCode(enrollmentRequest.level);
             if(!level) {
                 throw new Error('Level not found');
             }
-            const module = this.moduleRepository.find(enrollment.level, enrollment.module);
+            const module = this.moduleRepository.find(enrollmentRequest.level, enrollmentRequest.module);
             if(!module) {
                 throw new Error('Module not found');
             }
-            if(enrollment.student.age < module.minimumAge) {
+            if(student.age < module.minimumAge) {
                 throw new Error('Student below minimum age');
             }
             const classRoom = this.classRepository.find(
-                enrollment.level, enrollment.module, enrollment.classRoom
+                enrollmentRequest.level, enrollmentRequest.module, enrollmentRequest.classRoom
             );
             if(!classRoom) {
                 throw new Error('Class not found');
@@ -52,6 +54,11 @@ export default class EnrollStudent {
             if(classRoom.capacity === this.enrollmentRepository.findAllByClass(classRoom).length) {
                 throw new Error('Class is over capacity');
             }
+            if(this.enrollmentRepository.findByCpf(enrollmentRequest.student.cpf)) {
+                throw new Error('Enrollment with duplicated student is not allowed');
+            }
+            const sequence = this.enrollmentRepository.count();
+            const enrollment = new Enrollment(student, enrollmentRequest, sequence);
             this.enrollmentRepository.add(enrollment);
             return enrollment;
         } catch (error) {

@@ -8,12 +8,8 @@ export default class Enrollment {
     readonly classRoom: string;
     readonly code: string;
     
-    constructor(enrollmentRequest: EnrollmentRequest, sequence: number) {
-        this.student = new Student(
-            enrollmentRequest.student.name, 
-            enrollmentRequest.student.cpf,
-            enrollmentRequest.student.birthDate
-        );;
+    constructor(student: Student, enrollmentRequest: EnrollmentRequest, sequence: number) {
+        this.student = student;
         this.level = enrollmentRequest.level;
         this.module = enrollmentRequest.module;
         this.classRoom = enrollmentRequest.classRoom;
