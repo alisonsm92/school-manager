@@ -5,6 +5,23 @@ import ModuleRepositoryInMemory from '../adapters/output/repositories/module-rep
 import EnrollStudent from './enroll-student';
 import EnrollmentRequest from './ports/enrollment-request';
 
+const fakeLevel = {
+    code: "EM",
+    description: "Ensino Médio"
+};
+const fakeModule = {
+    level: "EM",
+    code: "1",
+    description: "1o Ano",
+    minimumAge: 15,
+    price: 17000
+};
+const fakeClassRoom = {
+    level: "EM",
+    module: "1",
+    code: "A",
+    capacity: 10,
+};
 const enrollmentRequest: EnrollmentRequest = {
     student: {
         name: 'Maria Carolina Fonseca',
@@ -24,11 +41,30 @@ type SutDependencies = {
 }
 
 function makeSut(dependencies?: SutDependencies) {
+    let enrollmentRepository = dependencies?.enrollmentRepository;
+    let levelRepository = dependencies?.levelRepository;
+    let moduleRepository = dependencies?.moduleRepository;
+    let classRepository = dependencies?.classRepository;
+    if(!enrollmentRepository) {
+        enrollmentRepository = new EnrollmentRepositoryInMemory();
+    }
+    if(!levelRepository) {
+        levelRepository = new LevelRepositoryInMemory();
+        levelRepository.add(fakeLevel);
+    }
+    if(!moduleRepository) {
+        moduleRepository = new ModuleRepositoryInMemory();
+        moduleRepository.add(fakeModule);
+    }
+    if(!classRepository) {
+        classRepository = new ClassRepositoryInMemory();
+        classRepository.add(fakeClassRoom);
+    }
     return new EnrollStudent({
-        enrollmentRepository: dependencies?.enrollmentRepository || new EnrollmentRepositoryInMemory(),
-        levelRepository: dependencies?.levelRepository || new LevelRepositoryInMemory(),
-        moduleRepository: dependencies?.moduleRepository || new ModuleRepositoryInMemory(), 
-        classRepository: dependencies?.classRepository || new ClassRepositoryInMemory(),
+        enrollmentRepository,
+        levelRepository,
+        moduleRepository, 
+        classRepository,
     });
 }
 

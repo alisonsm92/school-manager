@@ -2,14 +2,7 @@ import Class from '../../../core/entities/class';
 import ClassRepository from '../../../use-cases/ports/class-repository';
 
 export default class ClassRepositoryInMemory implements ClassRepository {
-    private readonly data: Class[] = [
-        {
-            level: 'EM',
-            module: '1',
-            code: 'A',
-            capacity: 10
-        }
-    ];
+    private readonly data: Class[] = [];
 
     find(level: string, module: string, code: string) {
         return this.data.find(classRoom => 
@@ -17,5 +10,9 @@ export default class ClassRepositoryInMemory implements ClassRepository {
             && classRoom.module === module
             && classRoom.code === code
         );
+    }
+
+    add(classRoom: Class): void {
+        this.data.push(classRoom);
     }
 }
