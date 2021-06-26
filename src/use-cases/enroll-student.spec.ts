@@ -8,6 +8,24 @@ import Module from '../core/entities/module';
 import EnrollStudent from './enroll-student';
 import EnrollmentRequest from './ports/enrollment-request';
 
+function getDateAfter(days: number) {
+    const date = new Date();
+    const calculatedDate = date.getDate() + days;
+    date.setDate(calculatedDate);
+    return date;
+}
+
+function getDateBefore(days: number) {
+    const date = new Date();
+    const calculatedDate = date.getDate() - days;
+    date.setDate(calculatedDate);
+    return date;
+}
+
+function getDateString(date: Date) {
+    return `${date.getUTCFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
+}
+
 const fakeLevel: Level = {
     code: "EM",
     description: "Ensino Médio"
@@ -140,7 +158,13 @@ describe('Testing enroll student', () => {
     });
 
     test('Should not enroll after que end of the class', () => {
-        const fakeClass = { ...fakeClassRoom, end_date: '2020-06-30' };
+        const aMonthAgo = getDateBefore(30);
+        const yesterDay = getDateBefore(1);
+        const fakeClass = { 
+            ...fakeClassRoom, 
+            start_date: getDateString(aMonthAgo), 
+            end_date: getDateString(yesterDay) 
+        };
         const classRepositoryInMemory = new ClassRepositoryInMemory();
         classRepositoryInMemory.add(new Class(fakeClass));
         const sut = makeSut({ classRepository: classRepositoryInMemory });
