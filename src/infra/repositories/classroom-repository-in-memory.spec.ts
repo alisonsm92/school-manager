@@ -1,7 +1,7 @@
-import ClassRoom from '../../domain/entities/class-room';
-import ClassRepositoryInMemory from './class-repository-in-memory';
+import Classroom from '../../domain/entities/classroom';
+import ClassRepositoryInMemory from './classroom-repository-in-memory';
 
-const fakeClassRoom = {
+const fakeClassroom = {
     level: "EM",
     module: "1",
     code: "A",
@@ -12,9 +12,9 @@ const fakeClassRoom = {
 
 describe('Testing ClassRepository', () => {
     describe('Find method', () => {
-        test('Should return the class with code provided when it exists', () => {
+        test('Should return the classroom with code provided when it exists', () => {
             const sut = new ClassRepositoryInMemory();
-            sut.add(new ClassRoom(fakeClassRoom));
+            sut.add(new Classroom(fakeClassroom));
             const module = sut.find('EM', '1', 'A');
             expect(module).toHaveProperty('level', 'EM');
             expect(module).toHaveProperty('module', '1');

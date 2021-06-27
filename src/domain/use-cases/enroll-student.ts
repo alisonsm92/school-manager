@@ -2,7 +2,7 @@ import Enrollment from '../entities/enrollment';
 import EnrollmentRequest from './ports/enrollment-request';
 import InvalidCpfError from '../errors/invalid-cpf';
 import InvalidNameError from '../errors/invalid-name';
-import ClassRepository from './ports/class-repository';
+import ClassroomRepository from './ports/classroom-repository';
 import ModuleRepository from './ports/module-repository';
 import LevelRepository from './ports/level-repository';
 import EnrollmentRepository from './ports/enrollment-repository';
@@ -12,19 +12,19 @@ type Dependencies = {
     enrollmentRepository: EnrollmentRepository,
     levelRepository: LevelRepository, 
     moduleRepository: ModuleRepository, 
-    classRepository: ClassRepository
+    classroomRepository: ClassroomRepository
 }
 export default class EnrollStudent {
     private readonly enrollmentRepository: EnrollmentRepository;
     private readonly levelRepository: LevelRepository;
     private readonly moduleRepository: ModuleRepository;
-    private readonly classRepository: ClassRepository;
+    private readonly classroomRepository: ClassroomRepository;
 
     constructor(dependencies: Dependencies) {
         this.enrollmentRepository = dependencies.enrollmentRepository;
         this.levelRepository = dependencies.levelRepository;
         this.moduleRepository = dependencies.moduleRepository;
-        this.classRepository = dependencies.classRepository;
+        this.classroomRepository = dependencies.classroomRepository;
     }
 
     execute(enrollmentRequest: EnrollmentRequest): Enrollment {
@@ -45,26 +45,26 @@ export default class EnrollStudent {
             if(student.age < module.minimumAge) {
                 throw new Error('Student below minimum age');
             }
-            const classRoom = this.classRepository.find(
-                enrollmentRequest.level, enrollmentRequest.module, enrollmentRequest.classRoom
+            const classroom = this.classroomRepository.find(
+                enrollmentRequest.level, enrollmentRequest.module, enrollmentRequest.classroom
             );
-            if(!classRoom) {
+            if(!classroom) {
                 throw new Error('Class not found');
             }
-            if(classRoom.capacity === this.enrollmentRepository.findAllByClass(classRoom).length) {
+            if(classroom.capacity === this.enrollmentRepository.findAllByClass(classroom).length) {
                 throw new Error('Class is over capacity');
             }
-            if(classRoom.isFinished()) {
+            if(classroom.isFinished()) {
                 throw new Error('Class is already finished');
             }
-            if(classRoom.isStarted()) {
+            if(classroom.isStarted()) {
                 throw new Error('Class is already started');
             }
             if(this.enrollmentRepository.findByCpf(enrollmentRequest.student.cpf)) {
                 throw new Error('Enrollment with duplicated student is not allowed');
             }
             const sequence = this.enrollmentRepository.count();
-            const enrollment = new Enrollment({ student, level, module, classRoom, sequence });
+            const enrollment = new Enrollment({ student, level, module, classroom, sequence });
             this.enrollmentRepository.add(enrollment);
             return enrollment;
         } catch (error) {

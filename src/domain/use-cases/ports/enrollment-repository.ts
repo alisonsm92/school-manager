@@ -1,9 +1,9 @@
-import ClassRoom from "../../entities/class-room";
+import Classroom from "../../entities/classroom";
 import Enrollment from "../../entities/enrollment";
 
 interface EnrollmentRepository {
     findByCpf(cpf: string): Enrollment|undefined
-    findAllByClass(classRoom: ClassRoom): Enrollment[]
+    findAllByClass(classroom: Classroom): Enrollment[]
     count(): number
     add(enrollment: Enrollment): void
 }

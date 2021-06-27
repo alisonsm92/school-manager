@@ -1,6 +1,6 @@
 import Duration from "./duration";
 
-export default class ClassRoom {
+export default class Classroom {
     readonly level: string;
     readonly module: string;
     readonly code: string;

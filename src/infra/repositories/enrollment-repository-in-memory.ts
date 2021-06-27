@@ -1,4 +1,4 @@
-import ClassRoom from "../../domain/entities/class-room";
+import Classroom from "../../domain/entities/classroom";
 import Enrollment from "../../domain/entities/enrollment";
 import EnrollmentRepository from "../../domain/use-cases/ports/enrollment-repository";
 
@@ -13,10 +13,10 @@ export default class EnrollmentRepositoryInMemory implements EnrollmentRepositor
         return this.data.find(enrollment => enrollment.student.cpf === cpf);
     }
 
-    findAllByClass({ module, level, code }: ClassRoom) {
+    findAllByClass({ module, level, code }: Classroom) {
         return this.data.filter(enrollment => enrollment.module.code === module
             && enrollment.level.code === level
-            && enrollment.classRoom.code === code);
+            && enrollment.classroom.code === code);
     }
 
     count(): number {

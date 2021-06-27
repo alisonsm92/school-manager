@@ -6,7 +6,7 @@ interface EnrollmentRequest {
     },
     level: string,
     module: string,
-    classRoom: string
+    classroom: string
 }
 
 export default EnrollmentRequest

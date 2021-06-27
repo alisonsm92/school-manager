@@ -1,4 +1,4 @@
-import ClassRoom from "../../domain/entities/class-room";
+import Classroom from "../../domain/entities/classroom";
 import Enrollment from "../../domain/entities/enrollment";
 import Level from "../../domain/entities/level";
 import Module from "../../domain/entities/module";
@@ -18,7 +18,7 @@ const fakeModule = new Module({
     minimumAge: 15,
     price: 17000
 });
-const fakeClassRoom = new ClassRoom({
+const fakeClassroom = new Classroom({
     level: 'EM',
     module: '1',
     code: 'A',
@@ -30,7 +30,7 @@ const enrollment = new Enrollment({
     student: fakeStudent, 
     level: fakeLevel, 
     module: fakeModule, 
-    classRoom: fakeClassRoom, 
+    classroom: fakeClassroom, 
     sequence: 0 
 });
 
