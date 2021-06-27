@@ -8,14 +8,14 @@ import Module from '../entities/module';
 import EnrollStudent from './enroll-student';
 import EnrollmentRequest from './ports/enrollment-request';
 
-function getDateAfter(days: number) {
+function getDateAfter({ days }: { days: number }) {
     const date = new Date();
     const calculatedDate = date.getDate() + days;
     date.setDate(calculatedDate);
     return date;
 }
 
-function getDateBefore(days: number) {
+function getDateBefore({ days }: { days: number }) {
     const date = new Date();
     const calculatedDate = date.getDate() - days;
     date.setDate(calculatedDate);
@@ -26,8 +26,8 @@ function getDateString(date: Date) {
     return `${date.getUTCFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
 }
 
-const aMonthAgo = getDateBefore(30);
-const aMonthAfter = getDateAfter(30);
+const aMonthAgo = getDateBefore({ days: 30 });
+const aMonthAfter = getDateAfter({ days: 30 });
 const fakeLevel: Level = {
     code: "EM",
     description: "Ensino Médio"
@@ -160,7 +160,7 @@ describe('Testing enroll student', () => {
     });
 
     test('Should not enroll after que end of the class', () => {
-        const yesterDay = getDateBefore(1);
+        const yesterDay = getDateBefore({ days: 1 });
         const fakeClass = { 
             ...fakeClassRoom, 
             start_date: getDateString(aMonthAgo), 
