@@ -1,3 +1,5 @@
+import Duration from "./duration";
+
 type ClassDTO = {
     level: string,
     module: string,
@@ -6,7 +8,6 @@ type ClassDTO = {
     start_date: string,
     end_date: string
 }
-
 export default class Class {
     readonly level: string;
     readonly module: string;
@@ -26,5 +27,12 @@ export default class Class {
 
     isFinished() {
         return new Date() > this.endDate;
+    }
+
+    isStarted() {
+        const now = new Date();
+        const classCalendarDuration = new Duration(this.startDate, this.endDate);
+        const percentCompleted = classCalendarDuration.getPercentCompleteUntil(now);
+        return percentCompleted > 25 ? true : false;
     }
 }

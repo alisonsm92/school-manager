@@ -54,6 +54,9 @@ export default class EnrollStudent {
             if(classRoom.capacity === this.enrollmentRepository.findAllByClass(classRoom).length) {
                 throw new Error('Class is over capacity');
             }
+            if(classRoom.isStarted()) {
+                throw new Error('Class is already started');
+            }
             if(classRoom.isFinished()) {
                 throw new Error('Class is already finished');
             }

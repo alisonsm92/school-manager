@@ -26,6 +26,8 @@ function getDateString(date: Date) {
     return `${date.getUTCFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
 }
 
+const aMonthAgo = getDateBefore(30);
+const aMonthAfter = getDateAfter(30);
 const fakeLevel: Level = {
     code: "EM",
     description: "Ensino Médio"
@@ -42,8 +44,8 @@ const fakeClassRoom = {
     module: "1",
     code: "A",
     capacity: 10,
-    start_date: "2021-05-01",
-    end_date: "2021-06-30"
+    start_date: getDateString(new Date()),
+    end_date: getDateString(aMonthAfter)
 };
 const enrollmentRequest: EnrollmentRequest = {
     student: {
@@ -158,7 +160,6 @@ describe('Testing enroll student', () => {
     });
 
     test('Should not enroll after que end of the class', () => {
-        const aMonthAgo = getDateBefore(30);
         const yesterDay = getDateBefore(1);
         const fakeClass = { 
             ...fakeClassRoom, 
@@ -169,5 +170,17 @@ describe('Testing enroll student', () => {
         classRepositoryInMemory.add(new Class(fakeClass));
         const sut = makeSut({ classRepository: classRepositoryInMemory });
         expect(() => sut.execute(enrollmentRequest)).toThrow(new Error('Class is already finished'));
+    });
+
+    test('Should not enroll after 25% of the start of the class', () => {
+        const classData = { 
+            ...fakeClassRoom, 
+            start_date: getDateString(aMonthAgo), 
+            end_date: getDateString(aMonthAfter) 
+        };
+        const classRepositoryInMemory = new ClassRepositoryInMemory();
+        classRepositoryInMemory.add(new Class(classData));
+        const sut = makeSut({ classRepository: classRepositoryInMemory });
+        expect(() => sut.execute(enrollmentRequest)).toThrow(new Error('Class is already started'));
     });
 });
