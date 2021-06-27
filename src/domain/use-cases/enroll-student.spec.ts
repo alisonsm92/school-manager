@@ -2,7 +2,7 @@ import ClassRepositoryInMemory from '../../infra/repositories/class-repository-i
 import EnrollmentRepositoryInMemory from '../../infra/repositories/enrollment-repository-in-memory';
 import LevelRepositoryInMemory from '../../infra/repositories/level-repository-in-memory';
 import ModuleRepositoryInMemory from '../../infra/repositories/module-repository-in-memory';
-import Class from '../entities/class';
+import ClassRoom from '../entities/class-room';
 import Level from '../entities/level';
 import Module from '../entities/module';
 import EnrollStudent from './enroll-student';
@@ -44,8 +44,8 @@ const fakeClassRoom = {
     module: "1",
     code: "A",
     capacity: 10,
-    start_date: getDateString(new Date()),
-    end_date: getDateString(aMonthAfter)
+    startDate: getDateString(new Date()),
+    endDate: getDateString(aMonthAfter)
 };
 const enrollmentRequest: EnrollmentRequest = {
     student: {
@@ -83,7 +83,7 @@ function makeSut(dependencies?: SutDependencies) {
     }
     if(!classRepository) {
         classRepository = new ClassRepositoryInMemory();
-        classRepository.add(new Class(fakeClassRoom));
+        classRepository.add(new ClassRoom(fakeClassRoom));
     }
     return new EnrollStudent({
         enrollmentRepository,
@@ -100,9 +100,9 @@ describe('Testing enroll student', () => {
         expect(enrollment).toHaveProperty('student.name', enrollmentRequest.student.name);
         expect(enrollment).toHaveProperty('student.cpf', enrollmentRequest.student.cpf);
         expect(enrollment).toHaveProperty('student.birthDate', new Date(enrollmentRequest.student.birthDate));
-        expect(enrollment).toHaveProperty('level', enrollmentRequest.level);
-        expect(enrollment).toHaveProperty('module', enrollmentRequest.module);
-        expect(enrollment).toHaveProperty('classRoom', enrollmentRequest.classRoom);
+        expect(enrollment).toHaveProperty('level.code', enrollmentRequest.level);
+        expect(enrollment).toHaveProperty('module.code', enrollmentRequest.module);
+        expect(enrollment).toHaveProperty('classRoom.code', enrollmentRequest.classRoom);
     });
     
     test('Should not enroll without valid student name', () => {
@@ -147,7 +147,7 @@ describe('Testing enroll student', () => {
     test('Should not enroll student over class capacity', () => {
         const fakeClass = { ...fakeClassRoom, capacity: 1 };
         const classRepositoryInMemory = new ClassRepositoryInMemory();
-        classRepositoryInMemory.add(new Class(fakeClass));
+        classRepositoryInMemory.add(new ClassRoom(fakeClass));
         const secondStudent: EnrollmentRequest['student'] = { 
             ...enrollmentRequest.student, 
             name: 'Pedro da Silva',
@@ -161,25 +161,25 @@ describe('Testing enroll student', () => {
 
     test('Should not enroll after que end of the class', () => {
         const yesterDay = getDateBefore({ days: 1 });
-        const fakeClass = { 
+        const classRoom = new ClassRoom({
             ...fakeClassRoom, 
-            start_date: getDateString(aMonthAgo), 
-            end_date: getDateString(yesterDay) 
-        };
+            startDate: getDateString(aMonthAgo), 
+            endDate: getDateString(yesterDay) 
+        });
         const classRepositoryInMemory = new ClassRepositoryInMemory();
-        classRepositoryInMemory.add(new Class(fakeClass));
+        classRepositoryInMemory.add(classRoom);
         const sut = makeSut({ classRepository: classRepositoryInMemory });
         expect(() => sut.execute(enrollmentRequest)).toThrow(new Error('Class is already finished'));
     });
 
     test('Should not enroll after 25% of the start of the class', () => {
-        const classData = { 
+        const classRoom = new ClassRoom({ 
             ...fakeClassRoom, 
-            start_date: getDateString(aMonthAgo), 
-            end_date: getDateString(aMonthAfter) 
-        };
+            startDate: getDateString(aMonthAgo), 
+            endDate: getDateString(aMonthAfter) 
+        });
         const classRepositoryInMemory = new ClassRepositoryInMemory();
-        classRepositoryInMemory.add(new Class(classData));
+        classRepositoryInMemory.add(classRoom);
         const sut = makeSut({ classRepository: classRepositoryInMemory });
         expect(() => sut.execute(enrollmentRequest)).toThrow(new Error('Class is already started'));
     });

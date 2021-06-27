@@ -1,8 +1,8 @@
-import Class from '../../domain/entities/class';
+import ClassRoom from '../../domain/entities/class-room';
 import ClassRepository from '../../domain/use-cases/ports/class-repository';
 
 export default class ClassRepositoryInMemory implements ClassRepository {
-    private readonly data: Class[] = [];
+    private readonly data: ClassRoom[] = [];
 
     find(level: string, module: string, code: string) {
         return this.data.find(classRoom => 
@@ -12,7 +12,7 @@ export default class ClassRepositoryInMemory implements ClassRepository {
         );
     }
 
-    add(classRoom: Class): void {
+    add(classRoom: ClassRoom): void {
         this.data.push(classRoom);
     }
 }

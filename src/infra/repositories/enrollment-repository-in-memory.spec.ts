@@ -1,36 +1,50 @@
+import ClassRoom from "../../domain/entities/class-room";
 import Enrollment from "../../domain/entities/enrollment";
+import Level from "../../domain/entities/level";
+import Module from "../../domain/entities/module";
 import Student from "../../domain/entities/student";
-import EnrollmentRequest from "../../domain/use-cases/ports/enrollment-request";
 import EnrollmentRepositoryInMemory from "./enrollment-repository-in-memory";
 
-const enrollmentRequest: EnrollmentRequest = {
-    student: {
-        name: 'Maria Carolina Fonseca',
-        cpf: '755.525.774-26',
-        birthDate: '2002-03-12'
-    },
+const fakeStudent = new Student({
+    name: 'Maria Carolina Fonseca', 
+    cpf: '755.525.774-26', 
+    birthDate: '2002-03-12'
+});
+const fakeLevel = new Level({ code: 'EM', description: 'Ensino Médio' });
+const fakeModule = new Module({
+    level: 'EM',
+    code: '1',
+    description: '1o Ano',
+    minimumAge: 15,
+    price: 17000
+});
+const fakeClassRoom = new ClassRoom({
     level: 'EM',
     module: '1',
-    classRoom: 'A'
-};
-const student = new Student(
-    'Maria Carolina Fonseca', 
-    '755.525.774-26', 
-    '2002-03-12'
-);
-const enrollment = new Enrollment(student, enrollmentRequest, 0);
+    code: 'A',
+    capacity: 10,
+    startDate: '2021-01-01',
+    endDate: '2021-06-30'
+});
+const enrollment = new Enrollment({ 
+    student: fakeStudent, 
+    level: fakeLevel, 
+    module: fakeModule, 
+    classRoom: fakeClassRoom, 
+    sequence: 0 
+});
 
 describe('Testing EnrollmentRepository', () => {
     describe('FindByCpf method', () => {
         test('Should return the enrollment with cpf provided when it exists', () => {
             const enrollmentRepository = new EnrollmentRepositoryInMemory();
             enrollmentRepository.add(enrollment);
-            expect(enrollmentRepository.findByCpf(student.cpf)).toEqual(enrollment);
+            expect(enrollmentRepository.findByCpf(fakeStudent.cpf)).toEqual(enrollment);
         });
 
         test('Should return undefined when enrollment with the code provided not exists', () => {
             const enrollmentRepository = new EnrollmentRepositoryInMemory();
-            expect(enrollmentRepository.findByCpf(student.cpf)).toBeUndefined();
+            expect(enrollmentRepository.findByCpf(fakeStudent.cpf)).toBeUndefined();
         });
     });
 });

@@ -29,11 +29,11 @@ export default class EnrollStudent {
 
     execute(enrollmentRequest: EnrollmentRequest): Enrollment {
         try {
-            const student = new Student(
-                enrollmentRequest.student.name, 
-                enrollmentRequest.student.cpf,
-                enrollmentRequest.student.birthDate
-            );
+            const student = new Student({
+                name: enrollmentRequest.student.name, 
+                cpf: enrollmentRequest.student.cpf,
+                birthDate: enrollmentRequest.student.birthDate
+            });
             const level = this.levelRepository.findByCode(enrollmentRequest.level);
             if(!level) {
                 throw new Error('Level not found');
@@ -64,7 +64,7 @@ export default class EnrollStudent {
                 throw new Error('Enrollment with duplicated student is not allowed');
             }
             const sequence = this.enrollmentRepository.count();
-            const enrollment = new Enrollment(student, enrollmentRequest, sequence);
+            const enrollment = new Enrollment({ student, level, module, classRoom, sequence });
             this.enrollmentRepository.add(enrollment);
             return enrollment;
         } catch (error) {

@@ -1,14 +1,6 @@
 import Duration from "./duration";
 
-type ClassDTO = {
-    level: string,
-    module: string,
-    code: string,
-    capacity: number,
-    start_date: string,
-    end_date: string
-}
-export default class Class {
+export default class ClassRoom {
     readonly level: string;
     readonly module: string;
     readonly code: string;
@@ -16,13 +8,14 @@ export default class Class {
     readonly startDate: Date;
     readonly endDate: Date;
 
-    constructor({ level, module, code, capacity, start_date, end_date }: ClassDTO) {
+    constructor({ level, module, code, capacity, startDate, endDate }:
+        { level: string, module: string, code: string, capacity: number, startDate: string, endDate: string }) {
         this.level = level;
         this.module = module;
         this.code = code;
         this.capacity = capacity;
-        this.startDate = new Date(start_date);
-        this.endDate = new Date(end_date);
+        this.startDate = new Date(startDate);
+        this.endDate = new Date(endDate);
     }
 
     isFinished() {
