@@ -1,4 +1,4 @@
-import Module from "../../core/entities/module";
+import Module from "../../entities/module";
 
 interface ModuleRepository {
     find(level: string, code: string): Module|undefined

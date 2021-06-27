@@ -1,6 +1,6 @@
-import Enrollment from "../../../core/entities/enrollment";
-import Student from "../../../core/entities/student";
-import EnrollmentRequest from "../../../use-cases/ports/enrollment-request";
+import Enrollment from "../../domain/entities/enrollment";
+import Student from "../../domain/entities/student";
+import EnrollmentRequest from "../../domain/use-cases/ports/enrollment-request";
 import EnrollmentRepositoryInMemory from "./enrollment-repository-in-memory";
 
 const enrollmentRequest: EnrollmentRequest = {

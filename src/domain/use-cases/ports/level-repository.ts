@@ -1,4 +1,4 @@
-import Level from "../../core/entities/level";
+import Level from "../../entities/level";
 
 interface LevelRepository {
     findByCode(code: string): Level|undefined

@@ -1,5 +1,5 @@
-import Level from '../../../core/entities/level';
-import LevelRepository from '../../../use-cases/ports/level-repository';
+import Level from '../../domain/entities/level';
+import LevelRepository from '../../domain/use-cases/ports/level-repository';
 
 export default class LevelRepositoryInMemory implements LevelRepository {
     private readonly data: Level[] = [];

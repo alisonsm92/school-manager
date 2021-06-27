@@ -1,5 +1,5 @@
-import Class from "../../core/entities/class";
-import Enrollment from "../../core/entities/enrollment";
+import Class from "../../entities/class";
+import Enrollment from "../../entities/enrollment";
 
 interface EnrollmentRepository {
     findByCpf(cpf: string): Enrollment|undefined

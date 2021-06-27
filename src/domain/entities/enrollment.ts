@@ -1,4 +1,4 @@
-import EnrollmentRequest from '../../use-cases/ports/enrollment-request';
+import EnrollmentRequest from '../use-cases/ports/enrollment-request';
 import Student from './student';
 
 export default class Enrollment {

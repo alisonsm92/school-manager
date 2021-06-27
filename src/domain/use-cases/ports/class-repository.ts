@@ -1,4 +1,4 @@
-import Class from "../../core/entities/class";
+import Class from "../../entities/class";
 
 interface ClassRepository {
     find(level: string, module: string, code: string): Class|undefined

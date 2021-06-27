@@ -1,10 +1,10 @@
-import ClassRepositoryInMemory from '../adapters/output/repositories/class-repository-in-memory';
-import EnrollmentRepositoryInMemory from '../adapters/output/repositories/enrollment-repository-in-memory';
-import LevelRepositoryInMemory from '../adapters/output/repositories/level-repository-in-memory';
-import ModuleRepositoryInMemory from '../adapters/output/repositories/module-repository-in-memory';
-import Class from '../core/entities/class';
-import Level from '../core/entities/level';
-import Module from '../core/entities/module';
+import ClassRepositoryInMemory from '../../infra/repositories/class-repository-in-memory';
+import EnrollmentRepositoryInMemory from '../../infra/repositories/enrollment-repository-in-memory';
+import LevelRepositoryInMemory from '../../infra/repositories/level-repository-in-memory';
+import ModuleRepositoryInMemory from '../../infra/repositories/module-repository-in-memory';
+import Class from '../entities/class';
+import Level from '../entities/level';
+import Module from '../entities/module';
 import EnrollStudent from './enroll-student';
 import EnrollmentRequest from './ports/enrollment-request';
 

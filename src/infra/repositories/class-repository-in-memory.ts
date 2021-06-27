@@ -1,5 +1,5 @@
-import Class from '../../../core/entities/class';
-import ClassRepository from '../../../use-cases/ports/class-repository';
+import Class from '../../domain/entities/class';
+import ClassRepository from '../../domain/use-cases/ports/class-repository';
 
 export default class ClassRepositoryInMemory implements ClassRepository {
     private readonly data: Class[] = [];

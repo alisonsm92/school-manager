@@ -1,12 +1,12 @@
-import Enrollment from '../core/entities/enrollment';
+import Enrollment from '../entities/enrollment';
 import EnrollmentRequest from './ports/enrollment-request';
-import InvalidCpfError from '../core/errors/invalid-cpf';
-import InvalidNameError from '../core/errors/invalid-name';
+import InvalidCpfError from '../errors/invalid-cpf';
+import InvalidNameError from '../errors/invalid-name';
 import ClassRepository from './ports/class-repository';
 import ModuleRepository from './ports/module-repository';
 import LevelRepository from './ports/level-repository';
 import EnrollmentRepository from './ports/enrollment-repository';
-import Student from '../core/entities/student';
+import Student from '../entities/student';
 
 type Dependencies = {
     enrollmentRepository: EnrollmentRepository,
