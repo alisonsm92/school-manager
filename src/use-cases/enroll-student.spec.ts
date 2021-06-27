@@ -94,7 +94,7 @@ function makeSut(dependencies?: SutDependencies) {
 }
 
 describe('Testing enroll student', () => {
-    test('Should fullfil successfully when provide a valid name and cpf', () => {
+    test('Should fullfil successfully when provide a valid input data', () => {
         const sut = makeSut();
         const enrollment = sut.execute(enrollmentRequest);
         expect(enrollment).toHaveProperty('student.name', enrollmentRequest.student.name);
