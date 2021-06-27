@@ -42,9 +42,6 @@ export default class EnrollStudent {
             if(!module) {
                 throw new Error('Module not found');
             }
-            if(student.age < module.minimumAge) {
-                throw new Error('Student below minimum age');
-            }
             const classroom = this.classroomRepository.find(
                 enrollmentRequest.level, enrollmentRequest.module, enrollmentRequest.classroom
             );
@@ -53,12 +50,6 @@ export default class EnrollStudent {
             }
             if(classroom.capacity === this.enrollmentRepository.findAllByClass(classroom).length) {
                 throw new Error('Class is over capacity');
-            }
-            if(classroom.isFinished()) {
-                throw new Error('Class is already finished');
-            }
-            if(classroom.isStarted()) {
-                throw new Error('Class is already started');
             }
             if(this.enrollmentRepository.findByCpf(enrollmentRequest.student.cpf)) {
                 throw new Error('Enrollment with duplicated student is not allowed');

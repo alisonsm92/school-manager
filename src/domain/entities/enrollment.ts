@@ -12,6 +12,15 @@ export default class Enrollment {
     
     constructor({ student, level, module, classroom, sequence }:
         { student: Student, level: Level, module: Module, classroom: Classroom, sequence: number }) {
+        if(student.age < module.minimumAge) {
+            throw new Error('Student below minimum age');
+        }
+        if(classroom.isFinished()) {
+            throw new Error('Class is already finished');
+        }
+        if(classroom.isStarted()) {
+            throw new Error('Class is already started');
+        }
         this.student = student;
         this.level = level;
         this.module = module;

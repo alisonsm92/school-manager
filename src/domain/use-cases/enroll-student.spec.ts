@@ -1,3 +1,4 @@
+import DateHelper from '../../common/date-helper';
 import ClassRepositoryInMemory from '../../infra/repositories/classroom-repository-in-memory';
 import EnrollmentRepositoryInMemory from '../../infra/repositories/enrollment-repository-in-memory';
 import LevelRepositoryInMemory from '../../infra/repositories/level-repository-in-memory';
@@ -8,26 +9,8 @@ import Module from '../entities/module';
 import EnrollStudent from './enroll-student';
 import EnrollmentRequest from './ports/enrollment-request';
 
-function getDateAfter({ days }: { days: number }) {
-    const date = new Date();
-    const calculatedDate = date.getDate() + days;
-    date.setDate(calculatedDate);
-    return date;
-}
-
-function getDateBefore({ days }: { days: number }) {
-    const date = new Date();
-    const calculatedDate = date.getDate() - days;
-    date.setDate(calculatedDate);
-    return date;
-}
-
-function getDateString(date: Date) {
-    return `${date.getUTCFullYear()}-${date.getMonth()+1}-${date.getDate()}`;
-}
-
-const aMonthAgo = getDateBefore({ days: 30 });
-const aMonthAfter = getDateAfter({ days: 30 });
+const aMonthAgo = DateHelper.getDateBefore({ days: 30 });
+const aMonthAfter = DateHelper.getDateAfter({ days: 30 });
 const fakeLevel: Level = {
     code: "EM",
     description: "Ensino Médio"
@@ -44,8 +27,8 @@ const fakeClassroom = {
     module: "1",
     code: "A",
     capacity: 10,
-    startDate: getDateString(new Date()),
-    endDate: getDateString(aMonthAfter)
+    startDate: DateHelper.getDateString(new Date()),
+    endDate: DateHelper.getDateString(aMonthAfter)
 };
 const enrollmentRequest: EnrollmentRequest = {
     student: {
@@ -160,11 +143,11 @@ describe('Testing enroll student', () => {
     });
 
     test('Should not enroll after que end of the classroom', () => {
-        const yesterDay = getDateBefore({ days: 1 });
+        const yesterDay = DateHelper.getDateBefore({ days: 1 });
         const classroom = new Classroom({
             ...fakeClassroom, 
-            startDate: getDateString(aMonthAgo), 
-            endDate: getDateString(yesterDay) 
+            startDate: DateHelper.getDateString(aMonthAgo),
+            endDate: DateHelper.getDateString(yesterDay)
         });
         const classRepositoryInMemory = new ClassRepositoryInMemory();
         classRepositoryInMemory.add(classroom);
@@ -175,8 +158,8 @@ describe('Testing enroll student', () => {
     test('Should not enroll after 25% of the start of the classroom', () => {
         const classroom = new Classroom({ 
             ...fakeClassroom, 
-            startDate: getDateString(aMonthAgo), 
-            endDate: getDateString(aMonthAfter) 
+            startDate: DateHelper.getDateString(aMonthAgo),
+            endDate: DateHelper.getDateString(aMonthAfter)
         });
         const classRepositoryInMemory = new ClassRepositoryInMemory();
         classRepositoryInMemory.add(classroom);

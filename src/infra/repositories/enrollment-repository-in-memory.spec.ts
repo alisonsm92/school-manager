@@ -1,3 +1,4 @@
+import DateHelper from "../../common/date-helper";
 import Classroom from "../../domain/entities/classroom";
 import Enrollment from "../../domain/entities/enrollment";
 import Level from "../../domain/entities/level";
@@ -18,13 +19,14 @@ const fakeModule = new Module({
     minimumAge: 15,
     price: 17000
 });
+const aMonthAfter = DateHelper.getDateAfter({ days: 30 });
 const fakeClassroom = new Classroom({
     level: 'EM',
     module: '1',
     code: 'A',
     capacity: 10,
-    startDate: '2021-01-01',
-    endDate: '2021-06-30'
+    startDate: DateHelper.getDateString(new Date()),
+    endDate: DateHelper.getDateString(aMonthAfter)
 });
 const enrollment = new Enrollment({ 
     student: fakeStudent, 
