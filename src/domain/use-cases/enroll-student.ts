@@ -54,8 +54,9 @@ export default class EnrollStudent {
             if(this.enrollmentRepository.findByCpf(enrollmentRequest.student.cpf)) {
                 throw new Error('Enrollment with duplicated student is not allowed');
             }
-            const sequence = this.enrollmentRepository.count();
-            const enrollment = new Enrollment({ student, level, module, classroom, sequence });
+            const sequence = this.enrollmentRepository.count() + 1;
+            const issueDate = new Date();
+            const enrollment = new Enrollment({ student, level, module, classroom, issueDate, sequence });
             this.enrollmentRepository.add(enrollment);
             return enrollment;
         } catch (error) {

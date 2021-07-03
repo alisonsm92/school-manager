@@ -33,7 +33,8 @@ const enrollment = new Enrollment({
     level: fakeLevel, 
     module: fakeModule, 
     classroom: fakeClassroom, 
-    sequence: 0 
+    issueDate: new Date(),
+    sequence: 0
 });
 
 describe('Testing EnrollmentRepository', () => {
