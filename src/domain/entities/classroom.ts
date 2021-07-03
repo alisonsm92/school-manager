@@ -5,8 +5,6 @@ export default class Classroom {
     readonly module: string;
     readonly code: string;
     readonly capacity: number;
-    readonly startDate: Date;
-    readonly endDate: Date;
     readonly period: Period;
 
     constructor({ level, module, code, capacity, startDate, endDate }:
@@ -15,13 +13,11 @@ export default class Classroom {
         this.module = module;
         this.code = code;
         this.capacity = capacity;
-        this.startDate = startDate;
-        this.endDate = endDate;
         this.period = new Period(startDate, endDate);
     }
 
     isFinished(currentDate: Date) {
-        return currentDate > this.endDate;
+        return currentDate > this.period.end;
     }
 
     isStarted(currentDate: Date) {

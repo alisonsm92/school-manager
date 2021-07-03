@@ -1,7 +1,7 @@
 export default class Period {
     private readonly MsPerDay = 1000 * 60 * 60 * 24;
-    private readonly start: Date;
-    private readonly end: Date;
+    readonly start: Date;
+    readonly end: Date;
 
     constructor(start: Date, end: Date) {
         this.start = start;
