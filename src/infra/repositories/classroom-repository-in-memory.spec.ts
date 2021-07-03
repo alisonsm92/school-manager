@@ -6,8 +6,8 @@ const fakeClassroom = {
     module: "1",
     code: "A",
     capacity: 10,
-    startDate: "2021-05-01",
-    endDate: "2021-06-30"
+    startDate: new Date('2021-05-01'),
+    endDate: new Date('2021-06-30')
 };
 
 describe('Testing ClassRepository', () => {

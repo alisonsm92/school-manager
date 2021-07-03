@@ -27,14 +27,14 @@ const fakeClassroom = {
     module: "1",
     code: "A",
     capacity: 10,
-    startDate: DateHelper.getDateString(new Date()),
-    endDate: DateHelper.getDateString(aMonthAfter)
+    startDate: new Date(),
+    endDate: aMonthAfter
 };
 const enrollmentRequest: EnrollmentRequest = {
     student: {
         name: 'Maria Carolina Fonseca',
         cpf: '755.525.774-26',
-        birthDate: '2002-03-12'
+        birthDate: new Date('2002-03-12')
     },
     level: 'EM',
     module: '1',
@@ -120,7 +120,7 @@ describe('Testing enroll student', () => {
     test('Should not enroll student below minimum age', () => {
         const student: EnrollmentRequest['student'] = { 
             ...enrollmentRequest.student, 
-            birthDate: '2012-03-12' 
+            birthDate: new Date('2012-03-12')
         };
         const error = new Error('Student below minimum age');
         const sut = makeSut();
@@ -146,8 +146,8 @@ describe('Testing enroll student', () => {
         const yesterDay = DateHelper.getDateBefore({ days: 1 });
         const classroom = new Classroom({
             ...fakeClassroom, 
-            startDate: DateHelper.getDateString(aMonthAgo),
-            endDate: DateHelper.getDateString(yesterDay)
+            startDate: aMonthAgo,
+            endDate: yesterDay
         });
         const classRepositoryInMemory = new ClassRepositoryInMemory();
         classRepositoryInMemory.add(classroom);
@@ -158,8 +158,8 @@ describe('Testing enroll student', () => {
     test('Should not enroll after 25% of the start of the classroom', () => {
         const classroom = new Classroom({ 
             ...fakeClassroom, 
-            startDate: DateHelper.getDateString(aMonthAgo),
-            endDate: DateHelper.getDateString(aMonthAfter)
+            startDate: aMonthAgo,
+            endDate: aMonthAfter
         });
         const classRepositoryInMemory = new ClassRepositoryInMemory();
         classRepositoryInMemory.add(classroom);

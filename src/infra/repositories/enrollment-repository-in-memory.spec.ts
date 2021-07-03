@@ -9,7 +9,7 @@ import EnrollmentRepositoryInMemory from "./enrollment-repository-in-memory";
 const fakeStudent = new Student({
     name: 'Maria Carolina Fonseca', 
     cpf: '755.525.774-26', 
-    birthDate: '2002-03-12'
+    birthDate: new Date('2002-03-12')
 });
 const fakeLevel = new Level({ code: 'EM', description: 'Ensino Médio' });
 const fakeModule = new Module({
@@ -25,8 +25,8 @@ const fakeClassroom = new Classroom({
     module: '1',
     code: 'A',
     capacity: 10,
-    startDate: DateHelper.getDateString(new Date()),
-    endDate: DateHelper.getDateString(aMonthAfter)
+    startDate: new Date(),
+    endDate: aMonthAfter
 });
 const enrollment = new Enrollment({ 
     student: fakeStudent, 

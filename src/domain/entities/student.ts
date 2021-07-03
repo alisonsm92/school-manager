@@ -8,10 +8,10 @@ export default class Student {
     readonly birthDate: Date;
     readonly age: Number;
 
-    constructor({ name, cpf, birthDate }: { name: string, cpf: string, birthDate: string }) {
+    constructor({ name, cpf, birthDate }: { name: string, cpf: string, birthDate: Date }) {
         this.name = new Name(name).value;
         this.cpf = new Cpf(cpf).value;
-        this.birthDate = new Date(birthDate);
+        this.birthDate = birthDate;
         this.age = new Age(this.birthDate).value;
     }
 }

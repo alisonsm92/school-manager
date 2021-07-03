@@ -2,7 +2,7 @@ interface EnrollmentRequest {
     student: {
         name: string,
         cpf: string,
-        birthDate: string
+        birthDate: Date
     },
     level: string,
     module: string,

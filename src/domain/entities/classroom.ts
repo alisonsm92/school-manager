@@ -9,23 +9,22 @@ export default class Classroom {
     readonly endDate: Date;
 
     constructor({ level, module, code, capacity, startDate, endDate }:
-        { level: string, module: string, code: string, capacity: number, startDate: string, endDate: string }) {
+        { level: string, module: string, code: string, capacity: number, startDate: Date, endDate: Date }) {
         this.level = level;
         this.module = module;
         this.code = code;
         this.capacity = capacity;
-        this.startDate = new Date(startDate);
-        this.endDate = new Date(endDate);
+        this.startDate = startDate;
+        this.endDate = endDate;
     }
 
-    isFinished() {
-        return new Date() > this.endDate;
+    isFinished(currentDate: Date) {
+        return currentDate > this.endDate;
     }
 
-    isStarted() {
-        const now = new Date();
+    isStarted(currentDate: Date) {
         const classCalendarDuration = new Duration(this.startDate, this.endDate);
-        const percentCompleted = classCalendarDuration.getPercentCompleteUntil(now);
+        const percentCompleted = classCalendarDuration.getPercentCompleteUntil(currentDate);
         return percentCompleted > 25 ? true : false;
     }
 }
