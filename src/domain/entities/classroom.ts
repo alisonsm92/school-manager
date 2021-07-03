@@ -1,4 +1,4 @@
-import Duration from "./duration";
+import Period from "./period";
 
 export default class Classroom {
     readonly level: string;
@@ -7,6 +7,7 @@ export default class Classroom {
     readonly capacity: number;
     readonly startDate: Date;
     readonly endDate: Date;
+    readonly period: Period;
 
     constructor({ level, module, code, capacity, startDate, endDate }:
         { level: string, module: string, code: string, capacity: number, startDate: Date, endDate: Date }) {
@@ -16,6 +17,7 @@ export default class Classroom {
         this.capacity = capacity;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.period = new Period(startDate, endDate);
     }
 
     isFinished(currentDate: Date) {
@@ -23,8 +25,7 @@ export default class Classroom {
     }
 
     isStarted(currentDate: Date) {
-        const classCalendarDuration = new Duration(this.startDate, this.endDate);
-        const percentCompleted = classCalendarDuration.getPercentCompleteUntil(currentDate);
+        const percentCompleted = this.period.getPercentCompleteUntil(currentDate);
         return percentCompleted > 25 ? true : false;
     }
 }

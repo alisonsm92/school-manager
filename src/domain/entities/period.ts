@@ -1,4 +1,4 @@
-export default class Duration {
+export default class Period {
     private readonly MsPerDay = 1000 * 60 * 60 * 24;
     private readonly start: Date;
     private readonly end: Date;
@@ -11,11 +11,11 @@ export default class Duration {
     getPercentCompleteUntil(date: Date) {
         if(date < this.start) return 0;
         if(date > this.end) return 100;
-        const durationUntilDate = new Duration(this.start, date);
-        return durationUntilDate.getInDays() * 100 / this.getInDays();
+        const periodUntilDate = new Period(this.start, date);
+        return periodUntilDate.getDiffInDays() * 100 / this.getDiffInDays();
     }
 
-    getInDays() {
+    getDiffInDays() {
         const diffTime = Math.abs(this.start.getTime() - this.end.getTime());
         return Math.ceil(diffTime / this.MsPerDay);
     }
