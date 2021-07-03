@@ -1,4 +1,5 @@
 import Classroom from './classroom';
+import EnrollmentCode from './enrollment-code';
 import Level from './level';
 import Module from './module';
 import Student from './student';
@@ -10,7 +11,7 @@ export default class Enrollment {
     readonly classroom: Classroom;
     readonly issueDate: Date;
     readonly sequence: number;
-    readonly code: string;
+    readonly code: EnrollmentCode;
     
     constructor({ student, level, module, classroom, issueDate, sequence }:
         { student: Student, level: Level, module: Module, classroom: Classroom, issueDate: Date, sequence: number }) {
@@ -29,12 +30,6 @@ export default class Enrollment {
         this.classroom = classroom;
         this.issueDate = issueDate;
         this.sequence = sequence;
-        this.code = this.generateCode();
-    }
-
-    generateCode(): string {
-        const fullYear = this.issueDate.getFullYear();
-        const sequenceWithPad = this.sequence.toString().padStart(4, '0');
-        return `${fullYear}${this.level.code}${this.module.code}${this.classroom.code}${sequenceWithPad}`;
+        this.code = new EnrollmentCode(level.code, module.code, classroom.code, issueDate, sequence);
     }
 }

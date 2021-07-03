@@ -114,7 +114,7 @@ describe('Testing enroll student', () => {
 
     test('Should generate enrollment code', () => {
         const sut = makeSut();
-        expect(sut.execute(enrollmentRequest)).toHaveProperty('code', '2021EM1A0001');
+        expect(sut.execute(enrollmentRequest)).toHaveProperty('code.value', '2021EM1A0001');
     });
 
     test('Should not enroll student below minimum age', () => {
