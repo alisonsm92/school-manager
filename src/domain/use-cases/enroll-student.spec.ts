@@ -77,6 +77,10 @@ function makeSut(dependencies?: SutDependencies) {
     });
 }
 
+function sumInvoicesAmount(accumulator: any, current: any) {
+    return accumulator + current.amount;
+};
+
 describe('Testing enroll student', () => {
     test('Should fullfil successfully when provide a valid input data', () => {
         const sut = makeSut();
@@ -172,9 +176,11 @@ describe('Testing enroll student', () => {
         const sut = makeSut();
         const enrollment = sut.execute(enrollmentRequest);
         const [firstInvoice, ] = enrollment.invoices;
-        const lastInvoice = [...enrollment.invoices].pop();
+        const lastInvoice = enrollment.invoices[enrollment.invoices.length - 1];
+        const invoicesTotalAmount = enrollment.invoices.reduce(sumInvoicesAmount, 0);
         expect(enrollment.invoices).toHaveLength(enrollmentRequest.installments);
+        expect(invoicesTotalAmount).toBe(fakeModule.price);
         expect(firstInvoice.amount).toBe(1416.66);
-        expect(lastInvoice.amount).toBe(1416.73);
+        expect(lastInvoice.amount).toBe(1416.74);
     });
 });
