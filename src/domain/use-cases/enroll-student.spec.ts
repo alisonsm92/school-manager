@@ -38,7 +38,8 @@ const enrollmentRequest: EnrollmentRequest = {
     },
     level: 'EM',
     module: '1',
-    classroom: 'A'
+    classroom: 'A',
+    installments: 12
 };
 
 type SutDependencies = {
@@ -165,5 +166,15 @@ describe('Testing enroll student', () => {
         classRepositoryInMemory.add(classroom);
         const sut = makeSut({ classRepository: classRepositoryInMemory });
         expect(() => sut.execute(enrollmentRequest)).toThrow(new Error('Class is already started'));
+    });
+
+    test('Should generate the invoices based on the number of installments, rounding each amount and applying the rest in the last invoice', () => {
+        const sut = makeSut();
+        const enrollment = sut.execute(enrollmentRequest);
+        const [firstInvoice, ] = enrollment.invoices;
+        const lastInvoice = [...enrollment.invoices].pop();
+        expect(enrollment.invoices).toHaveLength(enrollmentRequest.installments);
+        expect(firstInvoice.amount).toBe(1416.66);
+        expect(lastInvoice.amount).toBe(1416.73);
     });
 });

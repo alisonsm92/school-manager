@@ -56,7 +56,7 @@ export default class EnrollStudent {
             }
             const sequence = this.enrollmentRepository.count() + 1;
             const issueDate = new Date();
-            const enrollment = new Enrollment({ student, level, module, classroom, issueDate, sequence });
+            const enrollment = new Enrollment({ student, level, module, classroom, issueDate, sequence, installments: enrollmentRequest.installments });
             this.enrollmentRepository.add(enrollment);
             return enrollment;
         } catch (error) {
