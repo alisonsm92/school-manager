@@ -1,5 +1,7 @@
 import Classroom from './classroom';
+import Currency from './currency';
 import EnrollmentCode from './enrollment-code';
+import Invoice from './invoice';
 import Level from './level';
 import Module from './module';
 import Student from './student';
@@ -13,7 +15,7 @@ export default class Enrollment {
     readonly sequence: number;
     readonly code: EnrollmentCode;
     readonly installments: number;
-    readonly invoices: Array<any>;
+    readonly invoices: Invoice[];
     
     constructor({ student, level, module, classroom, issueDate, sequence, installments }:
         { student: Student, level: Level, module: Module, classroom: Classroom, issueDate: Date, sequence: number, installments: number }) {
@@ -39,11 +41,25 @@ export default class Enrollment {
     }
 
     generateInvoices() {
-        const installmentPrice = Math.trunc((this.module.price / this.installments)*100)/100;
-        for(let i = 0; i < this.installments; i++) {
-            this.invoices.push({ amount: installmentPrice });
+        const installmentAmount = new Currency(this.module.price / this.installments);
+        installmentAmount.truncate();
+        for(let i = 0; i < this.installments - 1; i++) {
+            const invoice = new Invoice({ 
+                code: this.code.value, 
+                month: i, 
+                year: this.issueDate.getFullYear(), 
+                amount: installmentAmount.value
+            });
+            this.invoices.push(invoice);
         }
-        const diff = Math.trunc((this.module.price - installmentPrice * this.installments) *100) / 100;
-        this.invoices[this.invoices.length -1].amount = installmentPrice + diff;
+        const diff = new Currency(this.module.price - installmentAmount.value * this.installments);
+        diff.roundUp();
+        const lastInvoice = new Invoice({
+            code: this.code.value, 
+            month: this.invoices.length + 1, 
+            year: this.issueDate.getFullYear(), 
+            amount: installmentAmount.value + diff.value
+        });
+        this.invoices.push(lastInvoice);
     }
 }
