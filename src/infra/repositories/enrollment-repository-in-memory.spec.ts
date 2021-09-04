@@ -39,6 +39,19 @@ const enrollment = new Enrollment({
 });
 
 describe('Testing EnrollmentRepository', () => {
+    describe('FindByCode method', () => {
+        test('Should return the enrollment with code provided when it exists', () => {
+            const enrollmentRepository = new EnrollmentRepositoryInMemory();
+            enrollmentRepository.add(enrollment);
+            expect(enrollmentRepository.findByCode(enrollment.code)).toEqual(enrollment);
+        });
+
+        test('Should return undefined when enrollment with the code provided not exists', () => {
+            const enrollmentRepository = new EnrollmentRepositoryInMemory();
+            expect(enrollmentRepository.findByCode(enrollment.code)).toBeUndefined();
+        });
+    });
+    
     describe('FindByCpf method', () => {
         test('Should return the enrollment with cpf provided when it exists', () => {
             const enrollmentRepository = new EnrollmentRepositoryInMemory();

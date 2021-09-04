@@ -1,5 +1,6 @@
 import Classroom from "../../domain/entities/classroom";
 import Enrollment from "../../domain/entities/enrollment";
+import EnrollmentCode from "../../domain/entities/enrollment-code";
 import EnrollmentRepository from "../../domain/use-cases/ports/enrollment-repository";
 
 export default class EnrollmentRepositoryInMemory implements EnrollmentRepository {
@@ -7,6 +8,10 @@ export default class EnrollmentRepositoryInMemory implements EnrollmentRepositor
 
     constructor() {
         this.data = [];
+    }
+
+    findByCode(code: EnrollmentCode) {
+        return this.data.find(enrollment => enrollment.code === code);
     }
 
     findByCpf(cpf: string) {
