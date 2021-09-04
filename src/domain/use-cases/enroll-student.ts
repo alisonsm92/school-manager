@@ -48,15 +48,25 @@ export default class EnrollStudent {
             if(!classroom) {
                 throw new Error('Class not found');
             }
-            if(classroom.capacity === this.enrollmentRepository.findAllByClass(classroom).length) {
+            const studentsEnrolledInClassroom = this.enrollmentRepository.findAllByClass(classroom);
+            if(classroom.capacity === studentsEnrolledInClassroom.length) {
                 throw new Error('Class is over capacity');
             }
             if(this.enrollmentRepository.findByCpf(enrollmentRequest.student.cpf)) {
                 throw new Error('Enrollment with duplicated student is not allowed');
             }
             const sequence = this.enrollmentRepository.count() + 1;
+            const installments = enrollmentRequest.installments;
             const issueDate = new Date();
-            const enrollment = new Enrollment({ student, level, module, classroom, issueDate, sequence, installments: enrollmentRequest.installments });
+            const enrollment = new Enrollment({
+                student, 
+                level, 
+                module, 
+                classroom, 
+                issueDate, 
+                sequence, 
+                installments
+            });
             this.enrollmentRepository.add(enrollment);
             return enrollment;
         } catch (error) {
