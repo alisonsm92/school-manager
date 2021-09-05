@@ -20,7 +20,7 @@ export default class Enrollment {
     readonly code: EnrollmentCode;
     readonly installments: number;
     readonly invoices: Invoice[];
-    readonly balance: Number;
+    readonly balance: number;
     
     constructor({ student, level, module, classroom, issueDate, sequence, installments }:
         { student: Student, level: Level, module: Module, classroom: Classroom, issueDate: Date, sequence: number, installments: number }) {
