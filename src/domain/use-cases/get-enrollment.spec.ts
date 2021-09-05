@@ -51,7 +51,7 @@ describe('Testing get enrollment', () => {
     test('Should get enrollment by code with invoice balance', () => {
         const { enrollmentRepository, sut } = setup();
         enrollmentRepository.add(enrollment);
-        const result = sut.execute(enrollment.code);
+        const result = sut.execute(enrollment.code.value);
         expect(result).toHaveProperty('code', enrollment.code);
         expect(result).toHaveProperty('student.name', enrollment.student.name);
         expect(result).toHaveProperty('student.cpf', enrollment.student.cpf);

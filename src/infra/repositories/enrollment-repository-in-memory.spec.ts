@@ -43,12 +43,12 @@ describe('Testing EnrollmentRepository', () => {
         test('Should return the enrollment with code provided when it exists', () => {
             const enrollmentRepository = new EnrollmentRepositoryInMemory();
             enrollmentRepository.add(enrollment);
-            expect(enrollmentRepository.findByCode(enrollment.code)).toEqual(enrollment);
+            expect(enrollmentRepository.findByCode(enrollment.code.value)).toEqual(enrollment);
         });
 
         test('Should return undefined when enrollment with the code provided not exists', () => {
             const enrollmentRepository = new EnrollmentRepositoryInMemory();
-            expect(enrollmentRepository.findByCode(enrollment.code)).toBeUndefined();
+            expect(enrollmentRepository.findByCode(enrollment.code.value)).toBeUndefined();
         });
     });
     

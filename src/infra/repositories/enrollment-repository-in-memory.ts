@@ -10,8 +10,8 @@ export default class EnrollmentRepositoryInMemory implements EnrollmentRepositor
         this.data = [];
     }
 
-    findByCode(code: EnrollmentCode) {
-        return this.data.find(enrollment => enrollment.code === code);
+    findByCode(code: EnrollmentCode['value']) {
+        return this.data.find(enrollment => enrollment.code.value === code);
     }
 
     findByCpf(cpf: string) {

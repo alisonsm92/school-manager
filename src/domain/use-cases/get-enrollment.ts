@@ -9,7 +9,7 @@ export default class GetEnrollment {
         this.enrollmentRepository = enrollmentRepository;
     }
 
-    execute(code: EnrollmentCode): Enrollment {
+    execute(code: EnrollmentCode['value']): Enrollment {
         const enrollment = this.enrollmentRepository.findByCode(code);
         if(!enrollment) throw new Error('Enrollment not found');
         return enrollment;
