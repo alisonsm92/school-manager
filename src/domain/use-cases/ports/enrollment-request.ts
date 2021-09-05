@@ -10,4 +10,4 @@ interface EnrollmentRequest {
     installments: number
 }
 
-export default EnrollmentRequest
+export default EnrollmentRequest;
