@@ -4,6 +4,7 @@ import EnrollmentRepositoryInMemory from '../../infra/repositories/enrollment-re
 import LevelRepositoryInMemory from '../../infra/repositories/level-repository-in-memory';
 import ModuleRepositoryInMemory from '../../infra/repositories/module-repository-in-memory';
 import Classroom from '../entities/classroom';
+import Invoice from '../entities/invoice';
 import Level from '../entities/level';
 import Module from '../entities/module';
 import EnrollStudent from './enroll-student';
@@ -77,7 +78,7 @@ function makeSut(dependencies?: SutDependencies) {
     });
 }
 
-function sumInvoicesAmount(accumulator: any, current: any) {
+function sumInvoicesAmount(accumulator: number, current: Invoice) {
     return accumulator + current.amount;
 };
 
