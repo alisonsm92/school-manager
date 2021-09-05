@@ -43,11 +43,7 @@ export default class Enrollment {
         this.installments = installments;
         this.invoices = [];
         this.generateInvoices();
-        this.balance = this.calculateBalance();
-    }
-
-    calculateBalance() {
-        return this.invoices.reduce(sumAmount, 0);
+        this.balance = this.getInvoicesBalance();
     }
 
     generateInvoices() {
@@ -71,5 +67,9 @@ export default class Enrollment {
             amount: installmentAmount.value + diff.value
         });
         this.invoices.push(lastInvoice);
+    }
+
+    getInvoicesBalance() {
+        return this.invoices.reduce(sumAmount, 0);
     }
 }
