@@ -6,6 +6,10 @@ import Level from './level';
 import Module from './module';
 import Student from './student';
 
+function sumAmount(accumulator: number, current: Invoice) {
+    return accumulator + current.amount;
+}
+
 export default class Enrollment {
     readonly student: Student;
     readonly level: Level;
@@ -16,6 +20,7 @@ export default class Enrollment {
     readonly code: EnrollmentCode;
     readonly installments: number;
     readonly invoices: Invoice[];
+    readonly balance: Number;
     
     constructor({ student, level, module, classroom, issueDate, sequence, installments }:
         { student: Student, level: Level, module: Module, classroom: Classroom, issueDate: Date, sequence: number, installments: number }) {
@@ -38,6 +43,11 @@ export default class Enrollment {
         this.installments = installments;
         this.invoices = [];
         this.generateInvoices();
+        this.balance = this.calculateBalance();
+    }
+
+    calculateBalance() {
+        return this.invoices.reduce(sumAmount, 0);
     }
 
     generateInvoices() {

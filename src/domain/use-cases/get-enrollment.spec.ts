@@ -1,3 +1,4 @@
+import DateHelper from "../../common/date-helper";
 import EnrollmentRepositoryInMemory from "../../infra/repositories/enrollment-repository-in-memory";
 import Classroom from "../entities/classroom";
 import Enrollment from "../entities/enrollment";
@@ -28,7 +29,7 @@ const fakeClassroom = new Classroom({
     code: "A",
     capacity: 10,
     startDate: new Date(),
-    endDate: new Date()
+    endDate: DateHelper.getDateAfter({ days: 30 })
 });
 const enrollment = new Enrollment({
     student: fakeStudent,
@@ -55,5 +56,6 @@ describe('Testing get enrollment', () => {
         expect(result).toHaveProperty('student.name', enrollment.student.name);
         expect(result).toHaveProperty('student.cpf', enrollment.student.cpf);
         expect(result).toHaveProperty('student.birthDate', new Date(enrollment.student.birthDate));
+        expect(result).toHaveProperty('balance', 17000);
     });
 });
