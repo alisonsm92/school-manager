@@ -15,4 +15,12 @@ export default class ClassRepositoryInMemory implements ClassroomRepository {
     add(classroom: Classroom): void {
         this.data.push(classroom);
     }
+
+    update(classroom: Classroom): void {
+        const index = this.data.findIndex(item => 
+            item.level === classroom.level 
+            && item.module === classroom.module
+            && item.code === classroom.code);
+        this.data[index] = classroom;
+    }
 }
