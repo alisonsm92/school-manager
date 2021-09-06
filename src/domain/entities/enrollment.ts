@@ -1,13 +1,17 @@
 import Classroom from './classroom';
 import Currency from './currency';
 import EnrollmentCode from './enrollment-code';
-import Invoice from './invoice';
+import Invoice, { InvoiceStatus } from './invoice';
 import Level from './level';
 import Module from './module';
 import Student from './student';
 
 function sumAmount(accumulator: number, current: Invoice) {
     return accumulator + current.amount;
+}
+
+function byPendingInvoice(invoice: Invoice) {
+    return invoice.status === InvoiceStatus.PENDING;
 }
 
 export default class Enrollment {
@@ -20,7 +24,7 @@ export default class Enrollment {
     readonly code: EnrollmentCode;
     readonly installments: number;
     readonly invoices: Invoice[];
-    readonly balance: number;
+    balance: number;
     
     constructor({ student, level, module, classroom, issueDate, sequence, installments }:
         { student: Student, level: Level, module: Module, classroom: Classroom, issueDate: Date, sequence: number, installments: number }) {
@@ -70,6 +74,10 @@ export default class Enrollment {
     }
 
     getInvoicesBalance() {
-        return this.invoices.reduce(sumAmount, 0);
+        return this.invoices.filter(byPendingInvoice).reduce(sumAmount, 0);
+    }
+
+    updateInvoicesBalance() {
+        this.balance = this.getInvoicesBalance();
     }
 }
