@@ -6,6 +6,11 @@ import Level from './level';
 import Module from './module';
 import Student from './student';
 
+export enum EnrollmentStatus {
+    ACTIVE = 'active',
+    CANCELLED = 'cancelled'
+}
+
 function sumAmount(accumulator: number, current: Invoice) {
     return accumulator + current.amount;
 }
@@ -13,7 +18,6 @@ function sumAmount(accumulator: number, current: Invoice) {
 function byPendingInvoice(invoice: Invoice) {
     return invoice.status === InvoiceStatus.PENDING;
 }
-
 export default class Enrollment {
     readonly student: Student;
     readonly level: Level;
@@ -25,6 +29,7 @@ export default class Enrollment {
     readonly installments: number;
     readonly invoices: Invoice[];
     balance: number;
+    status: EnrollmentStatus;
     
     constructor({ student, level, module, classroom, issueDate, sequence, installments }:
         { student: Student, level: Level, module: Module, classroom: Classroom, issueDate: Date, sequence: number, installments: number }) {
@@ -48,6 +53,7 @@ export default class Enrollment {
         this.invoices = [];
         this.generateInvoices();
         this.balance = this.getInvoicesBalance();
+        this.status = EnrollmentStatus.ACTIVE;
     }
 
     generateInvoices() {
@@ -79,5 +85,9 @@ export default class Enrollment {
 
     updateInvoicesBalance() {
         this.balance = this.getInvoicesBalance();
+    }
+
+    cancel() {
+        this.status = EnrollmentStatus.CANCELLED;
     }
 }
