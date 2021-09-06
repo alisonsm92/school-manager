@@ -8,7 +8,7 @@ import Invoice from '../entities/invoice';
 import Level from '../entities/level';
 import Module from '../entities/module';
 import EnrollStudent from './enroll-student';
-import EnrollmentRequest from './ports/enrollment-request';
+import EnrollStudentRequestData from './ports/enroll-student-request-data';
 
 const aMonthAgo = DateHelper.getDateBefore({ days: 30 });
 const aMonthAfter = DateHelper.getDateAfter({ days: 30 });
@@ -31,7 +31,7 @@ const fakeClassroom = {
     startDate: new Date(),
     endDate: aMonthAfter
 };
-const enrollmentRequest: EnrollmentRequest = {
+const enrollmentRequest: EnrollStudentRequestData = {
     student: {
         name: 'Maria Carolina Fonseca',
         cpf: '755.525.774-26',
@@ -95,14 +95,14 @@ describe('Testing enroll student', () => {
     });
     
     test('Should not enroll without valid student name', () => {
-        const student: EnrollmentRequest['student'] = { ...enrollmentRequest.student, name: 'Ana' };
+        const student: EnrollStudentRequestData['student'] = { ...enrollmentRequest.student, name: 'Ana' };
         const error = new Error('Invalid student name');
         const sut = makeSut();
         expect(() => sut.execute({ ...enrollmentRequest, student })).toThrow(error);
     });
 
     test('Should not enroll without valid student cpf', () => {
-        const student: EnrollmentRequest['student'] = { 
+        const student: EnrollStudentRequestData['student'] = { 
             ...enrollmentRequest.student, 
             cpf: '123.456.789-99' 
         };
@@ -124,7 +124,7 @@ describe('Testing enroll student', () => {
     });
 
     test('Should not enroll student below minimum age', () => {
-        const student: EnrollmentRequest['student'] = { 
+        const student: EnrollStudentRequestData['student'] = { 
             ...enrollmentRequest.student, 
             birthDate: new Date('2012-03-12')
         };
@@ -137,7 +137,7 @@ describe('Testing enroll student', () => {
         const fakeClass = { ...fakeClassroom, capacity: 1 };
         const classRepositoryInMemory = new ClassRepositoryInMemory();
         classRepositoryInMemory.add(new Classroom(fakeClass));
-        const secondStudent: EnrollmentRequest['student'] = { 
+        const secondStudent: EnrollStudentRequestData['student'] = { 
             ...enrollmentRequest.student, 
             name: 'Pedro da Silva',
             cpf: '151.906.420-97'

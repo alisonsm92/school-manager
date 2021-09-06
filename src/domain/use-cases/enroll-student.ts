@@ -1,5 +1,5 @@
 import Enrollment from '../entities/enrollment';
-import EnrollmentRequest from './ports/enrollment-request';
+import EnrollStudentRequestData from './ports/enroll-student-request-data';
 import InvalidCpfError from '../errors/invalid-cpf';
 import InvalidNameError from '../errors/invalid-name';
 import ClassroomRepository from './ports/classroom-repository';
@@ -27,7 +27,7 @@ export default class EnrollStudent {
         this.classroomRepository = dependencies.classroomRepository;
     }
 
-    execute(enrollmentRequest: EnrollmentRequest): Enrollment {
+    execute(enrollmentRequest: EnrollStudentRequestData): Enrollment {
         try {
             const student = new Student({
                 name: enrollmentRequest.student.name, 

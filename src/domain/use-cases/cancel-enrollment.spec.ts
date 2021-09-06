@@ -17,7 +17,7 @@ describe('Testing cancel enrollment', () => {
         const enrollment = new EnrollmentBuilder().build();
         enrollmentRepository.add(enrollment);
         sut.execute({ code: enrollment.code.value });
-        const getEnrollmentOutput = getEnrollment.execute(enrollment.code.value);
+        const getEnrollmentOutput = getEnrollment.execute({ code: enrollment.code.value });
         expect(getEnrollmentOutput.status).toBe(EnrollmentStatus.CANCELLED);
     });
 });

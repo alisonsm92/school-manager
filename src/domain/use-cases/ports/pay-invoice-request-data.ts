@@ -1,10 +1,10 @@
 import EnrollmentCode from "../../entities/enrollment-code";
 
-interface PayInvoiceRequest {
+interface PayInvoiceRequestData {
     code: EnrollmentCode['value'],
     month: number,
     year: number,
     amount: number
 }
 
-export default PayInvoiceRequest;
+export default PayInvoiceRequestData;

@@ -1,4 +1,4 @@
-interface EnrollmentRequest {
+interface EnrollStudentRequestData {
     student: {
         name: string,
         cpf: string,
@@ -10,4 +10,4 @@ interface EnrollmentRequest {
     installments: number
 }
 
-export default EnrollmentRequest;
+export default EnrollStudentRequestData;
