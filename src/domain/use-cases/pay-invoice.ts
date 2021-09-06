@@ -13,12 +13,12 @@ export default class PayInvoice {
         this.enrollmentRepository = enrollmentRepository;
     }
 
-    execute(requestData: PayInvoiceRequest) {
-        const enrollment = this.enrollmentRepository.findByCode(requestData.code);
+    execute({ code, month, year, amount }: PayInvoiceRequest) {
+        const enrollment = this.enrollmentRepository.findByCode(code);
         if(!enrollment) throw new Error('Enrollment not found');
-        const invoice = enrollment.invoices.find(byDate(requestData.month, requestData.year));
+        const invoice = enrollment.invoices.find(byDate(month, year));
         if(!invoice) throw new Error('Invoice not found');
-        invoice.pay(requestData.amount);
+        invoice.pay(amount);
         enrollment.updateInvoicesBalance();
         this.enrollmentRepository.update(enrollment);
     }
