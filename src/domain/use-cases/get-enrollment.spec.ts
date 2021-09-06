@@ -18,6 +18,6 @@ describe('Testing get enrollment', () => {
         expect(result).toHaveProperty('student.name', enrollment.student.name);
         expect(result).toHaveProperty('student.cpf', enrollment.student.cpf);
         expect(result).toHaveProperty('student.birthDate', new Date(enrollment.student.birthDate));
-        expect(result).toHaveProperty('balance', 17000);
+        expect(result).toHaveProperty('balance', enrollment.module.price);
     });
 });
