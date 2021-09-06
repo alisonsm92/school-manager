@@ -7,6 +7,7 @@ interface EnrollmentRepository {
     findAllByClass(classroom: Classroom): Enrollment[]
     count(): number
     add(enrollment: Enrollment): void
+    update(enrollment: Enrollment): void
 }
 
 export default EnrollmentRepository;
