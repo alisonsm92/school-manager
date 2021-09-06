@@ -7,24 +7,19 @@ import ModuleRepository from './ports/module-repository';
 import LevelRepository from './ports/level-repository';
 import EnrollmentRepository from './ports/enrollment-repository';
 import Student from '../entities/student';
+import RepositoryAbstractFactory from '../../app/factories/repository-abstract-factory';
 
-type Dependencies = {
-    enrollmentRepository: EnrollmentRepository,
-    levelRepository: LevelRepository, 
-    moduleRepository: ModuleRepository, 
-    classroomRepository: ClassroomRepository
-}
 export default class EnrollStudent {
     private readonly enrollmentRepository: EnrollmentRepository;
     private readonly levelRepository: LevelRepository;
     private readonly moduleRepository: ModuleRepository;
     private readonly classroomRepository: ClassroomRepository;
 
-    constructor(dependencies: Dependencies) {
-        this.enrollmentRepository = dependencies.enrollmentRepository;
-        this.levelRepository = dependencies.levelRepository;
-        this.moduleRepository = dependencies.moduleRepository;
-        this.classroomRepository = dependencies.classroomRepository;
+    constructor(repositoryFactory: RepositoryAbstractFactory) {
+        this.enrollmentRepository = repositoryFactory.createEnrollmentRepository();
+        this.levelRepository = repositoryFactory.createLevelRepository();
+        this.moduleRepository = repositoryFactory.createModuleRepository();
+        this.classroomRepository = repositoryFactory.createClassroomRepository();
     }
 
     execute(enrollmentRequest: EnrollStudentRequestData): Enrollment {
