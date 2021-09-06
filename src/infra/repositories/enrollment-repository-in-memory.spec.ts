@@ -1,42 +1,7 @@
-import DateHelper from "../../common/date-helper";
-import Classroom from "../../domain/entities/classroom";
-import Enrollment from "../../domain/entities/enrollment";
-import Level from "../../domain/entities/level";
-import Module from "../../domain/entities/module";
-import Student from "../../domain/entities/student";
+import EnrollmentBuilder from "../../domain/use-cases/__test__/enrollment-builder";
 import EnrollmentRepositoryInMemory from "./enrollment-repository-in-memory";
 
-const fakeStudent = new Student({
-    name: 'Maria Carolina Fonseca', 
-    cpf: '755.525.774-26', 
-    birthDate: new Date('2002-03-12')
-});
-const fakeLevel = new Level({ code: 'EM', description: 'Ensino Médio' });
-const fakeModule = new Module({
-    level: 'EM',
-    code: '1',
-    description: '1o Ano',
-    minimumAge: 15,
-    price: 17000
-});
-const aMonthAfter = DateHelper.getDateAfter({ days: 30 });
-const fakeClassroom = new Classroom({
-    level: 'EM',
-    module: '1',
-    code: 'A',
-    capacity: 10,
-    startDate: new Date(),
-    endDate: aMonthAfter
-});
-const enrollment = new Enrollment({ 
-    student: fakeStudent, 
-    level: fakeLevel, 
-    module: fakeModule, 
-    classroom: fakeClassroom, 
-    issueDate: new Date(),
-    sequence: 0,
-    installments: 12
-});
+const enrollment = new EnrollmentBuilder().build();
 
 describe('Testing EnrollmentRepository', () => {
     describe('FindByCode method', () => {
@@ -56,12 +21,23 @@ describe('Testing EnrollmentRepository', () => {
         test('Should return the enrollment with cpf provided when it exists', () => {
             const enrollmentRepository = new EnrollmentRepositoryInMemory();
             enrollmentRepository.add(enrollment);
-            expect(enrollmentRepository.findByCpf(fakeStudent.cpf)).toEqual(enrollment);
+            expect(enrollmentRepository.findByCpf(enrollment.student.cpf)).toEqual(enrollment);
         });
 
         test('Should return undefined when enrollment with the code provided not exists', () => {
             const enrollmentRepository = new EnrollmentRepositoryInMemory();
-            expect(enrollmentRepository.findByCpf(fakeStudent.cpf)).toBeUndefined();
+            expect(enrollmentRepository.findByCpf(enrollment.student.cpf)).toBeUndefined();
+        });
+    });
+
+    describe('Update method', () => {
+        test('Should return the enrollment with the data updated', () => {
+            const enrollmentRepository = new EnrollmentRepositoryInMemory();
+            enrollmentRepository.add(enrollment);
+            enrollment.balance = 77777;
+            enrollmentRepository.update(enrollment);
+            const enrollmentAfterUpdate = enrollmentRepository.findByCode(enrollment.code.value);
+            expect(enrollmentAfterUpdate?.balance).toBe(77777);
         });
     });
 });
