@@ -1,12 +1,13 @@
 import Enrollment from '../entities/enrollment';
-import EnrollStudentInputData from './ports/enroll-student-input-data';
+import Student from '../entities/student';
 import InvalidCpfError from '../errors/invalid-cpf';
 import InvalidNameError from '../errors/invalid-name';
+import EnrollStudentInputData from './ports/enroll-student-input-data';
 import ClassroomRepository from './ports/classroom-repository';
 import ModuleRepository from './ports/module-repository';
 import LevelRepository from './ports/level-repository';
+import EnrollStudentOutputData from './ports/enroll-student-output-data';
 import EnrollmentRepository from './ports/enrollment-repository';
-import Student from '../entities/student';
 import RepositoryAbstractFactory from '../../app/factories/repository-abstract-factory';
 
 export default class EnrollStudent {
@@ -22,7 +23,7 @@ export default class EnrollStudent {
         this.classroomRepository = repositoryFactory.createClassroomRepository();
     }
 
-    execute(inputData: EnrollStudentInputData): Enrollment {
+    execute(inputData: EnrollStudentInputData): EnrollStudentOutputData {
         try {
             const student = new Student({
                 name: inputData.student.name, 
@@ -57,7 +58,7 @@ export default class EnrollStudent {
                 student, level, module, classroom, issueDate, sequence, installments  
             });
             this.enrollmentRepository.add(enrollment);
-            return enrollment;
+            return new EnrollStudentOutputData(enrollment);
         } catch (error) {
             if(error instanceof InvalidCpfError) throw new Error('Invalid student cpf');
             if(error instanceof InvalidNameError) throw new Error('Invalid student name');
