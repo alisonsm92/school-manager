@@ -31,23 +31,15 @@ export default class EnrollStudent {
                 birthDate: inputData.student.birthDate
             });
             const level = this.levelRepository.findByCode(inputData.level);
-            if(!level) {
-                throw new Error('Level not found');
-            }
+            if(!level) throw new Error('Level not found');
             const module = this.moduleRepository.find(inputData.level, inputData.module);
-            if(!module) {
-                throw new Error('Module not found');
-            }
+            if(!module) throw new Error('Module not found');
             const classroom = this.classroomRepository.find(
                 inputData.level, inputData.module, inputData.classroom
             );
-            if(!classroom) {
-                throw new Error('Class not found');
-            }
-            const studentsEnrolledInClassroom = this.enrollmentRepository.findAllByClass(classroom);
-            if(classroom.capacity === studentsEnrolledInClassroom.length) {
-                throw new Error('Class is over capacity');
-            }
+            if(!classroom) throw new Error('Class not found');
+            const studentsEnrolled = this.enrollmentRepository.findAllByClass(classroom);
+            if(classroom.capacity === studentsEnrolled.length) throw new Error('Class is over capacity');
             if(this.enrollmentRepository.findByCpf(inputData.student.cpf)) {
                 throw new Error('Enrollment with duplicated student is not allowed');
             }
