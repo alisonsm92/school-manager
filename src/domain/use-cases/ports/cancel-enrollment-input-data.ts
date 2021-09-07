@@ -1,6 +1,6 @@
 import EnrollmentCode from "../../entities/enrollment-code";
 
-type CancelEnrollmentInputData = {
+interface CancelEnrollmentInputData {
     code: EnrollmentCode['value'];
 }
 
