@@ -12,15 +12,6 @@ export default class GetEnrollment {
     execute({ code }: GetEnrollmentInputData): GetEnrollmentOutputData {
         const enrollment = this.enrollmentRepository.findByCode(code);
         if(!enrollment) throw new Error('Enrollment not found');
-        return {
-            code: enrollment.code.value,
-            student: {
-                name: enrollment.student.name,
-                cpf: enrollment.student.cpf,
-                birthDate: enrollment.student.birthDate
-            },
-            balance: enrollment.balance,
-            status: enrollment.status
-        };
+        return new GetEnrollmentOutputData(enrollment);
     }
 }

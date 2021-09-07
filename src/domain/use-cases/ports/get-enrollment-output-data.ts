@@ -1,14 +1,23 @@
-import { EnrollmentStatus } from "../../entities/enrollment";
+import Enrollment, { EnrollmentStatus } from "../../entities/enrollment";
 
-interface GetEnrollmentOutputData {
-    code: string,
-    student: {
+export default class GetEnrollmentOutputData {
+    readonly code: string;
+    readonly student: {
         name: string,
         cpf: string,
         birthDate: Date
-    },
-    balance: number,
-    status: EnrollmentStatus
-}
+    };
+    readonly balance: number;
+    readonly status: EnrollmentStatus;
 
-export default GetEnrollmentOutputData;
+    constructor(enrollment: Enrollment) {
+        this.code = enrollment.code.value;
+        this.student = {
+            name: enrollment.student.name,
+            cpf: enrollment.student.cpf,
+            birthDate: enrollment.student.birthDate
+        };
+        this.balance = enrollment.balance;
+        this.status = enrollment.status
+    }
+}
