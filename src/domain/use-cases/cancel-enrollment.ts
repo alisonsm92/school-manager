@@ -8,7 +8,7 @@ export default class CancelEnrollment {
         this.enrollmentRepository = enrollmentRepository;
     }
     
-    execute({ code }: CancelEnrollmentInputData) {
+    execute({ code }: CancelEnrollmentInputData): void {
         const enrollment = this.enrollmentRepository.findByCode(code);
         if(!enrollment) throw new Error('Enrollment not found');
         enrollment.cancel();

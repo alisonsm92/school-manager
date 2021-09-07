@@ -13,7 +13,7 @@ export default class PayInvoice {
         this.enrollmentRepository = enrollmentRepository;
     }
 
-    execute({ code, month, year, amount }: PayInvoiceInputData) {
+    execute({ code, month, year, amount }: PayInvoiceInputData): void {
         const enrollment = this.enrollmentRepository.findByCode(code);
         if(!enrollment) throw new Error('Enrollment not found');
         const invoice = enrollment.invoices.find(byDate(month, year));
