@@ -13,11 +13,11 @@ describe('Testing get enrollment', () => {
         const { enrollmentRepository, sut } = setup();
         const enrollment = new EnrollmentBuilder().build();
         enrollmentRepository.add(enrollment);
-        const result = sut.execute({ code: enrollment.code.value });
-        expect(result).toHaveProperty('code', enrollment.code);
-        expect(result).toHaveProperty('student.name', enrollment.student.name);
-        expect(result).toHaveProperty('student.cpf', enrollment.student.cpf);
-        expect(result).toHaveProperty('student.birthDate', new Date(enrollment.student.birthDate));
-        expect(result).toHaveProperty('balance', enrollment.module.price);
+        const outputData = sut.execute({ code: enrollment.code.value });
+        expect(outputData).toHaveProperty('code', enrollment.code.value);
+        expect(outputData).toHaveProperty('student.name', enrollment.student.name);
+        expect(outputData).toHaveProperty('student.cpf', enrollment.student.cpf);
+        expect(outputData).toHaveProperty('student.birthDate', new Date(enrollment.student.birthDate));
+        expect(outputData).toHaveProperty('balance', enrollment.module.price);
     });
 });
