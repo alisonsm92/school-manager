@@ -1,7 +1,7 @@
 import EnrollmentCode from "../../entities/enrollment-code";
 
-interface GetEnrollmentRequestData {
+interface GetEnrollmentInputData {
     code: EnrollmentCode['value']
 }
 
-export default GetEnrollmentRequestData;
+export default GetEnrollmentInputData;

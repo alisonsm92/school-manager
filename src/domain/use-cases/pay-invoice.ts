@@ -1,6 +1,6 @@
 import Invoice from "../entities/invoice";
 import EnrollmentRepository from "./ports/enrollment-repository";
-import PayInvoiceRequestData from "./ports/pay-invoice-request-data";
+import PayInvoiceInputData from "./ports/pay-invoice-input-data";
 
 const byDate = (month: number, year: number) => (invoice: Invoice) => {
     return invoice.month === month && invoice.year === year;
@@ -13,7 +13,7 @@ export default class PayInvoice {
         this.enrollmentRepository = enrollmentRepository;
     }
 
-    execute({ code, month, year, amount }: PayInvoiceRequestData) {
+    execute({ code, month, year, amount }: PayInvoiceInputData) {
         const enrollment = this.enrollmentRepository.findByCode(code);
         if(!enrollment) throw new Error('Enrollment not found');
         const invoice = enrollment.invoices.find(byDate(month, year));

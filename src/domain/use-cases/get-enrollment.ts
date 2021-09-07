@@ -1,6 +1,6 @@
 import Enrollment from "../entities/enrollment";
 import EnrollmentRepository from "./ports/enrollment-repository";
-import GetEnrollmentRequestData from "./ports/get-enrollment-request-data";
+import GetEnrollmentInputData from "./ports/get-enrollment-input-data";
 
 export default class GetEnrollment {
     private readonly enrollmentRepository: EnrollmentRepository;
@@ -9,7 +9,7 @@ export default class GetEnrollment {
         this.enrollmentRepository = enrollmentRepository;
     }
 
-    execute({ code }: GetEnrollmentRequestData): Enrollment {
+    execute({ code }: GetEnrollmentInputData): Enrollment {
         const enrollment = this.enrollmentRepository.findByCode(code);
         if(!enrollment) throw new Error('Enrollment not found');
         return enrollment;

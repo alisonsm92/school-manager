@@ -1,5 +1,5 @@
 import Enrollment from '../entities/enrollment';
-import EnrollStudentRequestData from './ports/enroll-student-request-data';
+import EnrollStudentInputData from './ports/enroll-student-input-data';
 import InvalidCpfError from '../errors/invalid-cpf';
 import InvalidNameError from '../errors/invalid-name';
 import ClassroomRepository from './ports/classroom-repository';
@@ -22,23 +22,23 @@ export default class EnrollStudent {
         this.classroomRepository = repositoryFactory.createClassroomRepository();
     }
 
-    execute(enrollmentRequest: EnrollStudentRequestData): Enrollment {
+    execute(inputData: EnrollStudentInputData): Enrollment {
         try {
             const student = new Student({
-                name: enrollmentRequest.student.name, 
-                cpf: enrollmentRequest.student.cpf,
-                birthDate: enrollmentRequest.student.birthDate
+                name: inputData.student.name, 
+                cpf: inputData.student.cpf,
+                birthDate: inputData.student.birthDate
             });
-            const level = this.levelRepository.findByCode(enrollmentRequest.level);
+            const level = this.levelRepository.findByCode(inputData.level);
             if(!level) {
                 throw new Error('Level not found');
             }
-            const module = this.moduleRepository.find(enrollmentRequest.level, enrollmentRequest.module);
+            const module = this.moduleRepository.find(inputData.level, inputData.module);
             if(!module) {
                 throw new Error('Module not found');
             }
             const classroom = this.classroomRepository.find(
-                enrollmentRequest.level, enrollmentRequest.module, enrollmentRequest.classroom
+                inputData.level, inputData.module, inputData.classroom
             );
             if(!classroom) {
                 throw new Error('Class not found');
@@ -47,12 +47,12 @@ export default class EnrollStudent {
             if(classroom.capacity === studentsEnrolledInClassroom.length) {
                 throw new Error('Class is over capacity');
             }
-            if(this.enrollmentRepository.findByCpf(enrollmentRequest.student.cpf)) {
+            if(this.enrollmentRepository.findByCpf(inputData.student.cpf)) {
                 throw new Error('Enrollment with duplicated student is not allowed');
             }
             const sequence = this.enrollmentRepository.count() + 1;
             const issueDate = new Date();
-            const { installments } = enrollmentRequest;
+            const { installments } = inputData;
             const enrollment = new Enrollment({ 
                 student, level, module, classroom, issueDate, sequence, installments  
             });

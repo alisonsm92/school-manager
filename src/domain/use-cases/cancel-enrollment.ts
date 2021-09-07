@@ -1,4 +1,4 @@
-import CancelEnrollmentRequestData from "./ports/cancel-enrollment-request-data";
+import CancelEnrollmentInputData from "./ports/cancel-enrollment-input-data";
 import EnrollmentRepository from "./ports/enrollment-repository";
 
 export default class CancelEnrollment {
@@ -8,7 +8,7 @@ export default class CancelEnrollment {
         this.enrollmentRepository = enrollmentRepository;
     }
     
-    execute({ code }: CancelEnrollmentRequestData) {
+    execute({ code }: CancelEnrollmentInputData) {
         const enrollment = this.enrollmentRepository.findByCode(code);
         if(!enrollment) throw new Error('Enrollment not found');
         enrollment.cancel();

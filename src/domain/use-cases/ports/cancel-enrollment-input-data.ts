@@ -1,7 +1,7 @@
 import EnrollmentCode from "../../entities/enrollment-code";
 
-type CancelEnrollmentRequestData = {
+type CancelEnrollmentInputData = {
     code: EnrollmentCode['value'];
 }
 
-export default CancelEnrollmentRequestData;
+export default CancelEnrollmentInputData;
