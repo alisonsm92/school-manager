@@ -1,7 +1,7 @@
 import Classroom from '../../domain/entities/classroom';
 import ClassroomRepository from '../../domain/use-cases/ports/classroom-repository';
 
-export default class ClassRepositoryInMemory implements ClassroomRepository {
+export default class ClassroomRepositoryInMemory implements ClassroomRepository {
     private readonly data: Classroom[] = [];
 
     find(level: string, module: string, code: string) {

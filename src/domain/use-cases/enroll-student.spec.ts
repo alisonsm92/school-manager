@@ -6,14 +6,10 @@ import EnrollmentRepository from './ports/enrollment-repository';
 import LevelRepository from './ports/level-repository';
 import ModuleRepository from './ports/module-repository';
 import ClassroomRepository from './ports/classroom-repository';
-import EnrollmentRepositoryInMemory from '../../infra/repositories/enrollment-repository-in-memory';
-import LevelRepositoryInMemory from '../../infra/repositories/level-repository-in-memory';
-import ModuleRepositoryInMemory from '../../infra/repositories/module-repository-in-memory';
-import ClassRepositoryInMemory from '../../infra/repositories/classroom-repository-in-memory';
 import LevelBuilder from './__test__/level-builder';
 import ModuleBuilder from './__test__/module-builder';
 import ClassroomBuilder from './__test__/classroom-builder';
-import RepositoryTestFactory from './__test__/repository-test-factory';
+import RepositoryInMemoryFactory from '../../app/factories/repository-in-memory-factory';
 
 const aMonthAgo = DateHelper.getDateBefore({ days: 30 });
 const aMonthAfter = DateHelper.getDateAfter({ days: 30 });
@@ -29,30 +25,29 @@ const inputData: EnrollStudentInputData = {
     installments: 12
 };
 
-function sumInvoicesAmount(accumulator: number, current: EnrollStudentOutputData['invoices'][number]) {
-    return accumulator + current.amount;
-};
-
 let sut: EnrollStudent;
 let enrollmentRepository: EnrollmentRepository;
 let levelRepository: LevelRepository;
 let moduleRepository: ModuleRepository;
 let classroomRepository: ClassroomRepository;
 
-beforeEach(function() {
-    enrollmentRepository = new EnrollmentRepositoryInMemory();
-    levelRepository = new LevelRepositoryInMemory();
-    moduleRepository = new ModuleRepositoryInMemory();
-    classroomRepository = new ClassRepositoryInMemory();
+function sumInvoicesAmount(accumulator: number, current: EnrollStudentOutputData['invoices'][number]) {
+    return accumulator + current.amount;
+};
+
+function prePopulateRepositories() {
     levelRepository.add(new LevelBuilder().build());
     moduleRepository.add(new ModuleBuilder().build());
     classroomRepository.add(new ClassroomBuilder().build());
-    const repositoryMemoryFactory = new RepositoryTestFactory({
-        enrollmentRepository, 
-        levelRepository, 
-        moduleRepository, 
-        classroomRepository
-    });
+}
+
+beforeEach(function() {
+    const repositoryMemoryFactory = new RepositoryInMemoryFactory();
+    enrollmentRepository = repositoryMemoryFactory.createEnrollmentRepository();
+    levelRepository = repositoryMemoryFactory.createLevelRepository();
+    moduleRepository = repositoryMemoryFactory.createModuleRepository();
+    classroomRepository = repositoryMemoryFactory.createClassroomRepository();
+    prePopulateRepositories();
     sut = new EnrollStudent(repositoryMemoryFactory);
 });
 
