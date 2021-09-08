@@ -1,16 +1,18 @@
 import EnrollmentRepositoryInMemory from "../../infra/repositories/enrollment-repository-in-memory";
 import GetEnrollment from "./get-enrollment";
+import EnrollmentRepository from "./ports/enrollment-repository";
 import EnrollmentBuilder from "./__test__/enrollment-builder";
 
-function setup() {
-    const enrollmentRepository = new EnrollmentRepositoryInMemory();
-    const sut = new GetEnrollment(enrollmentRepository);
-    return { sut, enrollmentRepository };
-}
+let enrollmentRepository: EnrollmentRepository;
+let sut: GetEnrollment;
+
+beforeEach(function() {
+    enrollmentRepository = new EnrollmentRepositoryInMemory();
+    sut = new GetEnrollment(enrollmentRepository);
+});
 
 describe('Testing get enrollment', () => {
     test('Should get enrollment by code with invoice balance', () => {
-        const { enrollmentRepository, sut } = setup();
         const enrollment = new EnrollmentBuilder().build();
         enrollmentRepository.add(enrollment);
         const outputData = sut.execute({ code: enrollment.code.value });

@@ -1,19 +1,22 @@
 import EnrollmentRepositoryInMemory from "../../infra/repositories/enrollment-repository-in-memory";
 import GetEnrollment from "./get-enrollment";
 import PayInvoice from "./pay-invoice";
+import EnrollmentRepository from "./ports/enrollment-repository";
 import PayInvoiceInputData from "./ports/pay-invoice-input-data";
 import EnrollmentBuilder from "./__test__/enrollment-builder";
 
-describe('Testing pay invoice', () => {
-    function setup() {
-        const enrollmentRepository = new EnrollmentRepositoryInMemory();
-        const getEnrollment = new GetEnrollment(enrollmentRepository);
-        const sut = new PayInvoice(enrollmentRepository);
-        return { sut, getEnrollment, enrollmentRepository };
-    }
+let enrollmentRepository: EnrollmentRepository;
+let getEnrollment: GetEnrollment;
+let sut: PayInvoice;
 
+beforeEach(function() {
+    enrollmentRepository = new EnrollmentRepositoryInMemory();
+    getEnrollment = new GetEnrollment(enrollmentRepository);
+    sut = new PayInvoice(enrollmentRepository);
+});
+
+describe('Testing pay invoice', () => {
     test('Should pay enrollment invoice', () => {
-        const { sut, getEnrollment, enrollmentRepository } = setup();
         const enrollment = new EnrollmentBuilder().build();
         enrollmentRepository.add(enrollment);
         const originalBalance =  enrollment.balance;
