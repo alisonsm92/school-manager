@@ -20,6 +20,7 @@ const inputData: EnrollStudentInputData = {
     classroom: 'A',
     installments: 12
 };
+const currentYear = new Date().getFullYear();
 
 let repositoryFactory: RepositoryAbstractFactory;
 let moduleRepository: ModuleRepository;
@@ -53,7 +54,6 @@ describe('Testing get enrollment', () => {
     });
 
     test('Should calculate due date and return status open or overdue for each invoice', () => {
-        const currentYear = new Date().getFullYear();
         const { code } = enrollStudent.execute(inputData);
         const { invoices } = sut.execute({ code, currentDate: new Date(`${currentYear}-6-20`) });
         const [firstInvoice, ] = invoices;
@@ -62,5 +62,16 @@ describe('Testing get enrollment', () => {
         expect(firstInvoice.status).toBe(InvoiceStatus.OVERDUE);
         expect(lastInvoice.dueDate).toEqual(new Date(`${currentYear}-12-05`));
         expect(lastInvoice.status).toBe(InvoiceStatus.OPENED);
+    });
+
+    test('Should calculate penalty and interests', () => {
+        const { code } = enrollStudent.execute(inputData);
+        const { invoices } = sut.execute({ code, currentDate: new Date(`${currentYear}-6-20`) });
+        const [firstInvoice, ] = invoices;
+        const lastInvoice = invoices[invoices.length - 1];
+        expect(firstInvoice.penalty).toBe(141.67);
+        expect(firstInvoice.interests).toBe(2337.49);
+        expect(lastInvoice.penalty).toBe(0);
+        expect(lastInvoice.interests).toBe(0);
     });
 });

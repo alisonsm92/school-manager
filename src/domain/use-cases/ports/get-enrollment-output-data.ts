@@ -6,7 +6,9 @@ const clone = (invoice: Invoice) => invoice.clone();
 const formatInvoice = (currentDate: Date) => (invoice: Invoice) => ({
     amount: invoice.amount,
     dueDate: invoice.dueDate,
-    status: invoice.getStatus(currentDate)
+    status: invoice.getStatus(currentDate),
+    penalty: invoice.getPenalty(currentDate),
+    interests: invoice.getInterests(currentDate)
 });
 
 export default class GetEnrollmentOutputData {
@@ -22,6 +24,8 @@ export default class GetEnrollmentOutputData {
         amount: number,
         dueDate: Date,
         status: InvoiceStatus
+        penalty: number,
+        interests: number
     }[];
 
     constructor(enrollment: Enrollment, currentDate: Date) {

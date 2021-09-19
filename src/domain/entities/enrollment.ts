@@ -59,7 +59,7 @@ export default class Enrollment {
             const invoice = new Invoice({ 
                 code: this.code.value, 
                 month,
-                year: this.issueDate.getFullYear(), 
+                year: this.issueDate.getFullYear(),
                 amount: installmentAmount.value
             });
             this.invoices.push(invoice);
