@@ -90,6 +90,6 @@ export default class Enrollment {
     payInvoice(month: number, year: number, amount: number) {
         const invoice = this.getInvoice(month, year);
         if (!invoice) throw new Error('Invoice not found');
-        invoice.addEvent(new InvoiceEvent(InvoiceEventTypes.PAY, amount));
+        invoice.addEvent(new InvoiceEvent(InvoiceEventTypes.PAID, amount));
     }
 }
