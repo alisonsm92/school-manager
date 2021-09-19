@@ -64,8 +64,8 @@ export default class Enrollment {
             });
             this.invoices.push(invoice);
         }
-        const diff = new Currency(this.module.price - installmentAmount.value * this.installments);
-        diff.roundUp();
+        const diff = new Currency(this.module.price - installmentAmount.value * this.installments)
+            .roundUp();
         const lastInvoice = new Invoice({
             code: this.code.value, 
             month: this.invoices.length + 1, 

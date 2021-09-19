@@ -11,9 +11,11 @@ export default class Currency {
 
     roundUp() {
         this.value = Math.ceil(this.getFractional()) / 100;
+        return this;
     }
 
     truncate() {
         this.value = Math.trunc(this.getFractional()) / 100;
+        return this;
     }
 }

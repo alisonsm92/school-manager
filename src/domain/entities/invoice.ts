@@ -44,16 +44,14 @@ export default class Invoice implements Prototype {
 
     getPenalty(currentDate: Date) {
         if(this.getStatus(currentDate) === InvoiceStatus.OPENED) return 0;
-        const penalty = new Currency(this.amount * this.penaltyPercentage);
-        penalty.roundUp();
+        const penalty = new Currency(this.amount * this.penaltyPercentage).roundUp();
         return penalty.value;
     }
 
     getInterests(currentDate: Date) {
         if(this.getStatus(currentDate) === InvoiceStatus.OPENED) return 0;
         const daysDiff = new Period(this.dueDate, currentDate).getDiffInDays() - 1;
-        const penalty = new Currency(this.amount * (daysDiff * this.interestPercentage));
-        penalty.roundUp();
+        const penalty = new Currency(this.amount * (daysDiff * this.interestPercentage)).roundUp();
         return penalty.value;
     }
 
