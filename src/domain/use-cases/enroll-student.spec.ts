@@ -54,12 +54,7 @@ beforeEach(function() {
 describe('Testing enroll student', () => {
     test('Should fullfil successfully when provide a valid input data', () => {
         const enrollment = sut.execute(inputData);
-        expect(enrollment).toHaveProperty('student.name', inputData.student.name);
-        expect(enrollment).toHaveProperty('student.cpf', inputData.student.cpf);
-        expect(enrollment).toHaveProperty('student.birthDate', new Date(inputData.student.birthDate));
-        expect(enrollment).toHaveProperty('level', inputData.level);
-        expect(enrollment).toHaveProperty('module', inputData.module);
-        expect(enrollment).toHaveProperty('classroom', inputData.classroom);
+        expect(enrollment).toHaveProperty('code', '2021EM1A0001');
     });
     
     test('Should not enroll without valid student name', () => {
