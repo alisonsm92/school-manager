@@ -1,6 +1,5 @@
 import RepositoryAbstractFactory from "../../app/factories/repository-abstract-factory";
 import RepositoryInMemoryFactory from "../../app/factories/repository-in-memory-factory";
-import DateHelper from "../../common/date-helper";
 import { InvoiceStatus } from "../entities/invoice";
 import EnrollStudent from "./enroll-student";
 import GetEnrollment from "./get-enrollment";
@@ -44,7 +43,7 @@ beforeEach(function() {
 describe('Testing get enrollment', () => {
     test('Should get enrollment by code with invoice balance', () => {
         const enrollment = enrollStudent.execute(inputData);
-        const outputData = sut.execute({ code: enrollment.code });
+        const outputData = sut.execute({ code: enrollment.code, currentDate: new Date() });
         const module = moduleRepository.find(inputData.level, inputData.module);
         expect(outputData).toHaveProperty('code', enrollment.code);
         expect(outputData).toHaveProperty('student.name', inputData.student.name);
@@ -54,17 +53,14 @@ describe('Testing get enrollment', () => {
     });
 
     test('Should calculate due date and return status open or overdue for each invoice', () => {
+        const currentYear = new Date().getFullYear();
         const { code } = enrollStudent.execute(inputData);
-        const { invoices } = sut.execute({ code });
-        for(let installment = 0; installment < inputData.installments; installment++) {
-            const invoice = invoices[installment];
-            const currentYear = new Date().getFullYear();
-            const month = installment + 1;
-            expect(invoice.dueDate).toEqual(new Date(`${currentYear}-${month}-05`));
-            if(invoice.dueDate > DateHelper.today())
-                expect(invoice.status).toBe(InvoiceStatus.OVERDUE);
-            else
-                expect(invoice.status).toBe(InvoiceStatus.OPENED);
-        }
+        const { invoices } = sut.execute({ code, currentDate: new Date(`${currentYear}-6-20`) });
+        const [firstInvoice, ] = invoices;
+        const lastInvoice = invoices[invoices.length - 1];
+        expect(firstInvoice.dueDate).toEqual(new Date(`${currentYear}-1-05`));
+        expect(firstInvoice.status).toBe(InvoiceStatus.OVERDUE);
+        expect(lastInvoice.dueDate).toEqual(new Date(`${currentYear}-12-05`));
+        expect(lastInvoice.status).toBe(InvoiceStatus.OPENED);
     });
 });

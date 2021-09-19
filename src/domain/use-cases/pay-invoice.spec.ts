@@ -43,7 +43,7 @@ beforeEach(function() {
 describe('Testing pay invoice', () => {
     test('Should pay enrollment invoice', () => {
         const { code } = enrollStudent.execute(enrollStudentInputData);
-        const { balance: originalBalance} = getEnrollment.execute({ code });
+        const { balance: originalBalance} = getEnrollment.execute({ code, currentDate: new Date() });
         const inputData: PayInvoiceInputData = {
             code,
             month: 1,
@@ -51,7 +51,7 @@ describe('Testing pay invoice', () => {
             amount: 1416.66
         };
         sut.execute(inputData);
-        const { balance } = getEnrollment.execute({ code });
+        const { balance } = getEnrollment.execute({ code, currentDate: new Date() });
         expect(balance).toBe(originalBalance - inputData.amount);
     });
 });

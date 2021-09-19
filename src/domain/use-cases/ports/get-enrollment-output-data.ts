@@ -1,17 +1,14 @@
 import Enrollment, { EnrollmentStatus } from "../../entities/enrollment";
 import Invoice, { InvoiceStatus } from "../../entities/invoice";
 
-function clone(invoice: Invoice) {
-    return invoice.clone();
-}
+const clone = (invoice: Invoice) => invoice.clone();
 
-function formatInvoice(invoice: Invoice) {
-    return {
-        amount: invoice.amount,
-        dueDate: invoice.dueDate,
-        status: invoice.getStatus()
-    }
-}
+const formatInvoice = (currentDate: Date) => (invoice: Invoice) => ({
+    amount: invoice.amount,
+    dueDate: invoice.dueDate,
+    status: invoice.getStatus(currentDate)
+});
+
 export default class GetEnrollmentOutputData {
     readonly code: string;
     readonly student: {
@@ -27,7 +24,7 @@ export default class GetEnrollmentOutputData {
         status: InvoiceStatus
     }[];
 
-    constructor(enrollment: Enrollment) {
+    constructor(enrollment: Enrollment, currentDate: Date) {
         this.code = enrollment.code.value;
         this.student = {
             name: enrollment.student.name,
@@ -38,6 +35,6 @@ export default class GetEnrollmentOutputData {
         this.status = enrollment.status;
         this.invoices = enrollment.invoices
             .map(clone)
-            .map(formatInvoice);
+            .map(formatInvoice(currentDate));
     }
 }

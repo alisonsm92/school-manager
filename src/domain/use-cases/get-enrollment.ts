@@ -10,9 +10,9 @@ export default class GetEnrollment {
         this.enrollmentRepository = repositoryFactory.createEnrollmentRepository();
     }
 
-    execute({ code }: GetEnrollmentInputData): GetEnrollmentOutputData {
+    execute({ code, currentDate }: GetEnrollmentInputData): GetEnrollmentOutputData {
         const enrollment = this.enrollmentRepository.findByCode(code);
         if(!enrollment) throw new Error('Enrollment not found');
-        return new GetEnrollmentOutputData(enrollment);
+        return new GetEnrollmentOutputData(enrollment, currentDate);
     }
 }

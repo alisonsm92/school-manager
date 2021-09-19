@@ -1,4 +1,3 @@
-import DateHelper from "../../common/date-helper";
 import InvoiceEvent from "./invoiceEvent";
 import Prototype from "./prototype";
 
@@ -33,8 +32,8 @@ export default class Invoice implements Prototype {
         return this.events.reduce((total, event) => total - event.amount, this.amount);
     }
 
-    getStatus() {
-        return this.dueDate > DateHelper.today()
+    getStatus(currentDate: Date) {
+        return this.dueDate < currentDate
             ? InvoiceStatus.OVERDUE 
             : InvoiceStatus.OPENED;
     }

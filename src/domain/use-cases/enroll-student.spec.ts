@@ -121,7 +121,7 @@ describe('Testing enroll student', () => {
 
     test('Should generate the invoices based on the number of installments, rounding each amount and applying the rest in the last invoice', () => {
         const { code } = sut.execute(inputData);
-        const { invoices } = getEnrollment.execute({ code });
+        const { invoices } = getEnrollment.execute({ code, currentDate: new Date() });
         const [firstInvoice, ] = invoices;
         const lastInvoice = invoices[invoices.length - 1];
         const invoicesTotalAmount = invoices.reduce(sumInvoicesAmount, 0);

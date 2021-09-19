@@ -44,7 +44,7 @@ describe('Testing cancel enrollment', () => {
     test('Should cancel enrollment', () => {
         const { code } = enrollStudent.execute(inputData);
         sut.execute({ code });
-        const getEnrollmentOutput = getEnrollment.execute({ code });
+        const getEnrollmentOutput = getEnrollment.execute({ code, currentDate: new Date() });
         expect(getEnrollmentOutput.status).toBe(EnrollmentStatus.CANCELLED);
     });
 });

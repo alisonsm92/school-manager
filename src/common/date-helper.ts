@@ -12,10 +12,4 @@ export default class DateHelper {
         date.setDate(calculatedDate);
         return date;
     }
-
-    static today() {
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-        return today;
-    }
 }
