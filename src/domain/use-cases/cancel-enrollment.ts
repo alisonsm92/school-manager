@@ -1,11 +1,12 @@
+import RepositoryAbstractFactory from "../../app/factories/repository-abstract-factory";
 import CancelEnrollmentInputData from "./ports/cancel-enrollment-input-data";
 import EnrollmentRepository from "./ports/enrollment-repository";
 
 export default class CancelEnrollment {
     readonly enrollmentRepository: EnrollmentRepository;
 
-    constructor(enrollmentRepository: EnrollmentRepository) {
-        this.enrollmentRepository = enrollmentRepository;
+    constructor(repositoryFactory: RepositoryAbstractFactory) {
+        this.enrollmentRepository = repositoryFactory.createEnrollmentRepository();
     }
     
     execute({ code }: CancelEnrollmentInputData): void {

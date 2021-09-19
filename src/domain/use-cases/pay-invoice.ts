@@ -1,11 +1,12 @@
+import RepositoryAbstractFactory from "../../app/factories/repository-abstract-factory";
 import EnrollmentRepository from "./ports/enrollment-repository";
 import PayInvoiceInputData from "./ports/pay-invoice-input-data";
 
 export default class PayInvoice {
     readonly enrollmentRepository: EnrollmentRepository;
 
-    constructor(enrollmentRepository: EnrollmentRepository) {
-        this.enrollmentRepository = enrollmentRepository;
+    constructor(repositoryFactory: RepositoryAbstractFactory) {
+        this.enrollmentRepository = repositoryFactory.createEnrollmentRepository();
     }
 
     execute({ code, month, year, amount }: PayInvoiceInputData): void {

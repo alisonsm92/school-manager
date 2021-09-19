@@ -1,25 +1,53 @@
-import EnrollmentRepositoryInMemory from "../../infra/repositories/enrollment-repository-in-memory";
+import RepositoryAbstractFactory from "../../app/factories/repository-abstract-factory";
+import RepositoryInMemoryFactory from "../../app/factories/repository-in-memory-factory";
+import EnrollStudent from "./enroll-student";
 import GetEnrollment from "./get-enrollment";
-import EnrollmentRepository from "./ports/enrollment-repository";
-import EnrollmentBuilder from "./__test__/enrollment-builder";
+import EnrollStudentInputData from "./ports/enroll-student-input-data";
+import ModuleRepository from "./ports/module-repository";
+import ClassroomBuilder from "./__test__/classroom-builder";
+import LevelBuilder from "./__test__/level-builder";
+import ModuleBuilder from "./__test__/module-builder";
 
-let enrollmentRepository: EnrollmentRepository;
+const inputData: EnrollStudentInputData = {
+    student: {
+        name: 'Maria Carolina Fonseca',
+        cpf: '755.525.774-26',
+        birthDate: new Date('2002-03-12')
+    },
+    level: 'EM',
+    module: '1',
+    classroom: 'A',
+    installments: 12
+};
+
+let repositoryFactory: RepositoryAbstractFactory;
+let moduleRepository: ModuleRepository;
+let enrollStudent: EnrollStudent;
 let sut: GetEnrollment;
 
+function prePopulateRepositories() {
+    moduleRepository = repositoryFactory.createModuleRepository();
+    moduleRepository.add(new ModuleBuilder().build());
+    repositoryFactory.createLevelRepository().add(new LevelBuilder().build());
+    repositoryFactory.createClassroomRepository().add(new ClassroomBuilder().build());
+}
+
 beforeEach(function() {
-    enrollmentRepository = new EnrollmentRepositoryInMemory();
-    sut = new GetEnrollment(enrollmentRepository);
+    repositoryFactory = new RepositoryInMemoryFactory();
+    enrollStudent = new EnrollStudent(repositoryFactory);
+    sut = new GetEnrollment(repositoryFactory);
+    prePopulateRepositories();
 });
 
 describe('Testing get enrollment', () => {
     test('Should get enrollment by code with invoice balance', () => {
-        const enrollment = new EnrollmentBuilder().build();
-        enrollmentRepository.add(enrollment);
-        const outputData = sut.execute({ code: enrollment.code.value });
-        expect(outputData).toHaveProperty('code', enrollment.code.value);
-        expect(outputData).toHaveProperty('student.name', enrollment.student.name);
-        expect(outputData).toHaveProperty('student.cpf', enrollment.student.cpf);
-        expect(outputData).toHaveProperty('student.birthDate', new Date(enrollment.student.birthDate));
-        expect(outputData).toHaveProperty('balance', enrollment.module.price);
+        const enrollment = enrollStudent.execute(inputData);
+        const outputData = sut.execute({ code: enrollment.code });
+        const module = moduleRepository.find(inputData.level, inputData.module);
+        expect(outputData).toHaveProperty('code', enrollment.code);
+        expect(outputData).toHaveProperty('student.name', inputData.student.name);
+        expect(outputData).toHaveProperty('student.cpf', inputData.student.cpf);
+        expect(outputData).toHaveProperty('student.birthDate', new Date(inputData.student.birthDate));
+        expect(outputData).toHaveProperty('balance', module?.price);
     });
 });

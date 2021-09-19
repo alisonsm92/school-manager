@@ -2,17 +2,13 @@ import DateHelper from '../../common/date-helper';
 import EnrollStudent from './enroll-student';
 import EnrollStudentInputData from './ports/enroll-student-input-data';
 import EnrollStudentOutputData from './ports/enroll-student-output-data';
-import EnrollmentRepository from './ports/enrollment-repository';
-import LevelRepository from './ports/level-repository';
-import ModuleRepository from './ports/module-repository';
 import ClassroomRepository from './ports/classroom-repository';
 import LevelBuilder from './__test__/level-builder';
 import ModuleBuilder from './__test__/module-builder';
 import ClassroomBuilder from './__test__/classroom-builder';
 import RepositoryInMemoryFactory from '../../app/factories/repository-in-memory-factory';
+import RepositoryAbstractFactory from '../../app/factories/repository-abstract-factory';
 
-const aMonthAgo = DateHelper.getDateBefore({ days: 30 });
-const aMonthAfter = DateHelper.getDateAfter({ days: 30 });
 const inputData: EnrollStudentInputData = {
     student: {
         name: 'Maria Carolina Fonseca',
@@ -24,11 +20,11 @@ const inputData: EnrollStudentInputData = {
     classroom: 'A',
     installments: 12
 };
+const aMonthAgo = DateHelper.getDateBefore({ days: 30 });
+const aMonthAfter = DateHelper.getDateAfter({ days: 30 });
 
 let sut: EnrollStudent;
-let enrollmentRepository: EnrollmentRepository;
-let levelRepository: LevelRepository;
-let moduleRepository: ModuleRepository;
+let repositoryFactory: RepositoryAbstractFactory;
 let classroomRepository: ClassroomRepository;
 
 function sumInvoicesAmount(accumulator: number, current: EnrollStudentOutputData['invoices'][number]) {
@@ -36,19 +32,16 @@ function sumInvoicesAmount(accumulator: number, current: EnrollStudentOutputData
 };
 
 function prePopulateRepositories() {
-    levelRepository.add(new LevelBuilder().build());
-    moduleRepository.add(new ModuleBuilder().build());
+    repositoryFactory.createLevelRepository().add(new LevelBuilder().build());
+    repositoryFactory.createModuleRepository().add(new ModuleBuilder().build());
+    classroomRepository = repositoryFactory.createClassroomRepository();
     classroomRepository.add(new ClassroomBuilder().build());
 }
 
 beforeEach(function() {
-    const repositoryMemoryFactory = new RepositoryInMemoryFactory();
-    enrollmentRepository = repositoryMemoryFactory.createEnrollmentRepository();
-    levelRepository = repositoryMemoryFactory.createLevelRepository();
-    moduleRepository = repositoryMemoryFactory.createModuleRepository();
-    classroomRepository = repositoryMemoryFactory.createClassroomRepository();
+    repositoryFactory = new RepositoryInMemoryFactory();
+    sut = new EnrollStudent(repositoryFactory);
     prePopulateRepositories();
-    sut = new EnrollStudent(repositoryMemoryFactory);
 });
 
 describe('Testing enroll student', () => {
