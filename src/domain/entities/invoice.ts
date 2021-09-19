@@ -1,6 +1,7 @@
 import InvoiceEvent from "./invoiceEvent";
+import Prototype from "./prototype";
 
-export default class Invoice {
+export default class Invoice implements Prototype {
     readonly code: string;
     readonly month: number;
     readonly year: number;
@@ -22,5 +23,9 @@ export default class Invoice {
 
     getBalance () {
         return this.events.reduce((total, event) => total - event.amount, this.amount);
+    }
+
+    clone(): Invoice {
+        return JSON.parse(JSON.stringify(this));
     }
 }
