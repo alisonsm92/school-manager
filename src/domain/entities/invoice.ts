@@ -1,14 +1,11 @@
-export enum InvoiceStatus {
-    PENDING = 'pending',
-    PAID = 'paid'
-}
+import InvoiceEvent from "./invoiceEvent";
 
 export default class Invoice {
     readonly code: string;
     readonly month: number;
     readonly year: number;
     readonly amount: number;
-    status: InvoiceStatus;
+    events: InvoiceEvent[];
 
     constructor({ code, month, year, amount }: 
         { code: string, month: number, year: number, amount: number }) {
@@ -16,11 +13,14 @@ export default class Invoice {
         this.month = month;
         this.year = year;
         this.amount = amount;
-        this.status = InvoiceStatus.PENDING;
+        this.events = [];
     }
 
-    pay(amount: number) {
-        if(amount !== this.amount)  throw new Error('Pay amount is not equals to invoice amount');
-        this.status = InvoiceStatus.PAID;
+    addEvent (invoiceEvent: InvoiceEvent) {
+        this.events.push(invoiceEvent);
+    }
+
+    getBalance () {
+        return this.events.reduce((total, event) => total - event.amount, this.amount);
     }
 }

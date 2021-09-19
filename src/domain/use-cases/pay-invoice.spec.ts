@@ -19,7 +19,7 @@ describe('Testing pay invoice', () => {
     test('Should pay enrollment invoice', () => {
         const enrollment = new EnrollmentBuilder().build();
         enrollmentRepository.add(enrollment);
-        const originalBalance =  enrollment.balance;
+        const originalBalance =  enrollment.getInvoicesBalance();
         const inputData: PayInvoiceInputData = {
             code: enrollment.code.value,
             month: 1,

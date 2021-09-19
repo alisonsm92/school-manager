@@ -1,3 +1,4 @@
+import { EnrollmentStatus } from "../../domain/entities/enrollment";
 import EnrollmentBuilder from "../../domain/use-cases/__test__/enrollment-builder";
 import EnrollmentRepositoryInMemory from "./enrollment-repository-in-memory";
 
@@ -34,10 +35,10 @@ describe('Testing EnrollmentRepository', () => {
         test('Should return the enrollment with the data updated', () => {
             const enrollmentRepository = new EnrollmentRepositoryInMemory();
             enrollmentRepository.add(enrollment);
-            enrollment.balance = 77777;
+            enrollment.status = EnrollmentStatus.CANCELLED;
             enrollmentRepository.update(enrollment);
             const enrollmentAfterUpdate = enrollmentRepository.findByCode(enrollment.code.value);
-            expect(enrollmentAfterUpdate?.balance).toBe(77777);
+            expect(enrollmentAfterUpdate?.status).toBe(EnrollmentStatus.CANCELLED);
         });
     });
 });

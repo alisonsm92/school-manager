@@ -1,7 +1,8 @@
 import Classroom from './classroom';
 import Currency from './currency';
 import EnrollmentCode from './enrollment-code';
-import Invoice, { InvoiceStatus } from './invoice';
+import Invoice from './invoice';
+import InvoiceEvent, { InvoiceEventTypes } from './invoiceEvent';
 import Level from './level';
 import Module from './module';
 import Student from './student';
@@ -11,13 +12,10 @@ export enum EnrollmentStatus {
     CANCELLED = 'cancelled'
 }
 
-function sumAmount(accumulator: number, current: Invoice) {
-    return accumulator + current.amount;
+const byDate = (month: number, year: number) => (invoice: Invoice) => {
+    return invoice.month === month && invoice.year === year;
 }
 
-function byPendingInvoice(invoice: Invoice) {
-    return invoice.status === InvoiceStatus.PENDING;
-}
 export default class Enrollment {
     readonly student: Student;
     readonly level: Level;
@@ -28,7 +26,6 @@ export default class Enrollment {
     readonly code: EnrollmentCode;
     readonly installments: number;
     readonly invoices: Invoice[];
-    balance: number;
     status: EnrollmentStatus;
     
     constructor({ student, level, module, classroom, issueDate, sequence, installments }:
@@ -52,7 +49,6 @@ export default class Enrollment {
         this.installments = installments;
         this.invoices = [];
         this.generateInvoices();
-        this.balance = this.getInvoicesBalance();
         this.status = EnrollmentStatus.ACTIVE;
     }
 
@@ -80,14 +76,20 @@ export default class Enrollment {
     }
 
     getInvoicesBalance() {
-        return this.invoices.filter(byPendingInvoice).reduce(sumAmount, 0);
-    }
-
-    updateInvoicesBalance() {
-        this.balance = this.getInvoicesBalance();
+        return this.invoices.reduce((total, invoice) => total + invoice.getBalance(), 0);
     }
 
     cancel() {
         this.status = EnrollmentStatus.CANCELLED;
+    }
+
+    getInvoice(month: number, year: number) {
+        return this.invoices.find(byDate(month, year));
+    }
+
+    payInvoice(month: number, year: number, amount: number) {
+        const invoice = this.getInvoice(month, year);
+        if (!invoice) throw new Error('Invoice not found');
+        invoice.addEvent(new InvoiceEvent(InvoiceEventTypes.PAY, amount));
     }
 }

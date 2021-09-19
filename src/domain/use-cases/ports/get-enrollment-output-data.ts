@@ -17,7 +17,7 @@ export default class GetEnrollmentOutputData {
             cpf: enrollment.student.cpf,
             birthDate: enrollment.student.birthDate
         };
-        this.balance = enrollment.balance;
+        this.balance = enrollment.getInvoicesBalance();
         this.status = enrollment.status
     }
 }
