@@ -1,8 +1,16 @@
 import Enrollment, { EnrollmentStatus } from "../../entities/enrollment";
-import Invoice from "../../entities/invoice";
+import Invoice, { InvoiceStatus } from "../../entities/invoice";
 
 function clone(invoice: Invoice) {
     return invoice.clone();
+}
+
+function formatInvoice(invoice: Invoice) {
+    return {
+        amount: invoice.amount,
+        dueDate: invoice.dueDate,
+        status: invoice.getStatus()
+    }
 }
 export default class GetEnrollmentOutputData {
     readonly code: string;
@@ -13,7 +21,11 @@ export default class GetEnrollmentOutputData {
     };
     readonly balance: number;
     readonly status: EnrollmentStatus;
-    readonly invoices: Invoice[];
+    readonly invoices: {
+        amount: number,
+        dueDate: Date,
+        status: InvoiceStatus
+    }[];
 
     constructor(enrollment: Enrollment) {
         this.code = enrollment.code.value;
@@ -24,6 +36,8 @@ export default class GetEnrollmentOutputData {
         };
         this.balance = enrollment.getInvoicesBalance();
         this.status = enrollment.status;
-        this.invoices = enrollment.invoices.map(clone);
+        this.invoices = enrollment.invoices
+            .map(clone)
+            .map(formatInvoice);
     }
 }

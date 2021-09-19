@@ -9,6 +9,7 @@ import RepositoryInMemoryFactory from '../../app/factories/repository-in-memory-
 import RepositoryAbstractFactory from '../../app/factories/repository-abstract-factory';
 import GetEnrollment from './get-enrollment';
 import GetEnrollmentOutputData from './ports/get-enrollment-output-data';
+import { InvoiceStatus } from '../entities/invoice';
 
 const inputData: EnrollStudentInputData = {
     student: {
@@ -121,8 +122,7 @@ describe('Testing enroll student', () => {
 
     test('Should generate the invoices based on the number of installments, rounding each amount and applying the rest in the last invoice', () => {
         const { code } = sut.execute(inputData);
-        const getEnrollmentOutputData = getEnrollment.execute({ code });
-        const { invoices } = getEnrollmentOutputData;
+        const { invoices } = getEnrollment.execute({ code });
         const [firstInvoice, ] = invoices;
         const lastInvoice = invoices[invoices.length - 1];
         const invoicesTotalAmount = invoices.reduce(sumInvoicesAmount, 0);
@@ -130,5 +130,20 @@ describe('Testing enroll student', () => {
         expect(invoicesTotalAmount).toBe(new ModuleBuilder().build().price);
         expect(firstInvoice.amount).toBe(1416.66);
         expect(lastInvoice.amount).toBe(1416.74);
+    });
+
+    test('Should calculate due date and return status open or overdue for each invoice', () => {
+        const { code } = sut.execute(inputData);
+        const { invoices } = getEnrollment.execute({ code });
+        for(let installment = 0; installment < inputData.installments; installment++) {
+            const invoice = invoices[installment];
+            const currentYear = new Date().getFullYear();
+            const month = installment + 1;
+            expect(invoice.dueDate).toEqual(new Date(`${currentYear}-${month}-05`));
+            if(invoice.dueDate > DateHelper.today())
+                expect(invoice.status).toBe(InvoiceStatus.OVERDUE);
+            else
+                expect(invoice.status).toBe(InvoiceStatus.OPENED);
+        }
     });
 });

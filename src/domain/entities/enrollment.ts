@@ -55,10 +55,10 @@ export default class Enrollment {
     generateInvoices() {
         const installmentAmount = new Currency(this.module.price / this.installments);
         installmentAmount.truncate();
-        for(let i = 0; i < this.installments - 1; i++) {
+        for(let month = 1; month < this.installments; month++) {
             const invoice = new Invoice({ 
                 code: this.code.value, 
-                month: i, 
+                month,
                 year: this.issueDate.getFullYear(), 
                 amount: installmentAmount.value
             });

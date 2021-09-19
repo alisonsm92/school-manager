@@ -1,5 +1,11 @@
+import DateHelper from "../../common/date-helper";
 import InvoiceEvent from "./invoiceEvent";
 import Prototype from "./prototype";
+
+export enum InvoiceStatus {
+    OPENED = 'opened',
+    OVERDUE = 'overdue'
+}
 
 export default class Invoice implements Prototype {
     readonly code: string;
@@ -7,6 +13,7 @@ export default class Invoice implements Prototype {
     readonly year: number;
     readonly amount: number;
     events: InvoiceEvent[];
+    readonly dueDate: Date;
 
     constructor({ code, month, year, amount }: 
         { code: string, month: number, year: number, amount: number }) {
@@ -15,17 +22,24 @@ export default class Invoice implements Prototype {
         this.year = year;
         this.amount = amount;
         this.events = [];
+        this.dueDate = new Date(`${year}-${month}-05`);
     }
 
-    addEvent (invoiceEvent: InvoiceEvent) {
+    addEvent(invoiceEvent: InvoiceEvent) {
         this.events.push(invoiceEvent);
     }
 
-    getBalance () {
+    getBalance() {
         return this.events.reduce((total, event) => total - event.amount, this.amount);
     }
 
+    getStatus() {
+        return this.dueDate > DateHelper.today()
+            ? InvoiceStatus.OVERDUE 
+            : InvoiceStatus.OPENED;
+    }
+
     clone(): Invoice {
-        return JSON.parse(JSON.stringify(this));
+        return Object.assign(Object.create(Object.getPrototypeOf(this)), this);
     }
 }
