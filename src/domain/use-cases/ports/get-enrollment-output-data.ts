@@ -1,5 +1,9 @@
 import Enrollment, { EnrollmentStatus } from "../../entities/enrollment";
+import Invoice from "../../entities/invoice";
 
+function clone(invoice: Invoice) {
+    return invoice.clone();
+}
 export default class GetEnrollmentOutputData {
     readonly code: string;
     readonly student: {
@@ -9,6 +13,7 @@ export default class GetEnrollmentOutputData {
     };
     readonly balance: number;
     readonly status: EnrollmentStatus;
+    readonly invoices: Invoice[];
 
     constructor(enrollment: Enrollment) {
         this.code = enrollment.code.value;
@@ -18,6 +23,7 @@ export default class GetEnrollmentOutputData {
             birthDate: enrollment.student.birthDate
         };
         this.balance = enrollment.getInvoicesBalance();
-        this.status = enrollment.status
+        this.status = enrollment.status;
+        this.invoices = enrollment.invoices.map(clone);
     }
 }

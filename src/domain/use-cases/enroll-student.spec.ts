@@ -1,13 +1,14 @@
 import DateHelper from '../../common/date-helper';
 import EnrollStudent from './enroll-student';
 import EnrollStudentInputData from './ports/enroll-student-input-data';
-import EnrollStudentOutputData from './ports/enroll-student-output-data';
 import ClassroomRepository from './ports/classroom-repository';
 import LevelBuilder from './__test__/level-builder';
 import ModuleBuilder from './__test__/module-builder';
 import ClassroomBuilder from './__test__/classroom-builder';
 import RepositoryInMemoryFactory from '../../app/factories/repository-in-memory-factory';
 import RepositoryAbstractFactory from '../../app/factories/repository-abstract-factory';
+import GetEnrollment from './get-enrollment';
+import GetEnrollmentOutputData from './ports/get-enrollment-output-data';
 
 const inputData: EnrollStudentInputData = {
     student: {
@@ -24,10 +25,11 @@ const aMonthAgo = DateHelper.getDateBefore({ days: 30 });
 const aMonthAfter = DateHelper.getDateAfter({ days: 30 });
 
 let sut: EnrollStudent;
+let getEnrollment: GetEnrollment;
 let repositoryFactory: RepositoryAbstractFactory;
 let classroomRepository: ClassroomRepository;
 
-function sumInvoicesAmount(accumulator: number, current: EnrollStudentOutputData['invoices'][number]) {
+function sumInvoicesAmount(accumulator: number, current: GetEnrollmentOutputData['invoices'][number]) {
     return accumulator + current.amount;
 };
 
@@ -40,6 +42,7 @@ function prePopulateRepositories() {
 
 beforeEach(function() {
     repositoryFactory = new RepositoryInMemoryFactory();
+    getEnrollment = new GetEnrollment(repositoryFactory);
     sut = new EnrollStudent(repositoryFactory);
     prePopulateRepositories();
 });
@@ -117,11 +120,13 @@ describe('Testing enroll student', () => {
     });
 
     test('Should generate the invoices based on the number of installments, rounding each amount and applying the rest in the last invoice', () => {
-        const outputData = sut.execute(inputData);
-        const [firstInvoice, ] = outputData.invoices;
-        const lastInvoice = outputData.invoices[outputData.invoices.length - 1];
-        const invoicesTotalAmount = outputData.invoices.reduce(sumInvoicesAmount, 0);
-        expect(outputData.invoices).toHaveLength(inputData.installments);
+        const { code } = sut.execute(inputData);
+        const getEnrollmentOutputData = getEnrollment.execute({ code });
+        const { invoices } = getEnrollmentOutputData;
+        const [firstInvoice, ] = invoices;
+        const lastInvoice = invoices[invoices.length - 1];
+        const invoicesTotalAmount = invoices.reduce(sumInvoicesAmount, 0);
+        expect(invoices).toHaveLength(inputData.installments);
         expect(invoicesTotalAmount).toBe(new ModuleBuilder().build().price);
         expect(firstInvoice.amount).toBe(1416.66);
         expect(lastInvoice.amount).toBe(1416.74);
