@@ -5,6 +5,7 @@ interface PayInvoiceInputData {
     month: number,
     year: number,
     amount: number
+    paymentDate: Date
 }
 
 export default PayInvoiceInputData;

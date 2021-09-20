@@ -9,9 +9,9 @@ export default class PayInvoice {
         this.enrollmentRepository = repositoryFactory.createEnrollmentRepository();
     }
 
-    execute({ code, month, year, amount }: PayInvoiceInputData): void {
+    execute({ code, month, year, amount, paymentDate }: PayInvoiceInputData): void {
         const enrollment = this.enrollmentRepository.findByCode(code);
         if(!enrollment) throw new Error('Enrollment not found');
-        enrollment.payInvoice(month, year, amount);
+        enrollment.payInvoice(month, year, amount, paymentDate);
     }
 }

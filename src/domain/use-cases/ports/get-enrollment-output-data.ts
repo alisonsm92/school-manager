@@ -8,7 +8,8 @@ const formatInvoice = (currentDate: Date) => (invoice: Invoice) => ({
     dueDate: invoice.dueDate,
     status: invoice.getStatus(currentDate),
     penalty: invoice.getPenalty(currentDate),
-    interests: invoice.getInterests(currentDate)
+    interests: invoice.getInterests(currentDate),
+    balance: invoice.getBalance()
 });
 
 export default class GetEnrollmentOutputData {
@@ -25,7 +26,8 @@ export default class GetEnrollmentOutputData {
         dueDate: Date,
         status: InvoiceStatus
         penalty: number,
-        interests: number
+        interests: number,
+        balance: number
     }[];
 
     constructor(enrollment: Enrollment, currentDate: Date) {

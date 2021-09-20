@@ -1,7 +1,7 @@
 import Classroom from './classroom';
 import Currency from './currency';
 import EnrollmentCode from './enrollment-code';
-import Invoice from './invoice';
+import Invoice, { InvoiceStatus } from './invoice';
 import InvoiceEvent, { InvoiceEventTypes } from './invoiceEvent';
 import Level from './level';
 import Module from './module';
@@ -87,9 +87,15 @@ export default class Enrollment {
         return this.invoices.find(byDate(month, year));
     }
 
-    payInvoice(month: number, year: number, amount: number) {
+    payInvoice(month: number, year: number, amount: number, paymentDate: Date) {
         const invoice = this.getInvoice(month, year);
         if (!invoice) throw new Error('Invoice not found');
         invoice.addEvent(new InvoiceEvent(InvoiceEventTypes.PAID, amount));
+        if(invoice.getStatus(paymentDate) === InvoiceStatus.OVERDUE) {
+            const penaltyAmount = -invoice.getPenalty(paymentDate);
+            const interestsAmount = -invoice.getInterests(paymentDate);
+            invoice.addEvent(new InvoiceEvent(InvoiceEventTypes.PENALTY, penaltyAmount));
+            invoice.addEvent(new InvoiceEvent(InvoiceEventTypes.INTERESTS, interestsAmount));
+        }
     }
 }

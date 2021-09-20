@@ -20,6 +20,8 @@ const enrollStudentInputData: EnrollStudentInputData = {
     classroom: 'A',
     installments: 12
 };
+const currentYear = new Date().getFullYear();
+const currentDate = new Date(`${currentYear}-06-20`);
 
 let repositoryFactory: RepositoryAbstractFactory;
 let enrollStudent: EnrollStudent;
@@ -43,15 +45,30 @@ beforeEach(function() {
 describe('Testing pay invoice', () => {
     test('Should pay enrollment invoice', () => {
         const { code } = enrollStudent.execute(enrollStudentInputData);
-        const { balance: originalBalance} = getEnrollment.execute({ code, currentDate: new Date() });
+        const { balance: originalBalance } = getEnrollment.execute({ code, currentDate });
+        const inputData: PayInvoiceInputData = {
+            code,
+            month: 7,
+            year: 2021,
+            amount: 1416.66,
+            paymentDate: currentDate
+        };
+        sut.execute(inputData);
+        const { balance } = getEnrollment.execute({ code, currentDate });
+        expect(balance).toBe(originalBalance - inputData.amount);
+    });
+
+    test('Should pay overdue invoice', () => {
+        const { code } = enrollStudent.execute(enrollStudentInputData);
         const inputData: PayInvoiceInputData = {
             code,
             month: 1,
-            year: 2021,
-            amount: 1416.66
-        };
+            year: currentYear,
+            amount: 3895.82,
+            paymentDate: currentDate
+        }
         sut.execute(inputData);
-        const { balance } = getEnrollment.execute({ code, currentDate: new Date() });
-        expect(balance).toBe(originalBalance - inputData.amount);
+        const { invoices: [firstInvoice,] } = getEnrollment.execute({ code, currentDate });
+        expect(firstInvoice.balance).toBe(0);
     });
 });
