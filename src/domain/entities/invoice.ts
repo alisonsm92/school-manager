@@ -5,6 +5,7 @@ import Prototype from "./prototype";
 
 export enum InvoiceStatus {
     OPENED = 'opened',
+    PAID = 'paid',
     OVERDUE = 'overdue'
 }
 
@@ -37,9 +38,9 @@ export default class Invoice implements Prototype {
     }
 
     getStatus(currentDate: Date) {
-        return this.dueDate < currentDate
-            ? InvoiceStatus.OVERDUE 
-            : InvoiceStatus.OPENED;
+        if(this.getBalance() === 0) return InvoiceStatus.PAID;
+        if(this.dueDate < currentDate) return InvoiceStatus.OVERDUE;
+        return InvoiceStatus.OPENED;
     }
 
     getPenalty(currentDate: Date) {
