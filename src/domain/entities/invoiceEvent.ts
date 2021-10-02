@@ -1,5 +1,5 @@
 export enum InvoiceEventTypes {
-    PAID = 'paid',
+    PAYMENT = 'payment',
     PENALTY = 'penalty',
     INTERESTS = 'interests'
 }

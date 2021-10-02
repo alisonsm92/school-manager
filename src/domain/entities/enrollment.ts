@@ -96,6 +96,6 @@ export default class Enrollment {
             invoice.addEvent(new InvoiceEvent(InvoiceEventTypes.PENALTY, penaltyAmount));
             invoice.addEvent(new InvoiceEvent(InvoiceEventTypes.INTERESTS, interestsAmount));
         }
-        invoice.addEvent(new InvoiceEvent(InvoiceEventTypes.PAID, amount));
+        invoice.addEvent(new InvoiceEvent(InvoiceEventTypes.PAYMENT, amount));
     }
 }

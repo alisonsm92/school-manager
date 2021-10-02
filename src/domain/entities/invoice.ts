@@ -36,7 +36,7 @@ export default class Invoice implements Prototype {
     getBalance() {
         return this.events.reduce((total, event) => {
             switch(event.type) {
-                case InvoiceEventTypes.PAID:
+                case InvoiceEventTypes.PAYMENT:
                     total -= event.amount;
                     break;
                 case InvoiceEventTypes.PENALTY:

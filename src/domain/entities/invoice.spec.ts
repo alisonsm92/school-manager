@@ -10,7 +10,7 @@ describe('Testing Invoice', () => {
                 year: 2021,
                 amount: 100
             });
-            invoice.addEvent(new InvoiceEvent(InvoiceEventTypes.PAID, 100));
+            invoice.addEvent(new InvoiceEvent(InvoiceEventTypes.PAYMENT, 100));
             expect(invoice.getStatus(new Date('2021-07-06'))).toBe(InvoiceStatus.PAID);
         });
 
