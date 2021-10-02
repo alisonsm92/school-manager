@@ -1,5 +1,5 @@
 import Currency from "./currency";
-import InvoiceEvent from "./invoiceEvent";
+import InvoiceEvent, { InvoiceEventTypes } from "./invoiceEvent";
 import Period from "./period";
 import Prototype from "./prototype";
 
@@ -34,7 +34,18 @@ export default class Invoice implements Prototype {
     }
 
     getBalance() {
-        return this.events.reduce((total, event) => total - event.amount, this.amount);
+        return this.events.reduce((total, event) => {
+            switch(event.type) {
+                case InvoiceEventTypes.PAID:
+                    total -= event.amount;
+                    break;
+                case InvoiceEventTypes.PENALTY:
+                case InvoiceEventTypes.INTERESTS:
+                    total += event.amount;
+                    break;
+            }
+            return new Currency(total).round().value;
+        }, this.amount);
     }
 
     getStatus(currentDate: Date) {
@@ -45,14 +56,14 @@ export default class Invoice implements Prototype {
 
     getPenalty(currentDate: Date) {
         if(this.getStatus(currentDate) === InvoiceStatus.OPENED) return 0;
-        const penalty = new Currency(this.amount * this.penaltyPercentage).roundUp();
+        const penalty = new Currency(this.getBalance() * this.penaltyPercentage).round();
         return penalty.value;
     }
 
     getInterests(currentDate: Date) {
         if(this.getStatus(currentDate) === InvoiceStatus.OPENED) return 0;
-        const daysDiff = new Period(this.dueDate, currentDate).getDiffInDays() - 1;
-        const penalty = new Currency(this.amount * (daysDiff * this.interestPercentage)).roundUp();
+        const dueDays = new Period(this.dueDate, currentDate).getDiffInDays() - 1;
+        const penalty = new Currency(this.getBalance() * (dueDays * this.interestPercentage)).round();
         return penalty.value;
     }
 

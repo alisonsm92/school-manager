@@ -9,8 +9,8 @@ export default class Currency {
         return this.value * 100;
     }
 
-    roundUp() {
-        this.value = Math.ceil(this.getFractional()) / 100;
+    round() {
+        this.value = Math.round(this.getFractional()) / 100;
         return this;
     }
 

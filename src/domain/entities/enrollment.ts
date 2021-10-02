@@ -65,7 +65,7 @@ export default class Enrollment {
             this.invoices.push(invoice);
         }
         const diff = new Currency(this.module.price - installmentAmount.value * this.installments)
-            .roundUp();
+            .round();
         const lastInvoice = new Invoice({
             code: this.code.value, 
             month: this.invoices.length + 1, 
@@ -90,12 +90,12 @@ export default class Enrollment {
     payInvoice(month: number, year: number, amount: number, paymentDate: Date) {
         const invoice = this.getInvoice(month, year);
         if (!invoice) throw new Error('Invoice not found');
-        invoice.addEvent(new InvoiceEvent(InvoiceEventTypes.PAID, amount));
         if(invoice.getStatus(paymentDate) === InvoiceStatus.OVERDUE) {
-            const penaltyAmount = -invoice.getPenalty(paymentDate);
-            const interestsAmount = -invoice.getInterests(paymentDate);
+            const penaltyAmount = invoice.getPenalty(paymentDate);
+            const interestsAmount = invoice.getInterests(paymentDate);
             invoice.addEvent(new InvoiceEvent(InvoiceEventTypes.PENALTY, penaltyAmount));
             invoice.addEvent(new InvoiceEvent(InvoiceEventTypes.INTERESTS, interestsAmount));
         }
+        invoice.addEvent(new InvoiceEvent(InvoiceEventTypes.PAID, amount));
     }
 }
