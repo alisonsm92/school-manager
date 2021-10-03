@@ -1,4 +1,4 @@
-import DateHelper from '../../common/date-helper';
+import DateHelper from '../__test__/date-helper';
 import EnrollStudent from './enroll-student';
 import EnrollStudentInputData from '../ports/enroll-student-input-data';
 import LevelBuilder from '../__test__/level-builder';
