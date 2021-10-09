@@ -1,5 +1,5 @@
 
-import ModuleRepository from "../../domain/repositories/module-repository";
+import ModuleRepository from "../../../domain/repositories/module-repository";
 import ModuleRepositoryInMemory from "./module-repository-in-memory";
 
 export default class ModuleRepositoryInMemorySingleton {

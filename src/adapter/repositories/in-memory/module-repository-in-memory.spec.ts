@@ -1,4 +1,4 @@
-import Module from '../../domain/entities/module';
+import Module from '../../../domain/entities/module';
 import ModuleRepositoryInMemory from './module-repository-in-memory';
 
 const fakeModule: Module = {

@@ -1,7 +1,7 @@
-import Classroom from "../../domain/entities/classroom";
-import Enrollment from "../../domain/entities/enrollment";
-import EnrollmentCode from "../../domain/entities/enrollment-code";
-import EnrollmentRepository from "../../domain/repositories/enrollment-repository";
+import Classroom from "../../../domain/entities/classroom";
+import Enrollment from "../../../domain/entities/enrollment";
+import EnrollmentCode from "../../../domain/entities/enrollment-code";
+import EnrollmentRepository from "../../../domain/repositories/enrollment-repository";
 
 
 export default class EnrollmentRepositoryInMemory implements EnrollmentRepository {

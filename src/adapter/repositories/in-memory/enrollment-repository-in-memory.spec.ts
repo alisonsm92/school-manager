@@ -1,5 +1,5 @@
-import { EnrollmentStatus } from "../../domain/entities/enrollment";
-import EnrollmentBuilder from "../../domain/__test__/enrollment-builder";
+import { EnrollmentStatus } from "../../../domain/entities/enrollment";
+import EnrollmentBuilder from "../../../domain/__test__/enrollment-builder";
 import EnrollmentRepositoryInMemory from "./enrollment-repository-in-memory";
 
 const enrollment = new EnrollmentBuilder().build();

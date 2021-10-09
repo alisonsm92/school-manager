@@ -1,5 +1,5 @@
 
-import ClassroomRepository from "../../domain/repositories/classroom-repository";
+import ClassroomRepository from "../../../domain/repositories/classroom-repository";
 import ClassroomRepositoryInMemory from "./classroom-repository-in-memory";
 
 

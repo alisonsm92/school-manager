@@ -1,8 +1,8 @@
-import ClassroomRepositoryInMemorySingleton from "../repositories/classroom-repository-in-memory-singleton";
-import EnrollmentRepositoryInMemorySingleton from "../repositories/enrollment-repository-in-memory-singleton";
-import LevelRepositoryInMemorySingleton from "../repositories/level-repository-in-memory-singleton";
-import ModuleRepositoryInMemorySingleton from "../repositories/module-repository-in-memory-singleton";
+import ClassroomRepositoryInMemorySingleton from "../repositories/in-memory/classroom-repository-in-memory-singleton";
 import RepositoryAbstractFactory from "../../domain/factories/repository-abstract-factory";
+import EnrollmentRepositoryInMemorySingleton from "../repositories/in-memory/enrollment-repository-in-memory-singleton";
+import LevelRepositoryInMemorySingleton from "../repositories/in-memory/level-repository-in-memory-singleton";
+import ModuleRepositoryInMemorySingleton from "../repositories/in-memory/module-repository-in-memory-singleton";
 
 export default class RepositoryInMemoryFactory implements RepositoryAbstractFactory {
     constructor () {

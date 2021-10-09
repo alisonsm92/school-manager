@@ -1,4 +1,4 @@
-import Level from '../../domain/entities/level';
+import Level from '../../../domain/entities/level';
 import LevelRepositoryInMemory from './level-repository-in-memory';
 
 const fakeLevel: Level = {
