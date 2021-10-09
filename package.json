@@ -19,10 +19,13 @@
   },
   "homepage": "https://github.com/alisonsm92/school-manager#readme",
   "dependencies": {
+    "dotenv": "^10.0.0",
+    "pg": "^8.7.1",
     "typescript": "^4.3.2"
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",
+    "@types/pg": "^8.6.1",
     "jest": "^27.0.4",
     "rimraf": "^3.0.2",
     "ts-jest": "^27.0.2"
