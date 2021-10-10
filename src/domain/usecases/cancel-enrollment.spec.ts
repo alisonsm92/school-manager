@@ -41,10 +41,10 @@ beforeEach(function() {
 });
 
 describe('Testing cancel enrollment', () => {
-    test('Should cancel enrollment', () => {
-        const { code } = enrollStudent.execute(inputData);
+    test('Should cancel enrollment', async () => {
+        const { code } = await enrollStudent.execute(inputData);
         sut.execute({ code });
-        const getEnrollmentOutput = getEnrollment.execute({ code, currentDate: new Date() });
+        const getEnrollmentOutput = await getEnrollment.execute({ code, currentDate: new Date() });
         expect(getEnrollmentOutput.status).toBe(EnrollmentStatus.CANCELLED);
     });
 });

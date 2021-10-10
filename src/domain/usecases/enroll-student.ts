@@ -23,7 +23,7 @@ export default class EnrollStudent {
         this.classroomRepository = repositoryFactory.createClassroomRepository();
     }
 
-    execute(inputData: EnrollStudentInputData): EnrollStudentOutputData {
+    async execute(inputData: EnrollStudentInputData): Promise<EnrollStudentOutputData> {
         try {
             const student = new Student({
                 name: inputData.student.name, 
@@ -38,12 +38,12 @@ export default class EnrollStudent {
                 inputData.level, inputData.module, inputData.classroom
             );
             if(!classroom) throw new Error('Class not found');
-            const studentsEnrolled = this.enrollmentRepository.findAllByClass(classroom);
+            const studentsEnrolled = await this.enrollmentRepository.findAllByClass(classroom);
             if(classroom.capacity === studentsEnrolled.length) throw new Error('Class is over capacity');
-            if(this.enrollmentRepository.findByCpf(inputData.student.cpf)) {
+            if(await this.enrollmentRepository.findByCpf(inputData.student.cpf)) {
                 throw new Error('Enrollment with duplicated student is not allowed');
             }
-            const sequence = this.enrollmentRepository.count() + 1;
+            const sequence = await this.enrollmentRepository.count() + 1;
             const issueDate = new Date();
             const { installments } = inputData;
             const enrollment = new Enrollment({ 

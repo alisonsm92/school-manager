@@ -48,46 +48,47 @@ beforeEach(function() {
 });
 
 describe('Testing enroll student', () => {
-    test('Should fullfil successfully when provide a valid input data', () => {
-        const enrollment = sut.execute(inputData);
+    test('Should fullfil successfully when provide a valid input data', async () => {
+        const enrollment = await sut.execute(inputData);
         expect(enrollment).toHaveProperty('code', '2021EM1A0001');
     });
     
-    test('Should not enroll without valid student name', () => {
+    test('Should not enroll without valid student name', async () => {
         const student: EnrollStudentInputData['student'] = { ...inputData.student, name: 'Ana' };
         const error = new Error('Invalid student name');
-        expect(() => sut.execute({ ...inputData, student })).toThrow(error);
+        await expect(sut.execute({ ...inputData, student })).rejects.toThrow(error);
     });
 
-    test('Should not enroll without valid student cpf', () => {
+    test('Should not enroll without valid student cpf', async () => {
         const student: EnrollStudentInputData['student'] = { 
             ...inputData.student, 
             cpf: '123.456.789-99' 
         };
         const error = new Error('Invalid student cpf');
-        expect(() => sut.execute({ ...inputData, student })).toThrow(error);
+        await expect(sut.execute({ ...inputData, student })).rejects.toThrow(error);
     });
 
-    test('Should not enroll duplicated student', () => {
+    test('Should not enroll duplicated student', async () => {
         const error = new Error('Enrollment with duplicated student is not allowed');
-        sut.execute(inputData);
-        expect(() => sut.execute(inputData)).toThrow(error);
+        await sut.execute(inputData);
+        await expect(sut.execute(inputData)).rejects.toThrow(error);
     });
 
-    test('Should generate enrollment code', () => {
-        expect(sut.execute(inputData)).toHaveProperty('code', '2021EM1A0001');
+    test('Should generate enrollment code', async () => {
+        const result = await sut.execute(inputData);
+        expect(result).toHaveProperty('code', '2021EM1A0001');
     });
 
-    test('Should not enroll student below minimum age', () => {
+    test('Should not enroll student below minimum age', async () => {
         const student: EnrollStudentInputData['student'] = { 
             ...inputData.student, 
             birthDate: new Date('2012-03-12')
         };
         const error = new Error('Student below minimum age');
-        expect(() => sut.execute({ ...inputData, student })).toThrow(error);
+        await expect(sut.execute({ ...inputData, student })).rejects.toThrow(error);
     });
 
-    test('Should not enroll student over classroom capacity', () => {
+    test('Should not enroll student over classroom capacity', async () => {
         const classroom = new ClassroomBuilder().withCapacity(1).build();
         classroomRepository.update(classroom);
         const secondStudent: EnrollStudentInputData['student'] = { 
@@ -96,32 +97,33 @@ describe('Testing enroll student', () => {
             cpf: '151.906.420-97'
         };
         const error = new Error('Class is over capacity');
-        sut.execute(inputData);
-        expect(() => sut.execute({ ...inputData, student: secondStudent })).toThrow(error);
+        await sut.execute(inputData);
+        await expect(sut.execute({ ...inputData, student: secondStudent })).rejects.toThrow(error);
     });
 
-    test('Should not enroll after que end of the classroom', () => {
+    test('Should not enroll after que end of the classroom', async () => {
         const yesterDay = DateHelper.getDateBefore({ days: 1 });
         const classroom = new ClassroomBuilder()
             .withStartDate(aMonthAgo)
             .withEndDate(yesterDay)
             .build();
         classroomRepository.update(classroom);
-        expect(() => sut.execute(inputData)).toThrow(new Error('Class is already finished'));
+        await expect(sut.execute(inputData)).rejects.toThrow(new Error('Class is already finished'));
     });
 
-    test('Should not enroll after 25% of the start of the classroom', () => {
+    test('Should not enroll after 25% of the start of the classroom', async () => {
         const classroom = new ClassroomBuilder()
             .withStartDate(aMonthAgo)
             .withEndDate(aMonthAfter)
             .build();
         classroomRepository.update(classroom);
-        expect(() => sut.execute(inputData)).toThrow(new Error('Class is already started'));
+        await expect(sut.execute(inputData)).rejects.toThrow(new Error('Class is already started'));
     });
 
-    test('Should generate the invoices based on the number of installments, rounding each amount and applying the rest in the last invoice', () => {
-        const { code } = sut.execute(inputData);
-        const { invoices } = getEnrollment.execute({ code, currentDate: new Date() });
+    test('Should generate the invoices based on the number of installments, rounding each amount ' 
+        + 'and applying the rest in the last invoice', async () => {
+        const { code } = await sut.execute(inputData);
+        const { invoices } = await getEnrollment.execute({ code, currentDate: new Date() });
         const [firstInvoice, ] = invoices;
         const lastInvoice = invoices[invoices.length - 1];
         const invoicesTotalAmount = invoices.reduce(sumInvoicesAmount, 0);

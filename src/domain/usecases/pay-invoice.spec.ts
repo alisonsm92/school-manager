@@ -43,9 +43,9 @@ beforeEach(function() {
 });
 
 describe('Testing pay invoice', () => {
-    test('Should pay enrollment invoice', () => {
-        const { code } = enrollStudent.execute(enrollStudentInputData);
-        const { balance: originalBalance } = getEnrollment.execute({ code, currentDate });
+    test('Should pay enrollment invoice', async () => {
+        const { code } = await enrollStudent.execute(enrollStudentInputData);
+        const { balance: originalBalance } = await getEnrollment.execute({ code, currentDate });
         const inputData: PayInvoiceInputData = {
             code,
             month: 7,
@@ -54,12 +54,12 @@ describe('Testing pay invoice', () => {
             paymentDate: currentDate
         };
         sut.execute(inputData);
-        const { balance } = getEnrollment.execute({ code, currentDate });
+        const { balance } = await getEnrollment.execute({ code, currentDate });
         expect(balance).toBe(originalBalance - inputData.amount);
     });
 
-    test('Should pay overdue invoice', () => {
-        const { code } = enrollStudent.execute(enrollStudentInputData);
+    test('Should pay overdue invoice', async () => {
+        const { code } = await enrollStudent.execute(enrollStudentInputData);
         const inputData: PayInvoiceInputData = {
             code,
             month: 1,
@@ -68,7 +68,7 @@ describe('Testing pay invoice', () => {
             paymentDate: currentDate
         }
         sut.execute(inputData);
-        const { invoices: [firstInvoice,] } = getEnrollment.execute({ code, currentDate });
+        const { invoices: [firstInvoice,] } = await getEnrollment.execute({ code, currentDate });
         expect(firstInvoice.balance).toBe(0);
     });
 });

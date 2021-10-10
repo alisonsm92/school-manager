@@ -42,9 +42,9 @@ beforeEach(function() {
 });
 
 describe('Testing get enrollment', () => {
-    test('Should get enrollment by code with invoice balance', () => {
-        const enrollment = enrollStudent.execute(inputData);
-        const outputData = sut.execute({ code: enrollment.code, currentDate: new Date() });
+    test('Should get enrollment by code with invoice balance', async () => {
+        const enrollment = await enrollStudent.execute(inputData);
+        const outputData = await sut.execute({ code: enrollment.code, currentDate: new Date() });
         const module = moduleRepository.find(inputData.level, inputData.module);
         expect(outputData).toHaveProperty('code', enrollment.code);
         expect(outputData).toHaveProperty('student.name', inputData.student.name);
@@ -53,9 +53,9 @@ describe('Testing get enrollment', () => {
         expect(outputData).toHaveProperty('balance', module?.price);
     });
 
-    test('Should calculate due date and return status open or overdue for each invoice', () => {
-        const { code } = enrollStudent.execute(inputData);
-        const { invoices } = sut.execute({ code, currentDate: new Date(`${currentYear}-6-20`) });
+    test('Should calculate due date and return status open or overdue for each invoice', async () => {
+        const { code } = await enrollStudent.execute(inputData);
+        const { invoices } = await sut.execute({ code, currentDate: new Date(`${currentYear}-6-20`) });
         const [firstInvoice, ] = invoices;
         const lastInvoice = invoices[invoices.length - 1];
         expect(firstInvoice.dueDate).toEqual(new Date(`${currentYear}-1-05`));
@@ -64,9 +64,9 @@ describe('Testing get enrollment', () => {
         expect(lastInvoice.status).toBe(InvoiceStatus.OPENED);
     });
 
-    test('Should calculate penalty and interests', () => {
-        const { code } = enrollStudent.execute(inputData);
-        const { invoices } = sut.execute({ code, currentDate: new Date(`${currentYear}-6-20`) });
+    test('Should calculate penalty and interests', async () => {
+        const { code } = await enrollStudent.execute(inputData);
+        const { invoices } = await sut.execute({ code, currentDate: new Date(`${currentYear}-6-20`) });
         const [firstInvoice, ] = invoices;
         const lastInvoice = invoices[invoices.length - 1];
         expect(firstInvoice.penalty).toBe(141.67);
