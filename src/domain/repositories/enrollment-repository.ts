@@ -8,6 +8,7 @@ interface EnrollmentRepository {
     count(): Promise<number>
     add(enrollment: Enrollment): Promise<void>
     update(enrollment: Enrollment): Promise<void>
+    clean(): Promise<void>
 }
 
 export default EnrollmentRepository;

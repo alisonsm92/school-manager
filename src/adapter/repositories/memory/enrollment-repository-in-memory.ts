@@ -36,4 +36,8 @@ export default class EnrollmentRepositoryInMemory implements EnrollmentRepositor
         const index = this.data.findIndex(item => item.code.value === enrollment.code.value);
         this.data[index] = enrollment;
     }
+
+    async clean() {
+        this.data = [];
+    }
 }
