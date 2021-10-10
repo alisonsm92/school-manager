@@ -4,7 +4,7 @@ import EnrollmentRepositoryInMemory from "./enrollment-repository-in-memory";
 
 const enrollment = new EnrollmentBuilder().build();
 
-describe('Testing EnrollmentRepository', () => {
+describe('Testing EnrollmentRepositoryInMemory', () => {
     describe('FindByCode method', () => {
         test('Should return the enrollment with code provided when it exists', async () => {
             const enrollmentRepository = new EnrollmentRepositoryInMemory();
