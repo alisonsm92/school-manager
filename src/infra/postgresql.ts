@@ -6,10 +6,11 @@ class PostgreSQL {
 
     constructor() {
         this.pool = new Pool({
-            host: environment.postgreSQL.host,
-            user: environment.postgreSQL.user,
-            password: environment.postgreSQL.password,
-            port: environment.postgreSQL.port,
+            host: environment.postgres.host,
+            database: environment.postgres.database,
+            user: environment.postgres.user,
+            password: environment.postgres.password,
+            port: environment.postgres.port,
         });
     }
 
