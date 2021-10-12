@@ -18,10 +18,11 @@ class PostgreSQL {
         return await this.pool.connect();
     }
 
-    async query(queryString: string, params?: unknown[]) {
+    async query<T>(queryString: string, params?: unknown[]) {
         const connection = await this.getConnection();
-        const result = await connection.query(queryString, params);
-        return result.rows[0];
+        const result = await connection.query<T>(queryString, params);
+        connection.release();
+        return result.rows;
     }
 }
 
