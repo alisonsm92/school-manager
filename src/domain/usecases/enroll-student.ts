@@ -30,7 +30,7 @@ export default class EnrollStudent {
                 cpf: inputData.student.cpf,
                 birthDate: inputData.student.birthDate
             });
-            const level = this.levelRepository.findByCode(inputData.level);
+            const level = await this.levelRepository.find(inputData.level);
             if(!level) throw new Error('Level not found');
             const module = await this.moduleRepository.find(inputData.level, inputData.module);
             if(!module) throw new Error('Module not found');
