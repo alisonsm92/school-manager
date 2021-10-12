@@ -1,5 +1,5 @@
 
-import EnrollmentRepository from "../../../domain/repositories/enrollment-repository";
+import EnrollmentRepository from "../../../../domain/repositories/enrollment-repository";
 import EnrollmentRepositoryInMemory from "./enrollment-repository-in-memory";
 
 

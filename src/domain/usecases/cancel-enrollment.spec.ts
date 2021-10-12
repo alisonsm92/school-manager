@@ -1,5 +1,5 @@
 import RepositoryAbstractFactory from "../factories/repository-abstract-factory";
-import RepositoryInMemoryFactory from "../../adapter/factories/repository-in-memory-factory";
+import RepositoryInMemoryFactory from "../../adapter/output/factories/repository-in-memory-factory";
 import { EnrollmentStatus } from "../entities/enrollment";
 import CancelEnrollment from "./cancel-enrollment";
 import EnrollStudent from "./enroll-student";

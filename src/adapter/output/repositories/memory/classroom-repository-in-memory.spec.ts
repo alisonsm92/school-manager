@@ -1,4 +1,4 @@
-import Classroom from '../../../domain/entities/classroom';
+import Classroom from '../../../../domain/entities/classroom';
 import ClassroomRepositoryInMemory from './classroom-repository-in-memory';
 
 const fakeClassroom = {

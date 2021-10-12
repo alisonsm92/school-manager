@@ -1,19 +1,13 @@
+import RepositoryAbstractFactory from "../../../domain/factories/repository-abstract-factory";
+import EnrollmentRepositoryDatabase from "../repositories/database/enrollment-repository-database";
 import ClassroomRepositoryInMemorySingleton from "../repositories/memory/classroom-repository-in-memory-singleton";
-import RepositoryAbstractFactory from "../../domain/factories/repository-abstract-factory";
-import EnrollmentRepositoryInMemorySingleton from "../repositories/memory/enrollment-repository-in-memory-singleton";
 import LevelRepositoryInMemorySingleton from "../repositories/memory/level-repository-in-memory-singleton";
 import ModuleRepositoryInMemorySingleton from "../repositories/memory/module-repository-in-memory-singleton";
 
-export default class RepositoryInMemoryFactory implements RepositoryAbstractFactory {
-    constructor () {
-        EnrollmentRepositoryInMemorySingleton.destroy();
-        LevelRepositoryInMemorySingleton.destroy();
-        ModuleRepositoryInMemorySingleton.destroy();
-        ClassroomRepositoryInMemorySingleton.destroy();
-    }
+export default class RepositoryDatabaseFactory implements RepositoryAbstractFactory {
 
     createEnrollmentRepository () {
-        return EnrollmentRepositoryInMemorySingleton.getInstance();
+        return new EnrollmentRepositoryDatabase();
     }
     
     createLevelRepository () {
