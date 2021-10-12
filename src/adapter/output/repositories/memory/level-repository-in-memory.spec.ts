@@ -26,8 +26,7 @@ describe('Testing LevelRepositoryInMemory', () => {
         });
 
         test('Should return undefined when the level it is not exists', async () => {
-            await sut.add(inputData);
-            const module = await sut.find('EF');
+            const module = await sut.find('EM');
             expect(module).toBeUndefined();
         });
     });

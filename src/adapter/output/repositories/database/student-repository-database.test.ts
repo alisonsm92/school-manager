@@ -34,8 +34,7 @@ describe('Testing StudentRepositoryDatabase', () => {
         });
 
         test('Should return undefined when the student it is not exists', async () => {
-            await sut.add(new Student(inputData));
-            const student = await sut.find(new Cpf('942.070.200-63'));
+            const student = await sut.find(new Cpf('755.525.774-26'));
             expect(student).toBeUndefined();
         });
     });

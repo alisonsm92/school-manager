@@ -37,8 +37,7 @@ describe('Testing ModuleRepositoryDatabase', () => {
         });
 
         test('Should return undefined when the module it is not exists', async () => {
-            await sut.add(inputData);
-            const module = await sut.find('EM', '2');
+            const module = await sut.find('EM', '1');
             expect(module).toBeUndefined();
         });
     });

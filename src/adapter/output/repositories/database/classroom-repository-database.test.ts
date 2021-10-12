@@ -39,8 +39,7 @@ describe('Testing ClassRepositoryDatabase', () => {
         });
 
         test('Should return undefined when the classroom it is not exists', async () => {
-            await sut.add(new Classroom(inputData));
-            const classroom = await sut.find('EM', '2', 'B');
+            const classroom = await sut.find('EM', '1', 'A');
             expect(classroom).toBeUndefined();
         });
     });
