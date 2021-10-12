@@ -2,13 +2,21 @@ import Module from '../../../../domain/entities/module';
 import ModuleRepository from '../../../../domain/repositories/module-repository';
 
 export default class ModuleRepositoryInMemory implements ModuleRepository {
-    readonly data: Module[] = [];
+    private data: Module[];
 
-    find(level: string, code: string) {
+    constructor() {
+        this.data = [];
+    }
+
+    async find(level: string, code: string) {
         return this.data.find(module => module.level === level && module.code === code);
     }
 
-    add(module: Module): void {
+    async add(module: Module) {
         this.data.push(module);
+    }
+
+    async clean() {
+        this.data = [];
     }
 }
