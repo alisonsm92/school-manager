@@ -16,7 +16,7 @@ afterEach(async () => {
     await sut.clean();
 });
 
-describe('Testing LevelRepository', () => {
+describe('Testing LevelRepositoryInMemory', () => {
     describe('Find and Add method', () => {
         test('Should return the level with code provided when it exists', async () => {
             await sut.add(inputData);
