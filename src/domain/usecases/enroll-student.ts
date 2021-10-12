@@ -32,7 +32,7 @@ export default class EnrollStudent {
             });
             const level = this.levelRepository.findByCode(inputData.level);
             if(!level) throw new Error('Level not found');
-            const module = this.moduleRepository.find(inputData.level, inputData.module);
+            const module = await this.moduleRepository.find(inputData.level, inputData.module);
             if(!module) throw new Error('Module not found');
             const classroom = await this.classroomRepository.find(
                 inputData.level, inputData.module, inputData.classroom

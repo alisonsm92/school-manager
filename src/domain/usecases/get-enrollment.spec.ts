@@ -45,7 +45,7 @@ describe('Testing get enrollment', () => {
     test('Should get enrollment by code with invoice balance', async () => {
         const enrollment = await enrollStudent.execute(inputData);
         const outputData = await sut.execute({ code: enrollment.code, currentDate: new Date() });
-        const module = moduleRepository.find(inputData.level, inputData.module);
+        const module = await moduleRepository.find(inputData.level, inputData.module);
         expect(outputData).toHaveProperty('code', enrollment.code);
         expect(outputData).toHaveProperty('student.name', inputData.student.name);
         expect(outputData).toHaveProperty('student.cpf', inputData.student.cpf);
