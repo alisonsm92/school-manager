@@ -2,7 +2,6 @@
 import EnrollmentRepository from "../../../../domain/repositories/enrollment-repository";
 import EnrollmentRepositoryInMemory from "./enrollment-repository-in-memory";
 
-
 export default class EnrollmentRepositoryInMemorySingleton {
     static instance: EnrollmentRepository | undefined;
 

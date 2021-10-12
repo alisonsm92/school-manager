@@ -1,7 +1,6 @@
 import Classroom from '../../../../domain/entities/classroom';
 import ClassroomRepository from '../../../../domain/repositories/classroom-repository';
 
-
 export default class ClassroomRepositoryInMemory implements ClassroomRepository {
     private readonly data: Classroom[] = [];
 
