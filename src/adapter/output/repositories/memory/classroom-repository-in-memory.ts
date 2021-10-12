@@ -2,9 +2,13 @@ import Classroom from '../../../../domain/entities/classroom';
 import ClassroomRepository from '../../../../domain/repositories/classroom-repository';
 
 export default class ClassroomRepositoryInMemory implements ClassroomRepository {
-    private readonly data: Classroom[] = [];
+    private data: Classroom[];
 
-    find(level: string, module: string, code: string) {
+    constructor() {
+        this.data = [];
+    }
+
+    async find(level: string, module: string, code: string) {
         return this.data.find(classroom => 
             classroom.level === level 
             && classroom.module === module
@@ -12,15 +16,19 @@ export default class ClassroomRepositoryInMemory implements ClassroomRepository 
         );
     }
 
-    add(classroom: Classroom): void {
+    async add(classroom: Classroom) {
         this.data.push(classroom);
     }
 
-    update(classroom: Classroom): void {
+    async update(classroom: Classroom) {
         const index = this.data.findIndex(item => 
             item.level === classroom.level 
             && item.module === classroom.module
             && item.code === classroom.code);
         this.data[index] = classroom;
+    }
+
+    async clean() {
+        this.data = [];
     }
 }
