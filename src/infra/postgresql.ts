@@ -24,6 +24,10 @@ class PostgreSQL {
         connection.release();
         return result.rows;
     }
+
+    async end() {
+        await this.pool.end();
+    }
 }
 
 export default new PostgreSQL();
