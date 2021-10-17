@@ -5,6 +5,7 @@ import Student from "../../../../domain/entities/student";
 import EnrollmentRepository from "../../../../domain/repositories/enrollment-repository";
 import postgreSQL from "../../../../infra/postgresql";
 import ClassroomRepositoryDatabase from "./classroom-repository-database";
+import InvoiceRepositoryDatabase from "./invoice-repository-database";
 import LevelRepositoryDatabase from "./level-repository-database";
 import ModuleRepositoryDatabase from "./module-repository-database";
 import StudentRepositoryDatabase from "./student-repository-database";
@@ -24,6 +25,7 @@ type EnrollmentRegister = {
 export default class EnrollmentRepositoryDatabase implements EnrollmentRepository {
     private database: typeof postgreSQL;
     private studentRepository: StudentRepositoryDatabase;
+    private invoiceRepository: InvoiceRepositoryDatabase;
     private levelRepository: LevelRepositoryDatabase;
     private moduleRepository: ModuleRepositoryDatabase;
     private classroomRepository: ClassroomRepositoryDatabase;
@@ -31,6 +33,7 @@ export default class EnrollmentRepositoryDatabase implements EnrollmentRepositor
     constructor() {
         this.database = postgreSQL;
         this.studentRepository = new StudentRepositoryDatabase();
+        this.invoiceRepository = new InvoiceRepositoryDatabase();
         this.levelRepository = new LevelRepositoryDatabase();
         this.moduleRepository = new ModuleRepositoryDatabase();
         this.classroomRepository = new ClassroomRepositoryDatabase();
@@ -116,6 +119,7 @@ export default class EnrollmentRepositoryDatabase implements EnrollmentRepositor
 
     async update(enrollment: Enrollment) {
         await this.studentRepository.update(enrollment.student);
+        await Promise.all(enrollment.invoices.map(this.invoiceRepository.update, this));
         await this.database.query(`
             UPDATE system.enrollment
             SET sequence = $2, level = $3, module = $4, classroom = $5, student = $6, installments = $7, issue_date = $8, status = $9
