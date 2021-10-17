@@ -27,9 +27,9 @@ describe('Testing StudentRepositoryDatabase', () => {
         test('Should return the student with code provided when it exists', async () => {
             await sut.add(new Student(inputData));
             const student = await sut.find(inputData.cpf);
-            expect(student).toHaveProperty('cpf', inputData.cpf);
-            expect(student).toHaveProperty('name', inputData.name);
-            expect(student).toHaveProperty('birthDate', inputData.birthDate);
+            expect(student?.cpf.value).toBe(inputData.cpf);
+            expect(student?.name.value).toBe(inputData.name);
+            expect(student?.birthDate).toEqual(inputData.birthDate);
         });
 
         test('Should return undefined when the student it is not exists', async () => {
@@ -44,7 +44,7 @@ describe('Testing StudentRepositoryDatabase', () => {
             inputData.name = 'Another name';
             await sut.update(new Student(inputData));
             const student = await sut.find(inputData.cpf);
-            expect(student?.name).toBe('Another name');
+            expect(student?.name.value).toBe('Another name');
         });
     });
 

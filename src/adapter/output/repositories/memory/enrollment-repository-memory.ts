@@ -15,7 +15,7 @@ export default class EnrollmentRepositoryMemory implements EnrollmentRepository 
     }
 
     async findByCpf(cpf: string) {
-        return this.data.find(enrollment => enrollment.student.cpf === cpf);
+        return this.data.find(enrollment => enrollment.student.cpf.value === cpf);
     }
 
     async findAllByClass({ module, level, code }: Classroom) {

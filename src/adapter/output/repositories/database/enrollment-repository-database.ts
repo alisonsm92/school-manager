@@ -100,7 +100,7 @@ export default class EnrollmentRepositoryDatabase implements EnrollmentRepositor
     }
 
     async add(enrollment: Enrollment) {
-        await this.studentRepository.add(new Student(enrollment.student));
+        await this.studentRepository.add(enrollment.student);
         await this.database.query(`
             INSERT INTO system.enrollment (code, sequence, level, module, classroom, student, installments, issue_date, status)
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);
@@ -110,7 +110,7 @@ export default class EnrollmentRepositoryDatabase implements EnrollmentRepositor
             enrollment.level.code,
             enrollment.module.code,
             enrollment.classroom.code,
-            enrollment.student.cpf,
+            enrollment.student.cpf.value,
             enrollment.installments,
             enrollment.issueDate,
             enrollment.status,
@@ -130,7 +130,7 @@ export default class EnrollmentRepositoryDatabase implements EnrollmentRepositor
             enrollment.level.code,
             enrollment.module.code,
             enrollment.classroom.code,
-            enrollment.student.cpf,
+            enrollment.student.cpf.value,
             enrollment.installments,
             enrollment.issueDate,
             enrollment.status,

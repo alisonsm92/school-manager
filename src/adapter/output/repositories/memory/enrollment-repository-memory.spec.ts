@@ -24,13 +24,13 @@ describe('Testing EnrollmentRepositoryMemory', () => {
         test('Should return the enrollment with cpf provided when it exists', async () => {
             const enrollmentRepository = new EnrollmentRepositoryMemory();
             enrollmentRepository.add(enrollment);
-            const result = await enrollmentRepository.findByCpf(enrollment.student.cpf);
+            const result = await enrollmentRepository.findByCpf(enrollment.student.cpf.value);
             expect(result).toEqual(enrollment);
         });
 
         test('Should return undefined when enrollment with the code provided not exists', async () => {
             const enrollmentRepository = new EnrollmentRepositoryMemory();
-            const result = await enrollmentRepository.findByCpf(enrollment.student.cpf);
+            const result = await enrollmentRepository.findByCpf(enrollment.student.cpf.value);
             expect(result).toBeUndefined();
         });
     });

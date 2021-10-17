@@ -33,8 +33,8 @@ export default class GetEnrollmentOutputData {
     constructor(enrollment: Enrollment, currentDate: Date) {
         this.code = enrollment.code.value;
         this.student = {
-            name: enrollment.student.name,
-            cpf: enrollment.student.cpf,
+            name: enrollment.student.name.value,
+            cpf: enrollment.student.cpf.value,
             birthDate: enrollment.student.birthDate
         };
         this.balance = enrollment.getInvoicesBalance();

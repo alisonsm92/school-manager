@@ -59,12 +59,12 @@ describe('Testing EnrollmentRepositoryDatabase', () => {
     describe('FindByCpf method', () => {
         test('Should return the enrollment with cpf provided when it exists', async () => {
             await sut.add(inputData);
-            const result = await sut.findByCpf(inputData.student.cpf);
+            const result = await sut.findByCpf(inputData.student.cpf.value);
             expect(result).toEqual(inputData);
         });
 
         test('Should return undefined when enrollment with the cpf provided not exists', async () => {
-            const result = await sut.findByCpf(inputData.student.cpf);
+            const result = await sut.findByCpf(inputData.student.cpf.value);
             expect(result).toBeUndefined();
         });
     });

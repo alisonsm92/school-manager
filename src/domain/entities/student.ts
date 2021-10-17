@@ -3,15 +3,15 @@ import Cpf from './cpf';
 import Name from './name';
 
 export default class Student {
-    readonly name: string;
-    readonly cpf: string;
+    readonly name: Name;
+    readonly cpf: Cpf;
     readonly birthDate: Date;
-    readonly age: Number;
+    readonly age: Age;
 
     constructor({ name, cpf, birthDate }: { name: string, cpf: string, birthDate: Date }) {
-        this.name = new Name(name).value;
-        this.cpf = new Cpf(cpf).value;
+        this.name = new Name(name);
+        this.cpf = new Cpf(cpf);
         this.birthDate = birthDate;
-        this.age = new Age(this.birthDate).value;
+        this.age = new Age(this.birthDate);
     }
 }

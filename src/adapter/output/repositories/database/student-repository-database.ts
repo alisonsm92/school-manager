@@ -31,8 +31,8 @@ export default class StudentRepositoryDatabase {
             INSERT INTO system.student (cpf, name, birth_date)
             VALUES ($1, $2, $3);
         `, [
-            student.cpf,
-            student.name,
+            student.cpf.value,
+            student.name.value,
             student.birthDate,
         ]);
     }
@@ -43,8 +43,8 @@ export default class StudentRepositoryDatabase {
             SET cpf = $1, name = $2, birth_date = $3
             WHERE cpf = $1
         `, [
-            student.cpf,
-            student.name,
+            student.cpf.value,
+            student.name.value,
             student.birthDate
         ]);
     }
