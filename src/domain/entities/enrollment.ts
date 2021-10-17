@@ -25,7 +25,7 @@ export default class Enrollment {
     readonly sequence: number;
     readonly code: EnrollmentCode;
     readonly installments: number;
-    readonly invoices: Invoice[];
+    invoices: Invoice[];
     status: EnrollmentStatus;
     
     constructor({ student, level, module, classroom, issueDate, sequence, installments }:

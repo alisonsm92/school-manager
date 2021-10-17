@@ -1,7 +1,6 @@
 import Classroom from "../../../../domain/entities/classroom";
 import Enrollment, { EnrollmentStatus } from "../../../../domain/entities/enrollment";
 import EnrollmentCode from "../../../../domain/entities/enrollment-code";
-import Student from "../../../../domain/entities/student";
 import EnrollmentRepository from "../../../../domain/repositories/enrollment-repository";
 import postgreSQL from "../../../../infra/postgresql";
 import ClassroomRepositoryDatabase from "./classroom-repository-database";
@@ -48,6 +47,7 @@ export default class EnrollmentRepositoryDatabase implements EnrollmentRepositor
         if(!module) throw new Error('Module not found');
         const classroom = await this.classroomRepository.find(row.level, row.module, row.classroom);
         if(!classroom) throw new Error('Classroom not found');
+        const invoices = await this.invoiceRepository.findMany(row.code);
         const enrollment = new Enrollment({
             student, 
             level, 
@@ -60,6 +60,7 @@ export default class EnrollmentRepositoryDatabase implements EnrollmentRepositor
         enrollment.status = EnrollmentStatus.ACTIVE === row.status 
             ? EnrollmentStatus.ACTIVE 
             : EnrollmentStatus.CANCELLED;
+        enrollment.invoices = invoices;
         return enrollment;
     }
 
@@ -101,6 +102,7 @@ export default class EnrollmentRepositoryDatabase implements EnrollmentRepositor
 
     async add(enrollment: Enrollment) {
         await this.studentRepository.add(enrollment.student);
+        await Promise.all(enrollment.invoices.map(this.invoiceRepository.add, this.invoiceRepository));
         await this.database.query(`
             INSERT INTO system.enrollment (code, sequence, level, module, classroom, student, installments, issue_date, status)
             VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);
@@ -141,6 +143,5 @@ export default class EnrollmentRepositoryDatabase implements EnrollmentRepositor
         await this.studentRepository.clean();
 		await this.invoiceRepository.clean();
 		await this.database.query("DELETE FROM system.enrollment");
-		
 	}
 }

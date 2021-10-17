@@ -31,6 +31,15 @@ export default class InvoiceRepositoryDatabase {
         return invoice;
     }
 
+    async findMany(enrollment: string) {
+        const rows = await this.database.query<InvoiceRegister>(`
+            SELECT * 
+            FROM system.invoice
+            WHERE enrollment = $1
+            ORDER BY month, year;`, [enrollment]);
+        return await Promise.all(rows.map(this.buildInvoice, this));
+    }
+
     async find(enrollment: string, month: number, year: number) {
         const [row] = await this.database.query<InvoiceRegister>(`
             SELECT * 
@@ -78,7 +87,7 @@ export default class InvoiceRepositoryDatabase {
     }
 
     async clean() {
-        await this.database.query('DELETE FROM system.invoice');
         await this.invoiceEventsRepository.clean();
+        await this.database.query('DELETE FROM system.invoice');
     }
 }
