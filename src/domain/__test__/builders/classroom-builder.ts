@@ -1,5 +1,5 @@
-import DateHelper from "./date-helper";
-import Classroom from "../entities/classroom";
+import DateHelper from "../date-helper";
+import Classroom from "../../entities/classroom";
 
 export default class ClassroomBuilder {
     defaultData = {

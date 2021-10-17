@@ -5,9 +5,9 @@ import GetEnrollment from "./get-enrollment";
 import PayInvoice from "./pay-invoice";
 import EnrollStudentInputData from "../ports/enroll-student-input-data";
 import PayInvoiceInputData from "../ports/pay-invoice-input-data";
-import ClassroomBuilder from "../__test__/classroom-builder";
-import LevelBuilder from "../__test__/level-builder";
-import ModuleBuilder from "../__test__/module-builder";
+import ClassroomBuilder from "../__test__/builders/classroom-builder";
+import LevelBuilder from "../__test__/builders/level-builder";
+import ModuleBuilder from "../__test__/builders/module-builder";
 
 const enrollStudentInputData: EnrollStudentInputData = {
     student: {

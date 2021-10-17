@@ -1,4 +1,4 @@
-import Module from "../entities/module";
+import Module from "../../entities/module";
 
 export default class ModuleBuilder {
     build() {
