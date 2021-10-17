@@ -1,5 +1,5 @@
 import Module from '../../../../domain/entities/module';
-import ModuleRepositoryInMemory from './module-repository-in-memory';
+import ModuleRepositoryMemory from './module-repository-memory';
 
 const inputData: Module = {
     level: 'EM',
@@ -9,10 +9,10 @@ const inputData: Module = {
     price: 17000
 };
 
-let sut: ModuleRepositoryInMemory;
+let sut: ModuleRepositoryMemory;
 
 beforeEach(() => {
-    sut = new ModuleRepositoryInMemory();
+    sut = new ModuleRepositoryMemory();
 });
 
 afterEach(async () => {

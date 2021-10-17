@@ -4,7 +4,7 @@ import EnrollStudentInputData from '../ports/enroll-student-input-data';
 import LevelBuilder from '../__test__/level-builder';
 import ModuleBuilder from '../__test__/module-builder';
 import ClassroomBuilder from '../__test__/classroom-builder';
-import RepositoryInMemoryFactory from '../../adapter/output/factories/repository-in-memory-factory';
+import RepositoryMemoryFactory from '../../adapter/output/factories/repository-memory-factory';
 import RepositoryAbstractFactory from '../factories/repository-abstract-factory';
 import GetEnrollment from './get-enrollment';
 import GetEnrollmentOutputData from '../ports/get-enrollment-output-data';
@@ -41,7 +41,7 @@ function prePopulateRepositories() {
 }
 
 beforeEach(function() {
-    repositoryFactory = new RepositoryInMemoryFactory();
+    repositoryFactory = new RepositoryMemoryFactory();
     getEnrollment = new GetEnrollment(repositoryFactory);
     sut = new EnrollStudent(repositoryFactory);
     prePopulateRepositories();

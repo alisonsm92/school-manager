@@ -1,22 +1,22 @@
 import Level from '../../../../domain/entities/level';
-import LevelRepositoryInMemory from './level-repository-in-memory';
+import LevelRepositoryMemory from './level-repository-memory';
 
 const inputData: Level = {
     code: "EM",
     description: "Ensino Médio"
 };
 
-let sut: LevelRepositoryInMemory;
+let sut: LevelRepositoryMemory;
 
 beforeEach(() => {
-    sut = new LevelRepositoryInMemory();
+    sut = new LevelRepositoryMemory();
 });
 
 afterEach(async () => {
     await sut.clean();
 });
 
-describe('Testing LevelRepositoryInMemory', () => {
+describe('Testing LevelRepositoryMemory', () => {
     describe('Find and Add method', () => {
         test('Should return the level with code provided when it exists', async () => {
             await sut.add(inputData);

@@ -1,7 +1,7 @@
 import Module from '../../../../domain/entities/module';
 import ModuleRepository from '../../../../domain/repositories/module-repository';
 
-export default class ModuleRepositoryInMemory implements ModuleRepository {
+export default class ModuleRepositoryMemory implements ModuleRepository {
     private data: Module[];
 
     constructor() {

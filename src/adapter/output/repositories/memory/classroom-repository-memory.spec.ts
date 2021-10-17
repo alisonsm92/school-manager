@@ -1,5 +1,5 @@
 import Classroom from '../../../../domain/entities/classroom';
-import ClassroomRepositoryInMemory from './classroom-repository-in-memory';
+import ClassroomRepositoryMemory from './classroom-repository-memory';
 
 const inputData = {
     level: "EM",
@@ -13,7 +13,7 @@ const inputData = {
 describe('Testing ClassRepositoryDatabase', () => {
     describe('Find method', () => {
         test('Should return the classroom with code provided when it exists', async () => {
-            const sut = new ClassroomRepositoryInMemory();
+            const sut = new ClassroomRepositoryMemory();
             await sut.add(new Classroom(inputData));
             const classroom = await sut.find('EM', '1', 'A');
             expect(classroom).toHaveProperty('code', 'A');

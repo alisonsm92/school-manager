@@ -1,5 +1,5 @@
 import RepositoryAbstractFactory from "../factories/repository-abstract-factory";
-import RepositoryInMemoryFactory from "../../adapter/output/factories/repository-in-memory-factory";
+import RepositoryMemoryFactory from "../../adapter/output/factories/repository-memory-factory";
 import EnrollStudent from "./enroll-student";
 import GetEnrollment from "./get-enrollment";
 import PayInvoice from "./pay-invoice";
@@ -35,7 +35,7 @@ function prePopulateRepositories() {
 }
 
 beforeEach(function() {
-    repositoryFactory = new RepositoryInMemoryFactory();
+    repositoryFactory = new RepositoryMemoryFactory();
     enrollStudent = new EnrollStudent(repositoryFactory);
     getEnrollment = new GetEnrollment(repositoryFactory);
     sut = new PayInvoice(repositoryFactory);

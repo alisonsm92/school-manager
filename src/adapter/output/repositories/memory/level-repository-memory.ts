@@ -1,7 +1,7 @@
 import Level from '../../../../domain/entities/level';
 import LevelRepository from '../../../../domain/repositories/level-repository';
 
-export default class LevelRepositoryInMemory implements LevelRepository {
+export default class LevelRepositoryMemory implements LevelRepository {
     private data: Level[];
 
     constructor() {
