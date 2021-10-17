@@ -1,5 +1,4 @@
 import Student from '../../../../domain/entities/student';
-import StudentRepository from '../../../../domain/repositories/student-repository';
 import postgreSQL from "../../../../infra/postgresql";
 
 type StudentRegister = {
@@ -8,7 +7,7 @@ type StudentRegister = {
     birth_date: Date
 }
 
-export default class StudentRepositoryDatabase implements StudentRepository {
+export default class StudentRepositoryDatabase {
     private database: typeof postgreSQL;
 
     constructor() {

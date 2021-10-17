@@ -1,5 +1,4 @@
 import Invoice from '../../../../domain/entities/invoice';
-import InvoiceRepository from '../../../../domain/repositories/invoice-repository';
 import postgreSQL from "../../../../infra/postgresql";
 
 type InvoiceRegister = {
@@ -10,7 +9,7 @@ type InvoiceRegister = {
     amount: number
 }
 
-export default class InvoiceRepositoryDatabase implements InvoiceRepository {
+export default class InvoiceRepositoryDatabase {
     private database: typeof postgreSQL;
 
     constructor() {
@@ -63,5 +62,6 @@ export default class InvoiceRepositoryDatabase implements InvoiceRepository {
 
     async clean() {
         await this.database.query('DELETE FROM system.invoice');
+        await this.database.query("DELETE FROM system.invoice_event");
     }
 }
