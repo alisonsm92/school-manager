@@ -39,6 +39,16 @@ describe('Testing StudentRepositoryDatabase', () => {
         });
     });
 
+    describe('Update method', () => {
+        it('Should return the student with the data updated', async () => {
+            await sut.add(new Student(inputData));
+            inputData.name = 'Another name';
+            await sut.update(new Student(inputData));
+            const student = await sut.find(new Cpf('755.525.774-26'));
+            expect(student?.name).toBe('Another name');
+        });
+    });
+
     describe('Clean method', () => {
         test('Should not found the register added', async () => {
             await sut.add(new Student(inputData));

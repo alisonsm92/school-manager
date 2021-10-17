@@ -39,6 +39,18 @@ export default class StudentRepositoryDatabase implements StudentRepository {
         ]);
     }
 
+    async update(student: Student) {
+        await this.database.query(`
+            UPDATE system.student
+            SET cpf = $1, name = $2, birth_date = $3
+            WHERE cpf = $1
+        `, [
+            student.cpf,
+            student.name,
+            student.birthDate
+        ]);
+    }
+
     async clean() {
         await this.database.query('DELETE FROM system.student');
     }
