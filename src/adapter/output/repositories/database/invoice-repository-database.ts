@@ -1,5 +1,6 @@
 import Invoice from '../../../../domain/entities/invoice';
 import postgreSQL from "../../../../infra/postgresql";
+import InvoiceEventRepositoryDatabase from './invoice-event-repository-database';
 
 type InvoiceRegister = {
     enrollment: string,
@@ -11,9 +12,23 @@ type InvoiceRegister = {
 
 export default class InvoiceRepositoryDatabase {
     private database: typeof postgreSQL;
+    private invoiceEventsRepository: InvoiceEventRepositoryDatabase;
 
     constructor() {
         this.database = postgreSQL;
+        this.invoiceEventsRepository = new InvoiceEventRepositoryDatabase();
+    }
+
+    private async buildInvoice(row: InvoiceRegister) {
+        const invoice = new Invoice({
+            code: row.enrollment,
+            month: row.month,
+            year: row.year,
+            amount: Number(row.amount),
+        });
+        const events = await this.invoiceEventsRepository.findMany(invoice);
+        events.every(invoice.addEvent);
+        return invoice;
     }
 
     async find(enrollment: string, month: number, year: number) {
@@ -23,12 +38,13 @@ export default class InvoiceRepositoryDatabase {
             WHERE enrollment = $1
             AND month = $2
             AND year = $3`, [enrollment, month, year]);
-        return row ? new Invoice({
-            code: row.enrollment,
-            month: row.month,
-            year: row.year,
-            amount: Number(row.amount),
-        }) : undefined;
+        return row ? this.buildInvoice(row) : undefined;
+    }
+
+    private async addEvents(invoice: Invoice) {
+        await Promise.all(
+            invoice.events.map((event) => this.invoiceEventsRepository.add(invoice, event), this)
+        );
     }
 
     async add(invoice: Invoice) {
@@ -42,6 +58,7 @@ export default class InvoiceRepositoryDatabase {
             invoice.dueDate,
             invoice.amount
         ]);
+        await this.addEvents(invoice);
     }
 
     async update(invoice: Invoice) {
@@ -58,10 +75,11 @@ export default class InvoiceRepositoryDatabase {
             invoice.dueDate,
             invoice.amount
         ]);
+        await this.addEvents(invoice);
     }
 
     async clean() {
         await this.database.query('DELETE FROM system.invoice');
-        await this.database.query("DELETE FROM system.invoice_event");
+        await this.invoiceEventsRepository.clean();
     }
 }

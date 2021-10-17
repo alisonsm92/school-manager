@@ -119,7 +119,7 @@ export default class EnrollmentRepositoryDatabase implements EnrollmentRepositor
 
     async update(enrollment: Enrollment) {
         await this.studentRepository.update(enrollment.student);
-        await Promise.all(enrollment.invoices.map(this.invoiceRepository.update, this));
+        await Promise.all(enrollment.invoices.map(this.invoiceRepository.update, this.invoiceRepository));
         await this.database.query(`
             UPDATE system.enrollment
             SET sequence = $2, level = $3, module = $4, classroom = $5, student = $6, installments = $7, issue_date = $8, status = $9
