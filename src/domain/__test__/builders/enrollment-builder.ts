@@ -1,4 +1,4 @@
-import Enrollment from "../entities/enrollment";
+import Enrollment from "../../entities/enrollment";
 import ClassroomBuilder from "./classroom-builder";
 import LevelBuilder from "./level-builder";
 import ModuleBuilder from "./module-builder";
