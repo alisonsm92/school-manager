@@ -138,9 +138,9 @@ export default class EnrollmentRepositoryDatabase implements EnrollmentRepositor
     }
 
     async clean(): Promise<void> {
-		await this.database.query("DELETE FROM system.invoice_event");
-		await this.database.query("DELETE FROM system.invoice");
+        await this.studentRepository.clean();
+		await this.invoiceRepository.clean();
 		await this.database.query("DELETE FROM system.enrollment");
-		await this.database.query("DELETE FROM system.student");
+		
 	}
 }
