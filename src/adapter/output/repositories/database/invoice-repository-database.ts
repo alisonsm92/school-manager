@@ -41,12 +41,6 @@ export default class InvoiceRepositoryDatabase {
         return row ? this.buildInvoice(row) : undefined;
     }
 
-    private async addEvents(invoice: Invoice) {
-        await Promise.all(
-            invoice.events.map((event) => this.invoiceEventsRepository.add(invoice, event), this)
-        );
-    }
-
     async add(invoice: Invoice) {
         await this.database.query(`
             INSERT INTO system.invoice (enrollment, month, year, due_date, amount)
@@ -58,7 +52,12 @@ export default class InvoiceRepositoryDatabase {
             invoice.dueDate,
             invoice.amount
         ]);
-        await this.addEvents(invoice);
+    }
+
+    private async addEvents(invoice: Invoice) {
+        await Promise.all(
+            invoice.events.map((event) => this.invoiceEventsRepository.add(invoice, event), this)
+        );
     }
 
     async update(invoice: Invoice) {
