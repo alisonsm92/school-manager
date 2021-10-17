@@ -52,8 +52,8 @@ describe('Testing StudentRepositoryDatabase', () => {
         test('Should not found the register added', async () => {
             await sut.add(new Student(inputData));
             await sut.clean();
-            const module = await sut.find(inputData.cpf);
-            expect(module).toBeUndefined();
+            const student = await sut.find(inputData.cpf);
+            expect(student).toBeUndefined();
         });
     });
 });

@@ -54,8 +54,8 @@ describe('Testing InvoiceRepositoryDatabase', () => {
         test('Should not found the register added', async () => {
             await sut.add(new Invoice(inputData));
             await sut.clean();
-            const module = await sut.find(inputData.code, inputData.month, inputData.year);
-            expect(module).toBeUndefined();
+            const invoice = await sut.find(inputData.code, inputData.month, inputData.year);
+            expect(invoice).toBeUndefined();
         });
     });
 });

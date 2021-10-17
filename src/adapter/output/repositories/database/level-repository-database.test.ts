@@ -25,14 +25,14 @@ describe('Testing LevelRepositoryDatabase', () => {
     describe('Find and Add method', () => {
         test('Should return the level with code provided when it exists', async () => {
             await sut.add(inputData);
-            const module = await sut.find('EM');
-            expect(module).toHaveProperty('code', 'EM');
-            expect(module).toHaveProperty('description', 'Ensino Médio');
+            const level = await sut.find('EM');
+            expect(level).toHaveProperty('code', 'EM');
+            expect(level).toHaveProperty('description', 'Ensino Médio');
         });
 
         test('Should return undefined when the level it is not exists', async () => {
-            const module = await sut.find('EM');
-            expect(module).toBeUndefined();
+            const level = await sut.find('EM');
+            expect(level).toBeUndefined();
         });
     });
 
@@ -40,8 +40,8 @@ describe('Testing LevelRepositoryDatabase', () => {
         test('Should not found the register added', async () => {
             await sut.add(new Level(inputData));
             await sut.clean();
-            const module = await sut.find('EM');
-            expect(module).toBeUndefined();
+            const level = await sut.find('EM');
+            expect(level).toBeUndefined();
         });
     });
 });
