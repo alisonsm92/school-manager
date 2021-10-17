@@ -1,9 +1,9 @@
-import Cpf from "../entities/cpf";
 import Student from "../entities/student";
 
 interface StudentRepository {
-    find(cpf: Cpf): Promise<Student|undefined>
+    find(cpf: string): Promise<Student|undefined>
     add(student: Student): Promise<void>
+    update(student: Student): Promise<void>
     clean(): Promise<void>
 }
 

@@ -1,5 +1,4 @@
 import Classroom from "../../../../domain/entities/classroom";
-import Cpf from "../../../../domain/entities/cpf";
 import Enrollment, { EnrollmentStatus } from "../../../../domain/entities/enrollment";
 import EnrollmentCode from "../../../../domain/entities/enrollment-code";
 import Student from "../../../../domain/entities/student";
@@ -38,7 +37,7 @@ export default class EnrollmentRepositoryDatabase implements EnrollmentRepositor
     }
 
     private async buildEnrollment(row: EnrollmentRegister) {
-        const student = await this.studentRepository.find(new Cpf(row.student));
+        const student = await this.studentRepository.find(row.student);
         if(!student) throw new Error('Student not found');
         const level = await this.levelRepository.find(row.level);
         if(!level) throw new Error('Level not found');

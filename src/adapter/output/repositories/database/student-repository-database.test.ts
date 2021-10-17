@@ -1,4 +1,3 @@
-import Cpf from '../../../../domain/entities/cpf';
 import Student from '../../../../domain/entities/student';
 import postgresql from '../../../../infra/postgresql';
 import StudentRepositoryDatabase from './student-repository-database';
@@ -27,14 +26,14 @@ describe('Testing StudentRepositoryDatabase', () => {
     describe('Find and Add method', () => {
         test('Should return the student with code provided when it exists', async () => {
             await sut.add(new Student(inputData));
-            const student = await sut.find(new Cpf(inputData.cpf));
+            const student = await sut.find(inputData.cpf);
             expect(student).toHaveProperty('cpf', inputData.cpf);
             expect(student).toHaveProperty('name', inputData.name);
             expect(student).toHaveProperty('birthDate', inputData.birthDate);
         });
 
         test('Should return undefined when the student it is not exists', async () => {
-            const student = await sut.find(new Cpf(inputData.cpf));
+            const student = await sut.find(inputData.cpf);
             expect(student).toBeUndefined();
         });
     });
@@ -44,7 +43,7 @@ describe('Testing StudentRepositoryDatabase', () => {
             await sut.add(new Student(inputData));
             inputData.name = 'Another name';
             await sut.update(new Student(inputData));
-            const student = await sut.find(new Cpf(inputData.cpf));
+            const student = await sut.find(inputData.cpf);
             expect(student?.name).toBe('Another name');
         });
     });
@@ -53,7 +52,7 @@ describe('Testing StudentRepositoryDatabase', () => {
         test('Should not found the register added', async () => {
             await sut.add(new Student(inputData));
             await sut.clean();
-            const module = await sut.find(new Cpf(inputData.cpf));
+            const module = await sut.find(inputData.cpf);
             expect(module).toBeUndefined();
         });
     });

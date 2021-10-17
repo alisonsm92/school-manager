@@ -1,4 +1,3 @@
-import Cpf from '../../../../domain/entities/cpf';
 import Student from '../../../../domain/entities/student';
 import StudentRepository from '../../../../domain/repositories/student-repository';
 import postgreSQL from "../../../../infra/postgresql";
@@ -16,11 +15,11 @@ export default class StudentRepositoryDatabase implements StudentRepository {
         this.database = postgreSQL;
     }
 
-    async find(cpf: Cpf) {
+    async find(cpf: string) {
         const [row] = await this.database.query<StudentRegister>(`
             SELECT * 
             FROM system.student
-            WHERE cpf = $1`, [cpf.value]);
+            WHERE cpf = $1`, [cpf]);
         return row ? new Student({
             cpf: row.cpf,
             name: row.name,
