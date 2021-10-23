@@ -1,5 +1,5 @@
 import Invoice from '../../../../domain/entities/invoice';
-import postgresql from '../../../../infra/postgresql';
+import connectionPool from '../../../../infra/database/connection-pool';
 import InvoiceRepositoryDatabase from './invoice-repository-database';
 
 const inputData = {
@@ -20,7 +20,7 @@ afterEach(async () => {
 });
 
 afterAll(async () => {
-    await postgresql.end();
+    await connectionPool.end();
 });
 
 describe('Testing InvoiceRepositoryDatabase', () => {

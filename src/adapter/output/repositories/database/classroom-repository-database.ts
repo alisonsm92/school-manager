@@ -1,6 +1,6 @@
 import Classroom from '../../../../domain/entities/classroom';
 import ClassroomRepository from '../../../../domain/repositories/classroom-repository';
-import postgreSQL from "../../../../infra/postgresql";
+import connectionPool from "../../../../infra/database/connection-pool";
 
 type ClassroomRegister = {
     code: string,
@@ -12,10 +12,10 @@ type ClassroomRegister = {
 }
 
 export default class ClassroomRepositoryDatabase implements ClassroomRepository {
-    private database: typeof postgreSQL;
+    private database: typeof connectionPool;
 
     constructor() {
-        this.database = postgreSQL;
+        this.database = connectionPool;
     }
 
     async find(level: string, module: string, code: string) {

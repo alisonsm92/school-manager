@@ -1,5 +1,5 @@
 import Student from '../../../../domain/entities/student';
-import postgreSQL from "../../../../infra/postgresql";
+import connectionPool from "../../../../infra/database/connection-pool";
 
 type StudentRegister = {
     cpf: string,
@@ -8,10 +8,10 @@ type StudentRegister = {
 }
 
 export default class StudentRepositoryDatabase {
-    private database: typeof postgreSQL;
+    private database: typeof connectionPool;
 
     constructor() {
-        this.database = postgreSQL;
+        this.database = connectionPool;
     }
 
     async find(cpf: string) {

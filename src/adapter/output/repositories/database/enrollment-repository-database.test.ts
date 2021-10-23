@@ -1,6 +1,6 @@
 import { EnrollmentStatus } from "../../../../domain/entities/enrollment";
 import EnrollmentBuilder from "../../../../domain/__test__/builders/enrollment-builder";
-import postgresql from "../../../../infra/postgresql";
+import connectionPool from "../../../../infra/database/connection-pool";
 import ClassroomRepositoryDatabase from "./classroom-repository-database";
 import EnrollmentRepositoryDatabase from "./enrollment-repository-database";
 import LevelRepositoryDatabase from "./level-repository-database";
@@ -39,7 +39,7 @@ afterAll(async () => {
         moduleRepository.clean(),
         classroomRepository.clean()
     ]);
-    await postgresql.end();
+    await connectionPool.end();
 });
 
 describe('Testing EnrollmentRepositoryDatabase', () => {

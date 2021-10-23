@@ -1,5 +1,5 @@
 import Module from '../../../../domain/entities/module';
-import postgresql from '../../../../infra/postgresql';
+import connectionPool from '../../../../infra/database/connection-pool';
 import ModuleRepositoryDatabase from './module-repository-database';
 
 const inputData: Module = {
@@ -21,7 +21,7 @@ afterEach(async () => {
 });
 
 afterAll(async () => {
-    await postgresql.end();
+    await connectionPool.end();
 });
 
 describe('Testing ModuleRepositoryDatabase', () => {

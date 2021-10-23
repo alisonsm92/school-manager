@@ -1,5 +1,5 @@
 import Level from '../../../../domain/entities/level';
-import postgresql from '../../../../infra/postgresql';
+import connectionPool from '../../../../infra/database/connection-pool';
 import LevelRepositoryDatabase from './level-repository-database';
 
 const inputData: Level = {
@@ -18,7 +18,7 @@ afterEach(async () => {
 });
 
 afterAll(async () => {
-    await postgresql.end();
+    await connectionPool.end();
 });
 
 describe('Testing LevelRepositoryDatabase', () => {

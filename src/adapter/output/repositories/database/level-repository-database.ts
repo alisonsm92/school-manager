@@ -1,6 +1,6 @@
 import Level from '../../../../domain/entities/level';
 import LevelRepository from '../../../../domain/repositories/level-repository';
-import postgreSQL from "../../../../infra/postgresql";
+import connectionPool from "../../../../infra/database/connection-pool";
 
 type LevelRegister = {
     code: string,
@@ -8,10 +8,10 @@ type LevelRegister = {
 }
 
 export default class LevelRepositoryDatabase implements LevelRepository {
-    private database: typeof postgreSQL;
+    private database: typeof connectionPool;
 
     constructor() {
-        this.database = postgreSQL;
+        this.database = connectionPool;
     }
 
     async find(code: string) {

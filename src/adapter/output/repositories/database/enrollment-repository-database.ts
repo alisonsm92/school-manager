@@ -2,7 +2,7 @@ import Classroom from "../../../../domain/entities/classroom";
 import Enrollment, { EnrollmentStatus } from "../../../../domain/entities/enrollment";
 import EnrollmentCode from "../../../../domain/entities/enrollment-code";
 import EnrollmentRepository from "../../../../domain/repositories/enrollment-repository";
-import postgreSQL from "../../../../infra/postgresql";
+import connectionPool from "../../../../infra/database/connection-pool";
 import ClassroomRepositoryDatabase from "./classroom-repository-database";
 import InvoiceRepositoryDatabase from "./invoice-repository-database";
 import LevelRepositoryDatabase from "./level-repository-database";
@@ -22,7 +22,7 @@ type EnrollmentRegister = {
 }
 
 export default class EnrollmentRepositoryDatabase implements EnrollmentRepository {
-    private database: typeof postgreSQL;
+    private database: typeof connectionPool;
     private studentRepository: StudentRepositoryDatabase;
     private invoiceRepository: InvoiceRepositoryDatabase;
     private levelRepository: LevelRepositoryDatabase;
@@ -30,7 +30,7 @@ export default class EnrollmentRepositoryDatabase implements EnrollmentRepositor
     private classroomRepository: ClassroomRepositoryDatabase;
 
     constructor() {
-        this.database = postgreSQL;
+        this.database = connectionPool;
         this.studentRepository = new StudentRepositoryDatabase();
         this.invoiceRepository = new InvoiceRepositoryDatabase();
         this.levelRepository = new LevelRepositoryDatabase();

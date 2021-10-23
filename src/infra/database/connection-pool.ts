@@ -1,5 +1,5 @@
 import { Pool } from 'pg';
-import environment from '../config/environment';
+import environment from '../../config/environment';
 
 class PostgreSQL {
     private pool: Pool;

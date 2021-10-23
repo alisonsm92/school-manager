@@ -1,6 +1,6 @@
 import Invoice from '../../../../domain/entities/invoice';
 import InvoiceEvent, { InvoiceEventTypes } from '../../../../domain/entities/invoiceEvent';
-import postgresql from '../../../../infra/postgresql';
+import connectionPool from '../../../../infra/database/connection-pool';
 import InvoiceEventRepositoryDatabase from './invoice-event-repository-database';
 
 const invoice = new Invoice({
@@ -21,7 +21,7 @@ afterEach(async () => {
 });
 
 afterAll(async () => {
-    await postgresql.end();
+    await connectionPool.end();
 });
 
 describe('Testing InvoiceEventRepositoryDatabase', () => {

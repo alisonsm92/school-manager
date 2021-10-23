@@ -1,6 +1,6 @@
 import Module from '../../../../domain/entities/module';
 import ModuleRepository from '../../../../domain/repositories/module-repository';
-import postgreSQL from "../../../../infra/postgresql";
+import connectionPool from "../../../../infra/database/connection-pool";
 
 type ModuleRegister = {
     code: string,
@@ -11,10 +11,10 @@ type ModuleRegister = {
 }
 
 export default class ModuleRepositoryDatabase implements ModuleRepository {
-    private database: typeof postgreSQL;
+    private database: typeof connectionPool;
 
     constructor() {
-        this.database = postgreSQL;
+        this.database = connectionPool;
     }
 
     async find(level: string, code: string) {

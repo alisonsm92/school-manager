@@ -1,5 +1,5 @@
 import Student from '../../../../domain/entities/student';
-import postgresql from '../../../../infra/postgresql';
+import connectionPool from '../../../../infra/database/connection-pool';
 import StudentRepositoryDatabase from './student-repository-database';
 
 const inputData = {
@@ -19,7 +19,7 @@ afterEach(async () => {
 });
 
 afterAll(async () => {
-    await postgresql.end();
+    await connectionPool.end();
 });
 
 describe('Testing StudentRepositoryDatabase', () => {

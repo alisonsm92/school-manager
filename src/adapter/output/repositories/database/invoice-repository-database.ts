@@ -1,5 +1,5 @@
 import Invoice from '../../../../domain/entities/invoice';
-import postgreSQL from "../../../../infra/postgresql";
+import connectionPool from "../../../../infra/database/connection-pool";
 import InvoiceEventRepositoryDatabase from './invoice-event-repository-database';
 
 type InvoiceRegister = {
@@ -11,11 +11,11 @@ type InvoiceRegister = {
 }
 
 export default class InvoiceRepositoryDatabase {
-    private database: typeof postgreSQL;
+    private database: typeof connectionPool;
     private invoiceEventsRepository: InvoiceEventRepositoryDatabase;
 
     constructor() {
-        this.database = postgreSQL;
+        this.database = connectionPool;
         this.invoiceEventsRepository = new InvoiceEventRepositoryDatabase();
     }
 

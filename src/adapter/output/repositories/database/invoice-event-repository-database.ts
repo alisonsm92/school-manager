@@ -1,6 +1,6 @@
 import Invoice from '../../../../domain/entities/invoice';
 import InvoiceEvent, { InvoiceEventTypes } from '../../../../domain/entities/invoiceEvent';
-import postgreSQL from "../../../../infra/postgresql";
+import connectionPool from "../../../../infra/database/connection-pool";
 
 type InvoiceEventRegister = {
     enrollment: string,
@@ -29,10 +29,10 @@ const buildInvoice = (row: InvoiceEventRegister) => {
 }
 
 export default class InvoiceEventRepositoryDatabase {
-    private database: typeof postgreSQL;
+    private database: typeof connectionPool;
 
     constructor() {
-        this.database = postgreSQL;
+        this.database = connectionPool;
     }
 
     async findMany(invoice: Invoice) {
