@@ -4,7 +4,7 @@ import { EnrollmentStatus } from "../entities/enrollment";
 import CancelEnrollment from "./cancel-enrollment";
 import EnrollStudent from "./enroll-student";
 import GetEnrollment from "./get-enrollment";
-import EnrollStudentInputData from "../ports/enroll-student-input-data";
+import EnrollStudentInputData from "../data/enroll-student-input-data";
 import ClassroomBuilder from "../__test__/builders/classroom-builder";
 import LevelBuilder from "../__test__/builders/level-builder";
 import ModuleBuilder from "../__test__/builders/module-builder";

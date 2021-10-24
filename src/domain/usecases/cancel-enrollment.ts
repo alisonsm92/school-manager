@@ -1,5 +1,5 @@
 import RepositoryAbstractFactory from "../factories/repository-abstract-factory";
-import CancelEnrollmentInputData from "../ports/cancel-enrollment-input-data";
+import CancelEnrollmentInputData from "../data/cancel-enrollment-input-data";
 import EnrollmentRepository from "../repositories/enrollment-repository";
 
 

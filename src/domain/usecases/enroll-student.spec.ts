@@ -1,13 +1,13 @@
 import DateHelper from '../__test__/date-helper';
 import EnrollStudent from './enroll-student';
-import EnrollStudentInputData from '../ports/enroll-student-input-data';
+import EnrollStudentInputData from '../data/enroll-student-input-data';
 import LevelBuilder from '../__test__/builders/level-builder';
 import ModuleBuilder from '../__test__/builders/module-builder';
 import ClassroomBuilder from '../__test__/builders/classroom-builder';
 import RepositoryMemoryFactory from '../../adapter/output/factories/repository-memory-factory';
 import RepositoryAbstractFactory from '../factories/repository-abstract-factory';
 import GetEnrollment from './get-enrollment';
-import GetEnrollmentOutputData from '../ports/get-enrollment-output-data';
+import GetEnrollmentOutputData from '../data/get-enrollment-output-data';
 import ClassroomRepository from '../repositories/classroom-repository';
 
 const inputData: EnrollStudentInputData = {

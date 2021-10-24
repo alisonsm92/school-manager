@@ -1,5 +1,5 @@
 import RepositoryAbstractFactory from "../factories/repository-abstract-factory";
-import PayInvoiceInputData from "../ports/pay-invoice-input-data";
+import PayInvoiceInputData from "../data/pay-invoice-input-data";
 import EnrollmentRepository from "../repositories/enrollment-repository";
 
 export default class PayInvoice {

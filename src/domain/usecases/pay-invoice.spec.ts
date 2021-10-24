@@ -3,8 +3,8 @@ import RepositoryMemoryFactory from "../../adapter/output/factories/repository-m
 import EnrollStudent from "./enroll-student";
 import GetEnrollment from "./get-enrollment";
 import PayInvoice from "./pay-invoice";
-import EnrollStudentInputData from "../ports/enroll-student-input-data";
-import PayInvoiceInputData from "../ports/pay-invoice-input-data";
+import EnrollStudentInputData from "../data/enroll-student-input-data";
+import PayInvoiceInputData from "../data/pay-invoice-input-data";
 import ClassroomBuilder from "../__test__/builders/classroom-builder";
 import LevelBuilder from "../__test__/builders/level-builder";
 import ModuleBuilder from "../__test__/builders/module-builder";
