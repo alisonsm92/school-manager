@@ -37,7 +37,7 @@ export default class EnrollStudent {
             const classroom = await this.classroomRepository.find(
                 inputData.level, inputData.module, inputData.classroom
             );
-            if(!classroom) throw new Error('Class not found');
+            if(!classroom) throw new Error('Classroom not found');
             const studentsEnrolled = await this.enrollmentRepository.findAllByClass(classroom);
             if(classroom.capacity === studentsEnrolled.length) throw new Error('Class is over capacity');
             if(await this.enrollmentRepository.findByCpf(inputData.student.cpf)) {
@@ -49,7 +49,7 @@ export default class EnrollStudent {
             const enrollment = new Enrollment({ 
                 student, level, module, classroom, issueDate, sequence, installments  
             });
-            this.enrollmentRepository.add(enrollment);
+            await this.enrollmentRepository.add(enrollment);
             return new EnrollStudentOutputData(enrollment);
         } catch (error) {
             if(error instanceof InvalidCpfError) throw new Error('Invalid student cpf');
