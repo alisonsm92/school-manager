@@ -9,7 +9,7 @@ import ClassroomBuilder from "../__test__/builders/classroom-builder";
 import LevelBuilder from "../__test__/builders/level-builder";
 import ModuleBuilder from "../__test__/builders/module-builder";
 
-const enrollStudentInputData: EnrollStudentInputData = {
+const enrollStudentInputData = new EnrollStudentInputData({
     student: {
         name: 'Maria Carolina Fonseca',
         cpf: '755.525.774-26',
@@ -19,7 +19,7 @@ const enrollStudentInputData: EnrollStudentInputData = {
     module: '1',
     classroom: 'A',
     installments: 12
-};
+});
 const currentYear = new Date().getFullYear();
 const currentDate = new Date(`${currentYear}-06-20`);
 
@@ -46,13 +46,13 @@ describe('Testing pay invoice', () => {
     test('Should pay enrollment invoice', async () => {
         const { code } = await enrollStudent.execute(enrollStudentInputData);
         const { balance: originalBalance } = await getEnrollment.execute({ code, currentDate });
-        const inputData: PayInvoiceInputData = {
+        const inputData = new PayInvoiceInputData({
             code,
             month: 7,
             year: 2021,
             amount: 1416.66,
             paymentDate: currentDate
-        };
+        });
         sut.execute(inputData);
         const { balance } = await getEnrollment.execute({ code, currentDate });
         expect(balance).toBe(originalBalance - inputData.amount);
@@ -60,13 +60,13 @@ describe('Testing pay invoice', () => {
 
     test('Should pay overdue invoice', async () => {
         const { code } = await enrollStudent.execute(enrollStudentInputData);
-        const inputData: PayInvoiceInputData = {
+        const inputData = new PayInvoiceInputData({
             code,
             month: 1,
             year: currentYear,
             amount: 3895.82,
             paymentDate: currentDate
-        }
+        });
         sut.execute(inputData);
         const { invoices: [firstInvoice,] } = await getEnrollment.execute({ code, currentDate });
         expect(firstInvoice.balance).toBe(0);
