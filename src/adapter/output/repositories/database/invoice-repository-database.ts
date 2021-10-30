@@ -27,7 +27,7 @@ export default class InvoiceRepositoryDatabase {
             amount: Number(row.amount),
         });
         const events = await this.invoiceEventsRepository.findMany(invoice);
-        events.every(invoice.addEvent);
+        events.every(invoice.addEvent, invoice);
         return invoice;
     }
 
@@ -47,7 +47,7 @@ export default class InvoiceRepositoryDatabase {
             WHERE enrollment = $1
             AND month = $2
             AND year = $3`, [enrollment, month, year]);
-        return row ? this.buildInvoice(row) : undefined;
+        return row ? await this.buildInvoice(row) : undefined;
     }
 
     async add(invoice: Invoice) {

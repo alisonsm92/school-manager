@@ -1,4 +1,5 @@
 import Invoice from '../../../../domain/entities/invoice';
+import InvoiceEvent, { InvoiceEventTypes } from '../../../../domain/entities/invoiceEvent';
 import connectionPool from '../../../../infra/database/connection-pool';
 import InvoiceRepositoryDatabase from './invoice-repository-database';
 
@@ -32,6 +33,18 @@ describe('Testing InvoiceRepositoryDatabase', () => {
             expect(invoice).toHaveProperty('month', inputData.month);
             expect(invoice).toHaveProperty('year', inputData.year);
             expect(invoice).toHaveProperty('amount', inputData.amount);
+        });
+
+        test('Should return the invoice with events when it exists', async () => {
+            const invoice = new Invoice(inputData);
+            await sut.add(invoice);
+            const event = new InvoiceEvent(InvoiceEventTypes.PAYMENT, 1000);
+            invoice.addEvent(event);
+            await sut.update(invoice);
+            const updatedInvoice = await sut.find(inputData.code, inputData.month, inputData.year);
+            expect(updatedInvoice?.events).toEqual(
+                expect.arrayContaining([expect.objectContaining(event)])
+            );
         });
 
         test('Should return undefined when the invoice it is not exists', async () => {
