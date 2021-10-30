@@ -5,7 +5,7 @@ import StudentRepositoryDatabase from './student-repository-database';
 const inputData = {
     name: 'Maria Carolina Fonseca',
     cpf: '755.525.774-26',
-    birthDate: new Date('2002-03-12')
+    birthDate: '2002-03-12T00:00:00.000Z'
 };
 
 let sut: StudentRepositoryDatabase;
@@ -29,7 +29,7 @@ describe('Testing StudentRepositoryDatabase', () => {
             const student = await sut.find(inputData.cpf);
             expect(student?.cpf.value).toBe(inputData.cpf);
             expect(student?.name.value).toBe(inputData.name);
-            expect(student?.birthDate).toEqual(inputData.birthDate);
+            expect(student?.birthDate).toEqual(new Date(inputData.birthDate));
         });
 
         test('Should return undefined when the student it is not exists', async () => {

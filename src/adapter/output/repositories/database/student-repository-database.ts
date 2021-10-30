@@ -4,7 +4,7 @@ import connectionPool from "../../../../infra/database/connection-pool";
 type StudentRegister = {
     cpf: string,
     name: string,
-    birth_date: Date
+    birth_date: string
 }
 
 export default class StudentRepositoryDatabase {

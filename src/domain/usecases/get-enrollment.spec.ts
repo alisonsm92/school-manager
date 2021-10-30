@@ -13,7 +13,7 @@ const inputData: EnrollStudentInputData = {
     student: {
         name: 'Maria Carolina Fonseca',
         cpf: '755.525.774-26',
-        birthDate: new Date('2002-03-12')
+        birthDate: '2002-03-12T00:00:00.000Z'
     },
     level: 'EM',
     module: '1',
