@@ -96,8 +96,10 @@ export default class EnrollmentRepositoryDatabase implements EnrollmentRepositor
     }
 
     async count() {
-        const [row] = await this.database.query<number>('SELECT COUNT(*) FROM enrollment');
-        return row;
+        const [row] = await this.database.query<{count: string}>(`
+            SELECT COUNT(*) FROM system.enrollment
+        `);
+        return Number(row.count);
     }
 
     async add(enrollment: Enrollment) {

@@ -69,6 +69,19 @@ describe('Testing EnrollmentRepositoryDatabase', () => {
         });
     });
 
+    describe('Count method', () => {
+        test('Should return 1 when insert a enrollment in the database', async () => {
+            await sut.add(inputData);
+            const result = await sut.count();
+            expect(result).toBe(1);
+        });
+
+        test('Should return 0 when there no enrollment register in the database', async () => {
+            const result = await sut.count();
+            expect(result).toBe(0);
+        });
+    });
+
     describe('Update method', () => {
         test('Should return the enrollment with the data updated', async () => {
             await sut.add(inputData);
