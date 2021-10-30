@@ -9,7 +9,7 @@ import ClassroomBuilder from "../__test__/builders/classroom-builder";
 import LevelBuilder from "../__test__/builders/level-builder";
 import ModuleBuilder from "../__test__/builders/module-builder";
 
-const inputData: EnrollStudentInputData = {
+const inputData = new EnrollStudentInputData({
     student: {
         name: 'Maria Carolina Fonseca',
         cpf: '755.525.774-26',
@@ -19,7 +19,7 @@ const inputData: EnrollStudentInputData = {
     module: '1',
     classroom: 'A',
     installments: 12
-};
+});
 
 let repositoryFactory: RepositoryAbstractFactory;
 let enrollStudent: EnrollStudent;

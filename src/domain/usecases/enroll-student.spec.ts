@@ -10,7 +10,7 @@ import GetEnrollment from './get-enrollment';
 import GetEnrollmentOutputData from '../data/get-enrollment-output-data';
 import ClassroomRepository from '../repositories/classroom-repository';
 
-const inputData: EnrollStudentInputData = {
+const inputData = new EnrollStudentInputData({
     student: {
         name: 'Maria Carolina Fonseca',
         cpf: '755.525.774-26',
@@ -20,7 +20,7 @@ const inputData: EnrollStudentInputData = {
     module: '1',
     classroom: 'A',
     installments: 12
-};
+});
 const aMonthAgo = DateHelper.getDateBefore({ days: 30 });
 const aMonthAfter = DateHelper.getDateAfter({ days: 30 });
 
