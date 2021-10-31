@@ -5,6 +5,7 @@ import Invoice, { InvoiceStatus } from './invoice';
 import InvoiceEvent, { InvoiceEventTypes } from './invoiceEvent';
 import Level from './level';
 import Module from './module';
+import Prototype from './prototype';
 import Student from './student';
 
 export enum EnrollmentStatus {
@@ -16,7 +17,7 @@ const byDate = (month: number, year: number) => (invoice: Invoice) => {
     return invoice.month === month && invoice.year === year;
 }
 
-export default class Enrollment {
+export default class Enrollment implements Prototype {
     readonly student: Student;
     readonly level: Level;
     readonly module: Module;
@@ -105,7 +106,7 @@ export default class Enrollment {
         invoice.addEvent(new InvoiceEvent(InvoiceEventTypes.PAYMENT, amount));
     }
 
-    clone() {
+    clone(): Enrollment {
         return Object.assign(Object.create(Object.getPrototypeOf(this)), this);
     }
 }
