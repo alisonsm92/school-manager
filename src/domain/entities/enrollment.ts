@@ -87,14 +87,20 @@ export default class Enrollment {
         return this.invoices.find(byDate(month, year));
     }
 
-    payInvoice(month: number, year: number, amount: number, paymentDate: Date) {
-        const invoice = this.getInvoice(month, year);
+    async payInvoice(month: number, year: number, amount: number, paymentDate: Date) {
+        const invoice = await this.getInvoice(month, year);
         if (!invoice) throw new Error('Invoice not found');
-        if(invoice.getStatus(paymentDate) === InvoiceStatus.OVERDUE) {
+        const status = await invoice.getStatus(paymentDate);
+        if(status === InvoiceStatus.PAID) throw new Error('Invoice is already paid');
+        if(status === InvoiceStatus.OVERDUE) {
             const penaltyAmount = invoice.getPenalty(paymentDate);
             const interestsAmount = invoice.getInterests(paymentDate);
             invoice.addEvent(new InvoiceEvent(InvoiceEventTypes.PENALTY, penaltyAmount));
             invoice.addEvent(new InvoiceEvent(InvoiceEventTypes.INTERESTS, interestsAmount));
+        }
+        const dueAmount = invoice.getBalance();
+        if(amount != dueAmount) {
+            throw new Error('Payment amount does not match with the due amount');
         }
         invoice.addEvent(new InvoiceEvent(InvoiceEventTypes.PAYMENT, amount));
     }

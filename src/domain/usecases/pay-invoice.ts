@@ -12,6 +12,7 @@ export default class PayInvoice {
     async execute({ code, month, year, amount, paymentDate }: PayInvoiceInputData): Promise<void> {
         const enrollment = await this.enrollmentRepository.findByCode(code);
         if(!enrollment) throw new Error('Enrollment not found');
-        enrollment.payInvoice(month, year, amount, paymentDate);
+        await enrollment.payInvoice(month, year, amount, paymentDate);
+        await this.enrollmentRepository.update(enrollment);
     }
 }
