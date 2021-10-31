@@ -38,12 +38,20 @@ describe('Testing InvoiceRepositoryDatabase', () => {
         test('Should return the invoice with events when it exists', async () => {
             const invoice = new Invoice(inputData);
             await sut.add(invoice);
-            const event = new InvoiceEvent(InvoiceEventTypes.PAYMENT, 1000);
-            invoice.addEvent(event);
+            const interestsEvent = new InvoiceEvent(InvoiceEventTypes.INTERESTS, 100);
+            const penaltyEvent = new InvoiceEvent(InvoiceEventTypes.PENALTY, 100);
+            const paymentEvent = new InvoiceEvent(InvoiceEventTypes.PAYMENT, 1000);
+            invoice.addEvent(interestsEvent);
+            invoice.addEvent(penaltyEvent);
+            invoice.addEvent(paymentEvent);
             await sut.update(invoice);
             const updatedInvoice = await sut.find(inputData.code, inputData.month, inputData.year);
             expect(updatedInvoice?.events).toEqual(
-                expect.arrayContaining([expect.objectContaining(event)])
+                expect.arrayContaining([
+                    expect.objectContaining(interestsEvent),
+                    expect.objectContaining(penaltyEvent),
+                    expect.objectContaining(paymentEvent)
+                ])
             );
         });
 

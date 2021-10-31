@@ -27,7 +27,7 @@ export default class InvoiceRepositoryDatabase {
             amount: Number(row.amount),
         });
         const events = await this.invoiceEventsRepository.findMany(invoice);
-        events.every(invoice.addEvent, invoice);
+        events.forEach(invoice.addEvent, invoice);
         return invoice;
     }
 
