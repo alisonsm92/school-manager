@@ -104,4 +104,8 @@ export default class Enrollment {
         }
         invoice.addEvent(new InvoiceEvent(InvoiceEventTypes.PAYMENT, amount));
     }
+
+    clone() {
+        return Object.assign(Object.create(Object.getPrototypeOf(this)), this);
+    }
 }
