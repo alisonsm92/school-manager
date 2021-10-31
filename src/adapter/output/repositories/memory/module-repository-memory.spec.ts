@@ -1,7 +1,7 @@
 import Module from '../../../../domain/entities/module';
 import ModuleRepositoryMemory from './module-repository-memory';
 
-const inputData: Module = {
+const inputData = {
     level: 'EM',
     code: '1',
     description: '1o Ano',
@@ -22,7 +22,7 @@ afterEach(async () => {
 describe('Testing ModuleRepositoryDatabase', () => {
     describe('Find and Add method', () => {
         test('Should return the module with code provided when it exists', async () => {
-            await sut.add(inputData);
+            await sut.add(new Module(inputData));
             const module = await sut.find('EM', '1');
             expect(module).toHaveProperty('code', '1');
             expect(module).toHaveProperty('level', 'EM');

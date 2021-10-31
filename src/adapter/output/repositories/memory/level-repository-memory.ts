@@ -9,7 +9,8 @@ export default class LevelRepositoryMemory implements LevelRepository {
     }
 
     async find(code: string) {
-        return this.data.find(level => level.code === code);
+        const row = this.data.find(level => level.code === code);
+        return row ? row.clone() : undefined;
     }
 
     async add(level: Level) {

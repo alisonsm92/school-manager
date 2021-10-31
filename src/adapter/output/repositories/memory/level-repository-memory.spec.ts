@@ -1,7 +1,7 @@
 import Level from '../../../../domain/entities/level';
 import LevelRepositoryMemory from './level-repository-memory';
 
-const inputData: Level = {
+const inputData = {
     code: "EM",
     description: "Ensino Médio"
 };
@@ -19,7 +19,7 @@ afterEach(async () => {
 describe('Testing LevelRepositoryMemory', () => {
     describe('Find and Add method', () => {
         test('Should return the level with code provided when it exists', async () => {
-            await sut.add(inputData);
+            await sut.add(new Level(inputData));
             const level = await sut.find('EM');
             expect(level).toHaveProperty('code', 'EM');
             expect(level).toHaveProperty('description', 'Ensino Médio');

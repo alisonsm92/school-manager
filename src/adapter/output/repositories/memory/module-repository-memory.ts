@@ -9,7 +9,8 @@ export default class ModuleRepositoryMemory implements ModuleRepository {
     }
 
     async find(level: string, code: string) {
-        return this.data.find(module => module.level === level && module.code === code);
+        const row = this.data.find(module => module.level === level && module.code === code);
+        return row ? row.clone() : undefined;
     }
 
     async add(module: Module) {

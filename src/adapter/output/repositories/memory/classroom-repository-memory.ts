@@ -9,11 +9,12 @@ export default class ClassroomRepositoryMemory implements ClassroomRepository {
     }
 
     async find(level: string, module: string, code: string) {
-        return this.data.find(classroom => 
+        const row = this.data.find(classroom => 
             classroom.level === level 
             && classroom.module === module
             && classroom.code === code
         );
+        return row ? row.clone() : undefined;
     }
 
     async add(classroom: Classroom) {
