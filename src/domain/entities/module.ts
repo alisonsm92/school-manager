@@ -1,4 +1,6 @@
-export default class Module {
+import Prototype from "./prototype";
+
+export default class Module implements Prototype {
     readonly level: string;
     readonly code: string;
     readonly description: string;
@@ -12,5 +14,9 @@ export default class Module {
         this.description = description;
         this.minimumAge = minimumAge;
         this.price = price;
+    }
+
+    clone(): Module {
+        return Object.assign(Object.create(Object.getPrototypeOf(this)), this);
     }
 }

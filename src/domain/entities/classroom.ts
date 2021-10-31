@@ -1,6 +1,7 @@
 import Period from "./period";
+import Prototype from "./prototype";
 
-export default class Classroom {
+export default class Classroom implements Prototype {
     readonly level: string;
     readonly module: string;
     readonly code: string;
@@ -27,5 +28,9 @@ export default class Classroom {
     isStarted(currentDate: Date) {
         const percentCompleted = this.period.getPercentCompleteUntil(currentDate);
         return percentCompleted > 25 ? true : false;
+    }
+
+    clone(): Classroom {
+        return Object.assign(Object.create(Object.getPrototypeOf(this)), this);
     }
 }
