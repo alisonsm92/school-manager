@@ -1,7 +1,5 @@
 import RepositoryAbstractFactory from "../factories/repository-abstract-factory";
-import CancelEnrollmentInputData from "../data/cancel-enrollment-input-data";
 import EnrollmentRepository from "../repositories/enrollment-repository";
-
 
 export default class CancelEnrollment {
     readonly enrollmentRepository: EnrollmentRepository;
@@ -10,7 +8,7 @@ export default class CancelEnrollment {
         this.enrollmentRepository = repositoryFactory.createEnrollmentRepository();
     }
     
-    async execute({ code }: CancelEnrollmentInputData): Promise<void> {
+    async execute(code: string): Promise<void> {
         const enrollment = await this.enrollmentRepository.findByCode(code);
         if(!enrollment) throw new Error('Enrollment not found');
         enrollment.cancel();
