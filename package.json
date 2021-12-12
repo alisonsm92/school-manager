@@ -9,7 +9,9 @@
     "test": "jest --runInBand",
     "test:unit": "npm test -- -c jest.unit.config.js",
     "test:integration": "npm test -- -c jest.integration.config.js",
-    "test:coverage": "npm test -- --collect-coverage"
+    "test:coverage": "npm test -- --collect-coverage",
+    "lint": "eslint \"src/**\"",
+    "lint:fix": "npm run lint -- --fix"
   },
   "repository": {
     "type": "git",
