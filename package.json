@@ -7,9 +7,9 @@
     "build": "rimraf dist && tsc",
     "start": "npm run build && node dist/main/main.js",
     "test": "jest --runInBand",
-    "test:unit": "npm test -- -c jest.unit.config.js",
-    "test:integration": "npm test -- -c jest.integration.config.js",
-    "test:coverage": "npm test -- --collect-coverage",
+    "test:unit": "npm run test -- -c jest.unit.config.js",
+    "test:integration": "npm run test -- -c jest.integration.config.js",
+    "test:coverage": "npm run test -- --collect-coverage",
     "lint": "eslint \"src/**\"",
     "lint:fix": "npm run lint -- --fix"
   },
