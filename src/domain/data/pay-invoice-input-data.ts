@@ -5,17 +5,17 @@ export default class PayInvoiceInputData {
     readonly amount: number;
     readonly paymentDate: Date;
 
-    constructor(inputData: { 
+    constructor (inputData: {
         code: string,
         month: number,
         year: number,
         amount: number,
         paymentDate: Date
     }) {
-        this.code = inputData.code;
-        this.month = inputData.month;
-        this.year = inputData.year;
-        this.amount = inputData.amount;
-        this.paymentDate = inputData.paymentDate;
+      this.code = inputData.code
+      this.month = inputData.month
+      this.year = inputData.year
+      this.amount = inputData.amount
+      this.paymentDate = inputData.paymentDate
     }
 }

@@ -1,5 +1,5 @@
-import Classroom from "../entities/classroom";
-import Enrollment from "../entities/enrollment";
+import Classroom from '../entities/classroom'
+import Enrollment from '../entities/enrollment'
 interface EnrollmentRepository {
     findByCode(code: string): Promise<Enrollment|undefined>
     findByCpf(cpf: string): Promise<Enrollment|undefined>
@@ -10,4 +10,4 @@ interface EnrollmentRepository {
     clean(): Promise<void>
 }
 
-export default EnrollmentRepository;
+export default EnrollmentRepository

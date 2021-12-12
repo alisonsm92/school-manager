@@ -1,4 +1,4 @@
-import Prototype from "./prototype";
+import Prototype from './prototype'
 
 export default class Module implements Prototype {
     readonly level: string;
@@ -7,16 +7,16 @@ export default class Module implements Prototype {
     readonly minimumAge: number;
     readonly price: number;
 
-    constructor({ level, code, description, minimumAge, price }:
+    constructor ({ level, code, description, minimumAge, price }:
         { level: string, code: string, description: string, minimumAge: number, price: number }) {
-        this.level = level;
-        this.code = code;
-        this.description = description;
-        this.minimumAge = minimumAge;
-        this.price = price;
+      this.level = level
+      this.code = code
+      this.description = description
+      this.minimumAge = minimumAge
+      this.price = price
     }
 
-    clone(): Module {
-        return Object.assign(Object.create(Object.getPrototypeOf(this)), this);
+    clone (): Module {
+      return Object.assign(Object.create(Object.getPrototypeOf(this)), this)
     }
 }

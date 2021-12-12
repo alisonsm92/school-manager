@@ -4,6 +4,7 @@ export default class EnrollStudentInputData {
         cpf: string;
         birthDate: string;
     };
+
     readonly level: string;
     readonly module: string;
     readonly classroom: string;
@@ -20,14 +21,14 @@ export default class EnrollStudentInputData {
         classroom: string,
         installments: number
     }) {
-        this.student = {
-            name: inputData.student.name,
-            cpf: inputData.student.cpf,
-            birthDate: inputData.student.birthDate
-        }
-        this.level = inputData.level;
-        this.module = inputData.module;
-        this.classroom = inputData.classroom;
-        this.installments = inputData.installments;
+      this.student = {
+        name: inputData.student.name,
+        cpf: inputData.student.cpf,
+        birthDate: inputData.student.birthDate
+      }
+      this.level = inputData.level
+      this.module = inputData.module
+      this.classroom = inputData.classroom
+      this.installments = inputData.installments
     }
 }

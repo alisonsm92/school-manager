@@ -1,6 +1,7 @@
-import Module from '../../../../domain/entities/module';
-import ModuleRepository from '../../../../domain/repositories/module-repository';
-import connectionPool from "../../../../infra/database/connection-pool";
+/* eslint-disable camelcase */
+import Module from '../../../../domain/entities/module'
+import ModuleRepository from '../../../../domain/repositories/module-repository'
+import connectionPool from '../../../../infra/database/connection-pool'
 
 type ModuleRegister = {
     code: string,
@@ -13,39 +14,41 @@ type ModuleRegister = {
 export default class ModuleRepositoryDatabase implements ModuleRepository {
     private database: typeof connectionPool;
 
-    constructor() {
-        this.database = connectionPool;
+    constructor () {
+      this.database = connectionPool
     }
 
-    async find(level: string, code: string) {
-        const [row] = await this.database.query<ModuleRegister>(`
+    async find (level: string, code: string) {
+      const [row] = await this.database.query<ModuleRegister>(`
             SELECT * 
             FROM system.module
             WHERE level = $1
-            AND code = $2`, [level, code]);
-        return row ? new Module({
-            code: row.code,
-            level: row.level,
-            description: row.description,
-            minimumAge: row.minimum_age,
-            price: row.price
-        }) : undefined;
+            AND code = $2`, [level, code])
+      return row
+        ? new Module({
+          code: row.code,
+          level: row.level,
+          description: row.description,
+          minimumAge: row.minimum_age,
+          price: row.price
+        })
+        : undefined
     }
 
-    async add(module: Module) {
-        await this.database.query(`
+    async add (module: Module) {
+      await this.database.query(`
             INSERT INTO system.module (code, level, description, minimum_age, price)
             VALUES ($1, $2, $3, $4, $5);
         `, [
-            module.code,
-            module.level,
-            module.description,
-            module.minimumAge,
-            module.price
-        ]);
+        module.code,
+        module.level,
+        module.description,
+        module.minimumAge,
+        module.price
+      ])
     }
 
-    async clean() {
-        await this.database.query('DELETE FROM system.module');
+    async clean () {
+      await this.database.query('DELETE FROM system.module')
     }
 }

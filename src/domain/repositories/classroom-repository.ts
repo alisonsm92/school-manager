@@ -1,4 +1,4 @@
-import Classroom from "../entities/classroom";
+import Classroom from '../entities/classroom'
 
 interface ClassroomRepository {
     find(level: string, module: string, code: string): Promise<Classroom|undefined>
@@ -7,4 +7,4 @@ interface ClassroomRepository {
     clean(): Promise<void>
 }
 
-export default ClassroomRepository;
+export default ClassroomRepository

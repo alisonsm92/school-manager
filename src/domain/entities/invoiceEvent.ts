@@ -9,7 +9,7 @@ export default class InvoiceEvent {
     amount: number;
 
     constructor (type: InvoiceEventTypes, amount: number) {
-        this.type = type;
-        this.amount = amount;
+      this.type = type
+      this.amount = amount
     }
 }

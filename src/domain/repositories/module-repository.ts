@@ -1,4 +1,4 @@
-import Module from "../entities/module";
+import Module from '../entities/module'
 
 interface ModuleRepository {
     find(level: string, code: string): Promise<Module|undefined>
@@ -6,4 +6,4 @@ interface ModuleRepository {
     clean(): Promise<void>
 }
 
-export default ModuleRepository;
+export default ModuleRepository

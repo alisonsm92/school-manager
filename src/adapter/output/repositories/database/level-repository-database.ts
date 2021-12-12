@@ -1,6 +1,6 @@
-import Level from '../../../../domain/entities/level';
-import LevelRepository from '../../../../domain/repositories/level-repository';
-import connectionPool from "../../../../infra/database/connection-pool";
+import Level from '../../../../domain/entities/level'
+import LevelRepository from '../../../../domain/repositories/level-repository'
+import connectionPool from '../../../../infra/database/connection-pool'
 
 type LevelRegister = {
     code: string,
@@ -10,32 +10,34 @@ type LevelRegister = {
 export default class LevelRepositoryDatabase implements LevelRepository {
     private database: typeof connectionPool;
 
-    constructor() {
-        this.database = connectionPool;
+    constructor () {
+      this.database = connectionPool
     }
 
-    async find(code: string) {
-        const [row] = await this.database.query<LevelRegister>(`
+    async find (code: string) {
+      const [row] = await this.database.query<LevelRegister>(`
             SELECT * 
             FROM system.level
-            WHERE code = $1`, [code]);
-        return row ? new Level({
-            code: row.code,
-            description: row.description
-        }) : undefined;
+            WHERE code = $1`, [code])
+      return row
+        ? new Level({
+          code: row.code,
+          description: row.description
+        })
+        : undefined
     }
 
-    async add(level: Level) {
-        await this.database.query(`
+    async add (level: Level) {
+      await this.database.query(`
             INSERT INTO system.level (code, description)
             VALUES ($1, $2);
         `, [
-            level.code,
-            level.description,
-        ]);
+        level.code,
+        level.description
+      ])
     }
 
-    async clean() {
-        await this.database.query('DELETE FROM system.level');
+    async clean () {
+      await this.database.query('DELETE FROM system.level')
     }
 }

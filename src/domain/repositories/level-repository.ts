@@ -1,4 +1,4 @@
-import Level from "../entities/level";
+import Level from '../entities/level'
 
 interface LevelRepository {
     find(code: string): Promise<Level|undefined>
@@ -6,4 +6,4 @@ interface LevelRepository {
     clean(): Promise<void>
 }
 
-export default LevelRepository;
+export default LevelRepository

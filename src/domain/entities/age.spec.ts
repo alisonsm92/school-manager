@@ -1,15 +1,15 @@
-import Age from './age';
+import Age from './age'
 
-function mockDate() {
-    Date.now = jest.fn(() => new Date(Date.UTC(2021, 6, 13)).valueOf());
+function mockDate () {
+  Date.now = jest.fn(() => new Date(Date.UTC(2021, 6, 13)).valueOf())
 }
 
 describe('Testing Age', () => {
-    beforeEach(() => mockDate());
+  beforeEach(() => mockDate())
 
-    test('Should return the current age with the birth date provided', () => {
-        const birthDate = new Date('1992-08-28');
-        const age = new Age(birthDate);
-        expect(age.value).toBe(28);
-    });
-});
+  test('Should return the current age with the birth date provided', () => {
+    const birthDate = new Date('1992-08-28')
+    const age = new Age(birthDate)
+    expect(age.value).toBe(28)
+  })
+})
