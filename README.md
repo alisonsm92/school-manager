@@ -43,8 +43,6 @@ Diretório que possui o arquivo responsável por inicializar a aplicação.
 
 Diretório com as configurações das variáveis de ambiente do projeto.
 
-___
-
 ## Contexto da aplicação
 
 Foi construída uma aplicação de gerenciamento de matriculas para cursos em uma escola. A aplicação provê uma API REST onde é possível realizar as seguintes operações:
@@ -53,8 +51,6 @@ Foi construída uma aplicação de gerenciamento de matriculas para cursos em um
 * Recuperar um matrícula já cadastrada;
 * Realizar pagamento de uma matrícula;
 * Cancelar uma matrícula.
-
-___
 
 ## Executando a aplicação
 
@@ -97,6 +93,8 @@ npm run start
 
 **Nota**: _Neste modo de inicialização é necessário definir os valores para as variaveis de ambiente relacionadas a base de dados no arquivo `.env`_.
 
+## Comandos
+
 Os comandos a seguir podem ser executados em um ambiente com o [NodeJS](https://nodejs.org) instalado e após instalar as dependências do projeto (`npm i`).
 
 Comando   | Descrição
@@ -110,7 +108,6 @@ Comando   | Descrição
 `npm run lint` | Executa validação de lint nos arquivos do projeto
 
 `*` _Necessário possuir conexão com uma base de dados_
-___
 
 ## Trabalho pendente e melhorias
 
