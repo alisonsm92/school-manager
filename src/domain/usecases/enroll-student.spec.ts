@@ -50,7 +50,7 @@ beforeEach(function () {
 describe('Testing enroll student', () => {
   test('Should fullfil successfully when provide a valid input data', async () => {
     const enrollment = await sut.execute(inputData)
-    expect(enrollment).toHaveProperty('code', '2021EM1A0001')
+    expect(enrollment).toHaveProperty('code', `${DateHelper.getCurrentYear()}EM1A0001`)
   })
 
   test('Should not enroll without valid student name', async () => {
@@ -76,7 +76,7 @@ describe('Testing enroll student', () => {
 
   test('Should generate enrollment code', async () => {
     const result = await sut.execute(inputData)
-    expect(result).toHaveProperty('code', '2021EM1A0001')
+    expect(result).toHaveProperty('code', `${DateHelper.getCurrentYear()}EM1A0001`)
   })
 
   test('Should not enroll student below minimum age', async () => {

@@ -53,13 +53,13 @@ describe('Testing pay invoice', () => {
     const inputData = new PayInvoiceInputData({
       code,
       month: 7,
-      year: 2021,
+      year: currentYear,
       amount: 1416.66,
       paymentDate: currentDate
     })
     await sut.execute(inputData)
     const enrollment = await getEnrollment.execute({ code, currentDate })
-    const invoice = enrollment.invoices.find(byDueDate(new Date('2021-07-05T03:00:00.000Z')))
+    const invoice = enrollment.invoices.find(byDueDate(new Date(`${currentYear}-07-05T03:00:00.000Z`)))
     expect(invoice?.status).toBe(InvoiceStatus.PAID)
     expect(invoice?.balance).toBe(0)
     expect(enrollment.balance).toBe(15583.34)
