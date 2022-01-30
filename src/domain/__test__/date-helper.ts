@@ -1,4 +1,8 @@
 export default class DateHelper {
+  static getCurrentYear () {
+    return (new Date()).getFullYear()
+  }
+
   static getDateAfter ({ days }: { days: number }) {
     const date = new Date()
     const calculatedDate = date.getDate() + days
