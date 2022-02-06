@@ -1,3 +1,6 @@
+CREATE SCHEMA IF NOT EXISTS system
+    AUTHORIZATION postgres;
+
 -- Table: system.classroom
 
 CREATE TABLE IF NOT EXISTS system.classroom
