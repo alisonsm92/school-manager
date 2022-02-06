@@ -10,6 +10,8 @@ services:
       POSTGRES_DB: ${POSTGRES_DATABASE}
     ports:
       - "${POSTGRES_PORT}:5432"
+    volumes: 
+    - ./sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
   pgadmin:
     container_name: pgadmin4_container
     image: dpage/pgadmin4
