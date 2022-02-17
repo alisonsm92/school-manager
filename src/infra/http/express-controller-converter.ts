@@ -19,6 +19,7 @@ export default class ExpressControllerConverter {
           if (e instanceof Error) {
             res.status(500)
             res.json({ message: e.message })
+            return
           }
           throw e
         }
