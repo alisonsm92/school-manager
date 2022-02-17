@@ -1,6 +1,7 @@
 import express from 'express'
 import CancelEnrollmentController from '../../adapter/input/controllers/cancel-enrollment-controller'
 import EnrollModuleController from '../../adapter/input/controllers/enroll-module-controller'
+import EnrollLevelController from '../../adapter/input/controllers/enroll-level-controller'
 import EnrollStudentController from '../../adapter/input/controllers/enroll-student-controller'
 import GetEnrollmentController from '../../adapter/input/controllers/get-enrollment-controller'
 import PayInvoiceController from '../../adapter/input/controllers/pay-invoice-controller'
@@ -10,6 +11,8 @@ import ExpressConverter from './express-controller-converter'
 export default class Router {
   static build (repositoryFactory: RepositoryAbstractFactory) {
     const router = express.Router({ mergeParams: true })
+    router.post('/levels', new ExpressConverter(
+      new EnrollLevelController(repositoryFactory)).handler)
     router.post('/modules', new ExpressConverter(
       new EnrollModuleController(repositoryFactory)).handler)
     router.get('/enrollments/:code', new ExpressConverter(
