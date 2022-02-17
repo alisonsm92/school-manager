@@ -1,5 +1,6 @@
 import RepositoryMemoryFactory from '../../adapter/output/factories/repository-memory-factory'
 import EnrollModuleInputData from '../data/enroll-module-input-data'
+import ResourceNotFound from '../errors/resource-not-found'
 import RepositoryAbstractFactory from '../factories/repository-abstract-factory'
 import ModuleRepository from '../repositories/module-repository'
 import LevelBuilder from '../__test__/builders/level-builder'
@@ -41,6 +42,6 @@ describe('Testing enroll module', () => {
 
   test('Should not enroll when the level provided not exists', async () => {
     const invalidInputData = { ...inputData, level: 'non_existing_level_code' }
-    await expect(sut.execute(invalidInputData)).rejects.toThrow(new Error('Level not found'))
+    await expect(sut.execute(invalidInputData)).rejects.toThrow(new ResourceNotFound('Level'))
   })
 })
