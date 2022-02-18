@@ -7,6 +7,7 @@ import PayInvoiceController from '../../adapter/input/controllers/pay-invoice-co
 import CancelEnrollmentController from '../../adapter/input/controllers/cancel-enrollment-controller'
 import RepositoryAbstractFactory from '../../domain/factories/repository-abstract-factory'
 import ExpressConverter from './express-controller-converter'
+import RegisterClassroomController from '../../adapter/input/controllers/register-classroom-controller'
 
 export default class Router {
   static build (repositoryFactory: RepositoryAbstractFactory) {
@@ -15,6 +16,8 @@ export default class Router {
       new RegisterLevelController(repositoryFactory)).handler)
     router.post('/modules', new ExpressConverter(
       new RegisterModuleController(repositoryFactory)).handler)
+    router.post('/classrooms', new ExpressConverter(
+      new RegisterClassroomController(repositoryFactory)).handler)
     router.get('/enrollments/:code', new ExpressConverter(
       new GetEnrollmentController(repositoryFactory)).handler)
     router.post('/enrollments', new ExpressConverter(
