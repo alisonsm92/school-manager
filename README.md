@@ -112,8 +112,11 @@ Comando   | Descrição
 ## Trabalho pendente e melhorias
 
 * [x] Hooks para rodar link e testes;
+* [ ] Tratamento dos status http
+* [ ] Adicionar testes nos controladores
 * [ ] Documentação de API;
 * [ ] Verificar uma forma melhor de lidar com os ENUMs;
 * [ ] Logs;
 * [ ] Rollback de querys na base de dados;
 * [ ] Adicionar método clone nas entidades para testes com base em memória;
+* [ ] Aumentar cobertura de testes
