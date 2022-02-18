@@ -61,7 +61,6 @@ export async function enrollStudent (input) {
       classroom: input.classroom || 'x',
       installments: input.installments || 1
     }
-    console.log(enrollmentData)
     const { data } = await axios.post(`${SERVICE_URL}/enrollments`, enrollmentData)
     return data
   } catch (e) {
