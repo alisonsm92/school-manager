@@ -2,6 +2,7 @@ import RepositoryAbstractFactory from '../factories/repository-abstract-factory'
 import GetEnrollmentInputData from '../data/get-enrollment-input-data'
 import GetEnrollmentOutputData from '../data/get-enrollment-output-data'
 import EnrollmentRepository from '../repositories/enrollment-repository'
+import ResourceNotFound from '../errors/resource-not-found';
 
 export default class GetEnrollment {
     private readonly enrollmentRepository: EnrollmentRepository;
@@ -12,7 +13,7 @@ export default class GetEnrollment {
 
     async execute ({ code, currentDate }: GetEnrollmentInputData): Promise<GetEnrollmentOutputData> {
       const enrollment = await this.enrollmentRepository.findByCode(code)
-      if (!enrollment) throw new Error('Enrollment not found')
+      if (!enrollment) throw new ResourceNotFound('Enrollment')
       return new GetEnrollmentOutputData(enrollment, currentDate)
     }
 }
