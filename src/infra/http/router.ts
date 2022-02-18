@@ -1,10 +1,10 @@
 import express from 'express'
-import CancelEnrollmentController from '../../adapter/input/controllers/cancel-enrollment-controller'
-import EnrollModuleController from '../../adapter/input/controllers/register-module-controller'
-import EnrollLevelController from '../../adapter/input/controllers/register-level-controller'
-import EnrollStudentController from '../../adapter/input/controllers/enroll-student-controller'
+import RegisterLevelController from '../../adapter/input/controllers/register-level-controller'
+import RegisterModuleController from '../../adapter/input/controllers/register-module-controller'
 import GetEnrollmentController from '../../adapter/input/controllers/get-enrollment-controller'
+import EnrollStudentController from '../../adapter/input/controllers/enroll-student-controller'
 import PayInvoiceController from '../../adapter/input/controllers/pay-invoice-controller'
+import CancelEnrollmentController from '../../adapter/input/controllers/cancel-enrollment-controller'
 import RepositoryAbstractFactory from '../../domain/factories/repository-abstract-factory'
 import ExpressConverter from './express-controller-converter'
 
@@ -12,9 +12,9 @@ export default class Router {
   static build (repositoryFactory: RepositoryAbstractFactory) {
     const router = express.Router({ mergeParams: true })
     router.post('/levels', new ExpressConverter(
-      new EnrollLevelController(repositoryFactory)).handler)
+      new RegisterLevelController(repositoryFactory)).handler)
     router.post('/modules', new ExpressConverter(
-      new EnrollModuleController(repositoryFactory)).handler)
+      new RegisterModuleController(repositoryFactory)).handler)
     router.get('/enrollments/:code', new ExpressConverter(
       new GetEnrollmentController(repositoryFactory)).handler)
     router.post('/enrollments', new ExpressConverter(
