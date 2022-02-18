@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import Controller from '../../adapter/input/controllers/controller'
+import HttpResponse from '../../adapter/output/http/http-response'
 
 export default class ExpressControllerConverter {
     private readonly controller: Controller;
@@ -16,9 +17,15 @@ export default class ExpressControllerConverter {
           const response = await controller.handle({ params, body, headers })
           res.json(response)
         } catch (e) {
+          if (e instanceof HttpResponse) {
+            res.status(e.status)
+            res.json({ message: e.message })
+            return
+          }
           if (e instanceof Error) {
             res.status(500)
             res.json({ message: e.message })
+            return
           }
           throw e
         }

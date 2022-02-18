@@ -1,4 +1,4 @@
-export default class EnrollModuleInputData {
+export default class RegisterModuleInputData {
     readonly level: string;
     readonly code: string;
     readonly description: string;

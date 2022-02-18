@@ -9,6 +9,7 @@ import RepositoryAbstractFactory from '../factories/repository-abstract-factory'
 import GetEnrollment from './get-enrollment'
 import GetEnrollmentOutputData from '../data/get-enrollment-output-data'
 import ClassroomRepository from '../repositories/classroom-repository'
+import InvalidInputError from '../errors/invalid-input'
 
 const inputData = new EnrollStudentInputData({
   student: {
@@ -55,7 +56,7 @@ describe('Testing enroll student', () => {
 
   test('Should not enroll without valid student name', async () => {
     const student: EnrollStudentInputData['student'] = { ...inputData.student, name: 'Ana' }
-    const error = new Error('Invalid student name')
+    const error = new InvalidInputError('Invalid student name')
     await expect(sut.execute({ ...inputData, student })).rejects.toThrow(error)
   })
 
@@ -64,12 +65,12 @@ describe('Testing enroll student', () => {
       ...inputData.student,
       cpf: '123.456.789-99'
     }
-    const error = new Error('Invalid student cpf')
+    const error = new InvalidInputError('Invalid student cpf')
     await expect(sut.execute({ ...inputData, student })).rejects.toThrow(error)
   })
 
   test('Should not enroll duplicated student', async () => {
-    const error = new Error('Enrollment with duplicated student is not allowed')
+    const error = new InvalidInputError('Enrollment with duplicated student is not allowed')
     await sut.execute(inputData)
     await expect(sut.execute(inputData)).rejects.toThrow(error)
   })
@@ -84,7 +85,7 @@ describe('Testing enroll student', () => {
       ...inputData.student,
       birthDate: '2012-03-12T00:00:00.000Z'
     }
-    const error = new Error('Student below minimum age')
+    const error = new InvalidInputError('Student below minimum age')
     await expect(sut.execute({ ...inputData, student })).rejects.toThrow(error)
   })
 
@@ -96,7 +97,7 @@ describe('Testing enroll student', () => {
       name: 'Pedro da Silva',
       cpf: '151.906.420-97'
     }
-    const error = new Error('Class is over capacity')
+    const error = new InvalidInputError('Class is over capacity')
     await sut.execute(inputData)
     await expect(sut.execute({ ...inputData, student: secondStudent })).rejects.toThrow(error)
   })
@@ -108,7 +109,7 @@ describe('Testing enroll student', () => {
       .withEndDate(yesterDay)
       .build()
     classroomRepository.update(classroom)
-    await expect(sut.execute(inputData)).rejects.toThrow(new Error('Class is already finished'))
+    await expect(sut.execute(inputData)).rejects.toThrow(new InvalidInputError('Class is already finished'))
   })
 
   test('Should not enroll after 25% of the start of the classroom', async () => {
@@ -117,7 +118,7 @@ describe('Testing enroll student', () => {
       .withEndDate(aMonthAfter)
       .build()
     classroomRepository.update(classroom)
-    await expect(sut.execute(inputData)).rejects.toThrow(new Error('Class is already started'))
+    await expect(sut.execute(inputData)).rejects.toThrow(new InvalidInputError('Class is already started'))
   })
 
   test('Should generate the invoices based on the number of installments, rounding each amount ' +
