@@ -10,12 +10,18 @@ class PostgreSQL {
         database: environment.postgres.database,
         user: environment.postgres.user,
         password: environment.postgres.password,
-        port: environment.postgres.port
+        port: environment.postgres.port,
+        connectionTimeoutMillis: 10000,
+        statement_timeout: 10000
       })
     }
 
     private async getConnection () {
       return await this.pool.connect()
+    }
+
+    async isConnected () {
+      return !!await this.getConnection()
     }
 
     async query<T> (queryString: string, params?: unknown[]) {
