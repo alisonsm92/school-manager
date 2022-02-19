@@ -1,7 +1,8 @@
 import { Pool } from 'pg'
 import environment from '../../config/environment'
+import ConnectionPool from '../../domain/entities/connection-pool'
 
-class PostgreSQL {
+export default class PostgreSQL implements ConnectionPool {
     private pool: Pool;
 
     constructor () {
@@ -35,5 +36,3 @@ class PostgreSQL {
       await this.pool.end()
     }
 }
-
-export default new PostgreSQL()

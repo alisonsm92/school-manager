@@ -1,5 +1,5 @@
 import Student from '../../../../domain/entities/student'
-import connectionPool from '../../../../infra/database/connection-pool'
+import ConnectionPool from '../../../../infra/database/postgresql'
 import StudentRepositoryDatabase from './student-repository-database'
 
 const inputData = {
@@ -7,11 +7,12 @@ const inputData = {
   cpf: '755.525.774-26',
   birthDate: '2002-03-12T00:00:00.000Z'
 }
+const connectionPool = new ConnectionPool()
 
 let sut: StudentRepositoryDatabase
 
 beforeEach(() => {
-  sut = new StudentRepositoryDatabase()
+  sut = new StudentRepositoryDatabase(connectionPool)
 })
 
 afterEach(async () => {

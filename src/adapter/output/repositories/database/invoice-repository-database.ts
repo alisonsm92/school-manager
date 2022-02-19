@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
+import ConnectionPool from '../../../../domain/entities/connection-pool'
 import Invoice from '../../../../domain/entities/invoice'
-import connectionPool from '../../../../infra/database/connection-pool'
 import InvoiceEventRepositoryDatabase from './invoice-event-repository-database'
 
 type InvoiceRegister = {
@@ -12,12 +12,12 @@ type InvoiceRegister = {
 }
 
 export default class InvoiceRepositoryDatabase {
-    private database: typeof connectionPool;
+    private database: ConnectionPool;
     private invoiceEventsRepository: InvoiceEventRepositoryDatabase;
 
-    constructor () {
+    constructor (connectionPool: ConnectionPool) {
       this.database = connectionPool
-      this.invoiceEventsRepository = new InvoiceEventRepositoryDatabase()
+      this.invoiceEventsRepository = new InvoiceEventRepositoryDatabase(connectionPool)
     }
 
     private async buildInvoice (row: InvoiceRegister) {

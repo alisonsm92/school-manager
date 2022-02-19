@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
+import ConnectionPool from '../../../../domain/entities/connection-pool'
 import Student from '../../../../domain/entities/student'
-import connectionPool from '../../../../infra/database/connection-pool'
 
 type StudentRegister = {
     cpf: string,
@@ -9,9 +9,9 @@ type StudentRegister = {
 }
 
 export default class StudentRepositoryDatabase {
-    private database: typeof connectionPool;
+    private database: ConnectionPool;
 
-    constructor () {
+    constructor (connectionPool: ConnectionPool) {
       this.database = connectionPool
     }
 

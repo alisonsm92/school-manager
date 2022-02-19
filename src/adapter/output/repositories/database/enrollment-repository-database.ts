@@ -1,9 +1,9 @@
 /* eslint-disable camelcase */
 import Classroom from '../../../../domain/entities/classroom'
+import ConnectionPool from '../../../../domain/entities/connection-pool'
 import Enrollment, { EnrollmentStatus } from '../../../../domain/entities/enrollment'
 import EnrollmentCode from '../../../../domain/entities/enrollment-code'
 import EnrollmentRepository from '../../../../domain/repositories/enrollment-repository'
-import connectionPool from '../../../../infra/database/connection-pool'
 import ClassroomRepositoryDatabase from './classroom-repository-database'
 import InvoiceRepositoryDatabase from './invoice-repository-database'
 import LevelRepositoryDatabase from './level-repository-database'
@@ -23,20 +23,20 @@ type EnrollmentRegister = {
 }
 
 export default class EnrollmentRepositoryDatabase implements EnrollmentRepository {
-    private database: typeof connectionPool;
+    private database: ConnectionPool;
     private studentRepository: StudentRepositoryDatabase;
     private invoiceRepository: InvoiceRepositoryDatabase;
     private levelRepository: LevelRepositoryDatabase;
     private moduleRepository: ModuleRepositoryDatabase;
     private classroomRepository: ClassroomRepositoryDatabase;
 
-    constructor () {
+    constructor (connectionPool: ConnectionPool) {
       this.database = connectionPool
-      this.studentRepository = new StudentRepositoryDatabase()
-      this.invoiceRepository = new InvoiceRepositoryDatabase()
-      this.levelRepository = new LevelRepositoryDatabase()
-      this.moduleRepository = new ModuleRepositoryDatabase()
-      this.classroomRepository = new ClassroomRepositoryDatabase()
+      this.studentRepository = new StudentRepositoryDatabase(connectionPool)
+      this.invoiceRepository = new InvoiceRepositoryDatabase(connectionPool)
+      this.levelRepository = new LevelRepositoryDatabase(connectionPool)
+      this.moduleRepository = new ModuleRepositoryDatabase(connectionPool)
+      this.classroomRepository = new ClassroomRepositoryDatabase(connectionPool)
     }
 
     private async buildEnrollment (row: EnrollmentRegister) {

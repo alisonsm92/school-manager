@@ -1,6 +1,6 @@
 import { EnrollmentStatus } from '../../../../domain/entities/enrollment'
 import EnrollmentBuilder from '../../../../domain/__test__/builders/enrollment-builder'
-import connectionPool from '../../../../infra/database/connection-pool'
+import ConnectionPool from '../../../../infra/database/postgresql'
 import ClassroomRepositoryDatabase from './classroom-repository-database'
 import EnrollmentRepositoryDatabase from './enrollment-repository-database'
 import LevelRepositoryDatabase from './level-repository-database'
@@ -11,6 +11,7 @@ let levelRepository: LevelRepositoryDatabase
 let moduleRepository: ModuleRepositoryDatabase
 let classroomRepository: ClassroomRepositoryDatabase
 const inputData = new EnrollmentBuilder().build()
+const connectionPool = new ConnectionPool()
 
 const prePopulateRepositories = async () => await Promise.all([
   levelRepository.add(inputData.level),
@@ -19,14 +20,14 @@ const prePopulateRepositories = async () => await Promise.all([
 ])
 
 beforeAll(async () => {
-  levelRepository = new LevelRepositoryDatabase()
-  moduleRepository = new ModuleRepositoryDatabase()
-  classroomRepository = new ClassroomRepositoryDatabase()
+  levelRepository = new LevelRepositoryDatabase(connectionPool)
+  moduleRepository = new ModuleRepositoryDatabase(connectionPool)
+  classroomRepository = new ClassroomRepositoryDatabase(connectionPool)
   await prePopulateRepositories()
 })
 
 beforeEach(() => {
-  sut = new EnrollmentRepositoryDatabase()
+  sut = new EnrollmentRepositoryDatabase(connectionPool)
 })
 
 afterEach(async () => {
