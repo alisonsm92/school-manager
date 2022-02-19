@@ -1,5 +1,7 @@
 import axios from 'axios'
 import environment from '../config/environment.mjs'
+import { handleError } from '../helpers/error-handler.mjs'
+import { getDateAfter } from '../helpers/date.mjs'
 const SERVICE_URL = environment.schoolManagerService.url
 
 export async function registerLevel (input) {
@@ -11,7 +13,7 @@ export async function registerLevel (input) {
     await axios.post(`${SERVICE_URL}/levels`, levelData)
     return levelData
   } catch (e) {
-    errorHandler(e)
+    handleError(e)
   }
 }
 
@@ -27,7 +29,7 @@ export async function registerModule (input) {
     await axios.post(`${SERVICE_URL}/modules`, moduleData)
     return moduleData
   } catch (e) {
-    errorHandler(e)
+    handleError(e)
   }
 }
 
@@ -44,7 +46,7 @@ export async function registerClassroom (input) {
     await axios.post(`${SERVICE_URL}/classrooms`, classroomData)
     return classroomData
   } catch (e) {
-    errorHandler(e)
+    handleError(e)
   }
 }
 
@@ -56,15 +58,15 @@ export async function enrollStudent (input) {
         cpf: input.student?.cpf || '755.525.774-26',
         birthDate: input.student?.birthDate || '2002-03-12T00:00:00.000Z'
       },
-      level: input.level || 'xxx',
-      module: input.module || 'xx',
-      classroom: input.classroom || 'x',
+      level: input.level || 'EM',
+      module: input.module || '1',
+      classroom: input.classroom || 'A',
       installments: input.installments || 1
     }
     const { data } = await axios.post(`${SERVICE_URL}/enrollments`, enrollmentData)
     return data
   } catch (e) {
-    errorHandler(e)
+    handleError(e)
   }
 }
 
@@ -73,23 +75,6 @@ export async function getEnrollment (input) {
     const { data } = await axios.get(`${SERVICE_URL}/enrollments/${input.code}`)
     return data
   } catch (e) {
-    errorHandler(e)
+    handleError(e)
   }
-}
-
-function errorHandler (error) {
-  if (error.response) {
-    console.log(error.response.data)
-    console.log(error.response.status)
-    throw error
-  }
-  console.log(error)
-  throw error
-}
-
-function getDateAfter ({ days }) {
-  const date = new Date()
-  const calculatedDate = date.getDate() + days
-  date.setDate(calculatedDate)
-  return date
 }
