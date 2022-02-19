@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
+import ConnectionPool from '../../../../domain/entities/connection-pool'
 import Module from '../../../../domain/entities/module'
 import ModuleRepository from '../../../../domain/repositories/module-repository'
-import connectionPool from '../../../../infra/database/connection-pool'
 
 type ModuleRegister = {
     code: string,
@@ -12,9 +12,9 @@ type ModuleRegister = {
 }
 
 export default class ModuleRepositoryDatabase implements ModuleRepository {
-    private database: typeof connectionPool;
+    private database: ConnectionPool;
 
-    constructor () {
+    constructor (connectionPool: ConnectionPool) {
       this.database = connectionPool
     }
 

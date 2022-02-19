@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import Controller from '../../adapter/input/controllers/controller'
 import HttpResponse from '../../adapter/output/http/http-response'
+import logger from '../logger'
 
 export default class ExpressControllerConverter {
     private readonly controller: Controller;
@@ -18,16 +19,18 @@ export default class ExpressControllerConverter {
           res.json(response)
         } catch (e) {
           if (e instanceof HttpResponse) {
+            logger.debug(e)
             res.status(e.status)
             res.json({ message: e.message })
             return
           }
           if (e instanceof Error) {
+            logger.error(e)
             res.status(500)
             res.json({ message: e.message })
             return
           }
-          throw e
+          logger.fatal(e)
         }
       }
     }

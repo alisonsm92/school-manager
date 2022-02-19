@@ -1,16 +1,17 @@
 import Level from '../../../../domain/entities/level'
-import connectionPool from '../../../../infra/database/connection-pool'
+import ConnectionPool from '../../../../infra/database/postgresql'
 import LevelRepositoryDatabase from './level-repository-database'
 
 const inputData = {
   code: 'EM',
   description: 'Ensino Médio'
 }
+const connectionPool = new ConnectionPool()
 
 let sut: LevelRepositoryDatabase
 
 beforeEach(() => {
-  sut = new LevelRepositoryDatabase()
+  sut = new LevelRepositoryDatabase(connectionPool)
 })
 
 afterEach(async () => {

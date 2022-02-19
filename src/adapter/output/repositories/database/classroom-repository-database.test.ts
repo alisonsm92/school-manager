@@ -1,5 +1,5 @@
 import Classroom from '../../../../domain/entities/classroom'
-import connectionPool from '../../../../infra/database/connection-pool'
+import ConnectionPool from '../../../../infra/database/postgresql'
 import ClassroomRepositoryDatabase from './classroom-repository-database'
 
 const inputData = {
@@ -10,11 +10,12 @@ const inputData = {
   startDate: new Date('2021-05-01'),
   endDate: new Date('2021-06-30')
 }
+const connectionPool = new ConnectionPool()
 
 let sut: ClassroomRepositoryDatabase
 
 beforeEach(() => {
-  sut = new ClassroomRepositoryDatabase()
+  sut = new ClassroomRepositoryDatabase(connectionPool)
 })
 
 afterEach(async () => {

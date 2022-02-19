@@ -1,5 +1,5 @@
 import Module from '../../../../domain/entities/module'
-import connectionPool from '../../../../infra/database/connection-pool'
+import ConnectionPool from '../../../../infra/database/postgresql'
 import ModuleRepositoryDatabase from './module-repository-database'
 
 const inputData = {
@@ -9,11 +9,12 @@ const inputData = {
   minimumAge: 15,
   price: 17000
 }
+const connectionPool = new ConnectionPool()
 
 let sut: ModuleRepositoryDatabase
 
 beforeEach(() => {
-  sut = new ModuleRepositoryDatabase()
+  sut = new ModuleRepositoryDatabase(connectionPool)
 })
 
 afterEach(async () => {

@@ -1,6 +1,6 @@
 import Invoice from '../../../../domain/entities/invoice'
 import InvoiceEvent, { InvoiceEventTypes } from '../../../../domain/entities/invoiceEvent'
-import connectionPool from '../../../../infra/database/connection-pool'
+import ConnectionPool from '../../../../infra/database/postgresql'
 import InvoiceRepositoryDatabase from './invoice-repository-database'
 
 const inputData = {
@@ -9,11 +9,12 @@ const inputData = {
   year: 2021,
   amount: 100
 }
+const connectionPool = new ConnectionPool()
 
 let sut: InvoiceRepositoryDatabase
 
 beforeEach(() => {
-  sut = new InvoiceRepositoryDatabase()
+  sut = new InvoiceRepositoryDatabase(connectionPool)
 })
 
 afterEach(async () => {

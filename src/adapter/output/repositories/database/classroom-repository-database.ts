@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 import Classroom from '../../../../domain/entities/classroom'
+import ConnectionPool from '../../../../domain/entities/connection-pool'
 import ClassroomRepository from '../../../../domain/repositories/classroom-repository'
-import connectionPool from '../../../../infra/database/connection-pool'
 
 type ClassroomRegister = {
     code: string,
@@ -13,9 +13,9 @@ type ClassroomRegister = {
 }
 
 export default class ClassroomRepositoryDatabase implements ClassroomRepository {
-    private database: typeof connectionPool;
+    private database: ConnectionPool;
 
-    constructor () {
+    constructor (connectionPool: ConnectionPool) {
       this.database = connectionPool
     }
 

@@ -1,6 +1,6 @@
+import ConnectionPool from '../../../../domain/entities/connection-pool'
 import Invoice from '../../../../domain/entities/invoice'
 import InvoiceEvent, { InvoiceEventTypes } from '../../../../domain/entities/invoiceEvent'
-import connectionPool from '../../../../infra/database/connection-pool'
 
 type InvoiceEventRegister = {
     enrollment: string,
@@ -29,9 +29,9 @@ const buildInvoice = (row: InvoiceEventRegister) => {
 }
 
 export default class InvoiceEventRepositoryDatabase {
-    private database: typeof connectionPool;
+    private database: ConnectionPool;
 
-    constructor () {
+    constructor (connectionPool: ConnectionPool) {
       this.database = connectionPool
     }
 

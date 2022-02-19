@@ -1,6 +1,6 @@
+import ConnectionPool from '../../../../domain/entities/connection-pool'
 import Level from '../../../../domain/entities/level'
 import LevelRepository from '../../../../domain/repositories/level-repository'
-import connectionPool from '../../../../infra/database/connection-pool'
 
 type LevelRegister = {
     code: string,
@@ -8,9 +8,9 @@ type LevelRegister = {
 }
 
 export default class LevelRepositoryDatabase implements LevelRepository {
-    private database: typeof connectionPool;
+    private database: ConnectionPool;
 
-    constructor () {
+    constructor (connectionPool: ConnectionPool) {
       this.database = connectionPool
     }
 
