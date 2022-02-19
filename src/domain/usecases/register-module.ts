@@ -18,6 +18,6 @@ export default class RegisterModule {
       const level = await this.levelRepository.find(inputData.level)
       if (!level) throw new ResourceNotFound('Level')
       const module = new Module(inputData)
-      this.moduleRepository.add(module)
+      await this.moduleRepository.add(module)
     }
 }

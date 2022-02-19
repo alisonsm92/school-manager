@@ -12,6 +12,6 @@ export default class RegisterLevel {
 
     async execute (inputData: RegisterLevelInputData): Promise<void> {
       const level = new Level(inputData)
-      this.levelRepository.add(level)
+      await this.levelRepository.add(level)
     }
 }

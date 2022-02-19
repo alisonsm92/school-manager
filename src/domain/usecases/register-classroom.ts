@@ -23,6 +23,6 @@ export default class RegisterClassroom {
       const module = await this.moduleRepository.find(inputData.level, inputData.module)
       if (!module) throw new ResourceNotFound('Module')
       const classroom = new Classroom(inputData)
-      this.classroomRepository.add(classroom)
+      await this.classroomRepository.add(classroom)
     }
 }
