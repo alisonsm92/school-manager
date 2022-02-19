@@ -1,5 +1,5 @@
 # language: pt
-Funcionalidade: Matrícula de estudente
+Funcionalidade: Matrícula de estudante
   Contexto:
     Dado que a escola possua os seguintes cursos disponíveis
       | curso        | módulo | classe |
