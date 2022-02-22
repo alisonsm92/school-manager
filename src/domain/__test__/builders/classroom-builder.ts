@@ -11,6 +11,21 @@ export default class ClassroomBuilder {
       endDate: DateHelper.getDateAfter({ days: 30 })
     }
 
+    withCode (value: string) {
+      this.defaultData.code = value
+      return this
+    }
+
+    withLevel (value: string) {
+      this.defaultData.level = value
+      return this
+    }
+
+    withModule (value: string) {
+      this.defaultData.module = value
+      return this
+    }
+
     withCapacity (value: number) {
       this.defaultData.capacity = value
       return this

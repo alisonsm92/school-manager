@@ -1,10 +1,22 @@
 import Level from '../../entities/level'
 
 export default class LevelBuilder {
+  defaultData = {
+    code: 'EM',
+    description: 'Ensino Médio'
+  }
+
+  withCode (value: string) {
+    this.defaultData.code = value
+    return this
+  }
+
+  withDescription (value: string) {
+    this.defaultData.description = value
+    return this
+  }
+
   build () {
-    return new Level({
-      code: 'EM',
-      description: 'Ensino Médio'
-    })
+    return new Level(this.defaultData)
   }
 }
