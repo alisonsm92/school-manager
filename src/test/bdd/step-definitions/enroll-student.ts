@@ -1,5 +1,5 @@
 import assert from 'assert'
-import { Given, When, Then, DataTable } from '@cucumber/cucumber'
+import { Given, When, Then, DataTable, After } from '@cucumber/cucumber'
 import {
   registerModule,
   registerLevel,
@@ -12,6 +12,11 @@ import LevelInputDataBuilder from '../builders/level-input-data-builder'
 import ModuleInputDataBuilder from '../builders/module-input-data-builder'
 import ClassroomInputDataBuilder from '../builders/classroom-input-data-builder'
 import EnrollStudentInputDataBuilder from '../builders/enroll-student-input-data-builder'
+import Database from '../helpers/database'
+
+After(async function () {
+  await Database.clean()
+})
 
 Given('que a escola possua os seguintes cursos disponíveis', async function (table: DataTable) {
   const dataTableParser = new DataTableParser(table)
