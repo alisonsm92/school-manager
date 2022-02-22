@@ -43,6 +43,10 @@ Diretório que possui o arquivo responsável por inicializar a aplicação.
 
 Diretório com as configurações das variáveis de ambiente do projeto.
 
+### 🧪 Test
+
+Diretório onde estão definidos os cenários com as regras de negócio e a automação dos testes de integração de mais alto nível. Testes unitários e testes de integração com a base de dados estão implementados nos demais diretórios do projeto.
+
 ## Contexto da aplicação
 
 Foi construída uma aplicação de gerenciamento de matriculas para cursos em uma escola. A aplicação provê uma API REST onde é possível realizar as seguintes operações:
@@ -103,7 +107,8 @@ Comando   | Descrição
 `npm run build` | Executa o build do projeto transpilando o código em TypeScript
 `npm run test` | Executa todos os testes do projeto
 `npm run test:unit` | Executa os testes unitários
-`npm run test:integration` | Executa os testes de integração`*`
+`npm run test:integration` | Executa os testes de integração de baixo nível (integração com a base de dados)`*`
+`npm run test:bdd` | Executa todos os cenários de testes integração de alto nível`*`
 `npm run test:coverage` | Executa todos os testes do projeto e gera relatório de coberta de testes`*`
 `npm run lint` | Executa validação de lint nos arquivos do projeto
 
@@ -111,12 +116,7 @@ Comando   | Descrição
 
 ## Trabalho pendente e melhorias
 
-* [x] Hooks para rodar link e testes;
-* [ ] Tratamento dos status http
-* [ ] Adicionar testes nos controladores
 * [ ] Documentação de API;
-* [ ] Verificar uma forma melhor de lidar com os ENUMs;
-* [ ] Logs;
+* [ ] Adicionar logs;
 * [ ] Rollback de querys na base de dados;
-* [ ] Adicionar método clone nas entidades para testes com base em memória;
 * [ ] Aumentar cobertura de testes
