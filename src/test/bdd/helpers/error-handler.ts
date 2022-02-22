@@ -1,4 +1,4 @@
-function formatErrorMessage (error) {
+function formatErrorMessage (error: any) {
   return `
       ${error.code || error.response?.statusText}
       Request: ${error.config?.method.toUpperCase()} ${error.config?.url} ${error.config?.data}
@@ -6,8 +6,8 @@ function formatErrorMessage (error) {
       `
 }
 
-export function handleError (error) {
-  if (error.isAxiosError) {
+export function handleError (error: Error) {
+  if ('isAxiosError' in error) {
     error.message = formatErrorMessage(error)
   }
   throw error

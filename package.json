@@ -9,8 +9,8 @@
     "test": "jest --runInBand",
     "test:unit": "npm run test -- -c jest.unit.config.js",
     "test:integration": "npm run test -- -c jest.integration.config.js",
+    "test:bdd": "cucumber-js --config ./src/test/bdd/cucumber.js ./src/test/bdd",
     "test:coverage": "npm run test -- --collect-coverage",
-    "bdd": "cucumber-js --config ./bdd/cucumber.js ./bdd",
     "lint": "eslint \"src/**\"",
     "lint:fix": "npm run lint -- --fix"
   },
@@ -50,6 +50,7 @@
     "jest": "^27.0.4",
     "pino-pretty": "^7.1.0",
     "rimraf": "^3.0.2",
-    "ts-jest": "^27.0.2"
+    "ts-jest": "^27.0.2",
+    "ts-node": "^10.5.0"
   }
 }

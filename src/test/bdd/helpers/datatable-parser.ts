@@ -1,10 +1,14 @@
+import { DataTable } from '@cucumber/cucumber'
+
 export default class DataTableParser {
-  constructor (dataTable) {
+  dataTable: DataTable
+
+  constructor (dataTable: DataTable) {
     this.dataTable = dataTable
   }
 
   parse () {
-    return this.dataTable.rows().map((line) => line.map((item) => {
+    return this.dataTable.rows().map((line: string[]) => line.map((item: string) => {
       switch (item) {
         case 'Ensino Médio':
           return 'EM'
