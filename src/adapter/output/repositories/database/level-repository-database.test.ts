@@ -10,8 +10,9 @@ const connectionPool = new ConnectionPool()
 
 let sut: LevelRepositoryDatabase
 
-beforeEach(() => {
+beforeAll(async () => {
   sut = new LevelRepositoryDatabase(connectionPool)
+  await sut.clean()
 })
 
 afterEach(async () => {

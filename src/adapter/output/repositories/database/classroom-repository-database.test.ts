@@ -14,7 +14,7 @@ const connectionPool = new ConnectionPool()
 
 let sut: ClassroomRepositoryDatabase
 
-beforeEach(() => {
+beforeAll(async () => {
   sut = new ClassroomRepositoryDatabase(connectionPool)
 })
 

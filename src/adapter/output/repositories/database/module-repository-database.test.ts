@@ -13,8 +13,9 @@ const connectionPool = new ConnectionPool()
 
 let sut: ModuleRepositoryDatabase
 
-beforeEach(() => {
+beforeAll(async () => {
   sut = new ModuleRepositoryDatabase(connectionPool)
+  await sut.clean()
 })
 
 afterEach(async () => {

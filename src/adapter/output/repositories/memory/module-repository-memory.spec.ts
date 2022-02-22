@@ -11,8 +11,9 @@ const inputData = {
 
 let sut: ModuleRepositoryMemory
 
-beforeEach(() => {
+beforeAll(async () => {
   sut = new ModuleRepositoryMemory()
+  await sut.clean()
 })
 
 afterEach(async () => {

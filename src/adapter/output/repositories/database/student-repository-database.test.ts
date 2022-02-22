@@ -11,8 +11,9 @@ const connectionPool = new ConnectionPool()
 
 let sut: StudentRepositoryDatabase
 
-beforeEach(() => {
+beforeAll(async () => {
   sut = new StudentRepositoryDatabase(connectionPool)
+  await sut.clean()
 })
 
 afterEach(async () => {

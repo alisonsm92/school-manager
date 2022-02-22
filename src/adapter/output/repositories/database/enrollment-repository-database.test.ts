@@ -20,14 +20,17 @@ const prePopulateRepositories = async () => await Promise.all([
 ])
 
 beforeAll(async () => {
+  sut = new EnrollmentRepositoryDatabase(connectionPool)
   levelRepository = new LevelRepositoryDatabase(connectionPool)
   moduleRepository = new ModuleRepositoryDatabase(connectionPool)
   classroomRepository = new ClassroomRepositoryDatabase(connectionPool)
+  await Promise.all([
+    sut.clean(),
+    levelRepository.clean(),
+    moduleRepository.clean(),
+    classroomRepository.clean()
+  ])
   await prePopulateRepositories()
-})
-
-beforeEach(() => {
-  sut = new EnrollmentRepositoryDatabase(connectionPool)
 })
 
 afterEach(async () => {

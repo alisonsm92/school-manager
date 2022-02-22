@@ -13,8 +13,9 @@ const connectionPool = new ConnectionPool()
 
 let sut: InvoiceRepositoryDatabase
 
-beforeEach(() => {
+beforeAll(async () => {
   sut = new InvoiceRepositoryDatabase(connectionPool)
+  await sut.clean()
 })
 
 afterEach(async () => {
