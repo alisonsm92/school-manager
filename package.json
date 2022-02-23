@@ -5,7 +5,7 @@
   "scripts": {
     "tsc:init": "tsc --init",
     "build": "rimraf dist && tsc",
-    "start": "npm run build && node dist/main/main.js",
+    "start": "node dist/main/main.js",
     "test": "jest --runInBand",
     "test:unit": "npm run test -- -c jest.unit.config.js",
     "test:integration": "npm run test -- -c jest.integration.config.js",

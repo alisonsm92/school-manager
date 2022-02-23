@@ -69,7 +69,7 @@ As seguintes configurações podem ser definidas:
   * `LOG_LEVEL` Especifica o nível dos logs a serem exibidos `fatal|error|warn|info|debug|trace|silent`
   * `LOG_PRETTY_PRINT` Ativa ou desativa formatação dos logs `true|false`
 * Base de dados ([PostgreSQL](https://www.postgresql.org/))
-  * `POSTGRES_HOST` Endereço IP para conexão com uma base de dados
+  * `POSTGRES_HOST` Endereço IP para conexão com uma base de dados (não é necessário especificar caso inicializar a aplicação via Docker Compose)
   * `POSTGRES_DATABASE` Especifica nome da base de dados
   * `POSTGRES_USER` Especifica usuário para acesso a base de dados
   * `POSTGRES_PASSWORD` Especifica senha para acesso a base de dados
@@ -85,7 +85,7 @@ As seguintes configurações podem ser definidas:
 docker compose up
 ~~~
 
-Neste modo de inicialização um container para a base de dados [PostgreSQL](https://www.postgresql.org/) e um para o [pgAdmin](https://www.pgadmin.org/) serão inicializados localmente, não necessitando configurar a base de dados de forma independente.
+Neste modo de inicialização serão inicializados localmente containers para o servidor da aplicação, para a base de dados [PostgreSQL](https://www.postgresql.org/) e para o [pgAdmin](https://www.pgadmin.org/). Desta maneira não é necessário configurar a base de dados de forma independente.
 
 ### Inicializando a aplicação com NodeJS
 
@@ -95,7 +95,7 @@ npm run build
 npm run start
 ~~~
 
-**Nota**: _Neste modo de inicialização é necessário definir os valores para as variaveis de ambiente relacionadas a base de dados no arquivo `.env`_.
+**Nota**: _Neste modo de inicialização é necessário definir os valores para as variáveis de ambiente relacionadas a base de dados no arquivo `.env`_.
 
 ## Comandos
 
