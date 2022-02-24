@@ -10,3 +10,9 @@ Funcionalidade: Matrícula de estudante
       | curso        | módulo | classe |
       | Ensino Médio | 1      | A      |
     Então a matrícula deve ser cadastrada com sucesso
+
+  Cenário: Matrícula em curso indisponível
+    Quando cadastrar a matrícula com os dados
+      | curso        | módulo | classe |
+      | Ensino Médio | 2      | A      |
+    Então a matrícula não deve ser cadastrada

@@ -44,9 +44,9 @@ export async function enrollStudent (inputData: EnrollStudentInputData) {
   }
 }
 
-export async function getEnrollment (inputData: GetEnrollmentInputData) {
+export async function getEnrollment (code: string) {
   try {
-    const { data } = await axios.get(`${SERVICE_URL}/enrollments/${inputData.code}`)
+    const { data } = await axios.get(`${SERVICE_URL}/enrollments/${code}`)
     return data
   } catch (e) {
     if (e instanceof Error) handleError(e)
