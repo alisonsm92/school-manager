@@ -3,7 +3,7 @@ import RepositoryMemoryFactory from '../../adapter/output/factories/repository-m
 import { InvoiceStatus } from '../entities/invoice'
 import EnrollStudent from './enroll-student'
 import GetEnrollment from './get-enrollment'
-import EnrollStudentInputData from '../data/enroll-student-input-data'
+import EnrollStudentInputData from '../contracts/enroll-student-input-data'
 import ClassroomBuilder from '../../../test/builders/classroom-builder'
 import LevelBuilder from '../../../test/builders/level-builder'
 import ModuleBuilder from '../../../test/builders/module-builder'

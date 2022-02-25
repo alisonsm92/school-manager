@@ -1,4 +1,4 @@
-import PayInvoiceInputData from '../../../domain/data/pay-invoice-input-data'
+import PayInvoiceInputData from '../../../domain/contracts/pay-invoice-input-data'
 import ResourceNotFound from '../../../domain/errors/resource-not-found'
 import RepositoryAbstractFactory from '../../../domain/factories/repository-abstract-factory'
 import PayInvoice from '../../../domain/usecases/pay-invoice'

@@ -1,4 +1,4 @@
-import RegisterClassroomInputData from '../../../domain/data/register-classroom-input-data'
+import RegisterClassroomInputData from '../../../domain/contracts/register-classroom-input-data'
 import ResourceNotFound from '../../../domain/errors/resource-not-found'
 import RepositoryAbstractFactory from '../../../domain/factories/repository-abstract-factory'
 import RegisterClassroom from '../../../domain/usecases/register-classroom'

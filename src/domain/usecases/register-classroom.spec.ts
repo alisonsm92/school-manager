@@ -1,5 +1,5 @@
 import RepositoryMemoryFactory from '../../adapter/output/factories/repository-memory-factory'
-import RegisterClassroomInputData from '../data/register-classroom-input-data'
+import RegisterClassroomInputData from '../contracts/register-classroom-input-data'
 import ResourceNotFound from '../errors/resource-not-found'
 import RepositoryAbstractFactory from '../factories/repository-abstract-factory'
 import ClassroomRepository from '../repositories/classroom-repository'

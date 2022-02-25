@@ -1,6 +1,6 @@
 import RepositoryAbstractFactory from '../factories/repository-abstract-factory'
-import GetEnrollmentInputData from '../data/get-enrollment-input-data'
-import GetEnrollmentOutputData from '../data/get-enrollment-output-data'
+import GetEnrollmentInputData from '../contracts/get-enrollment-input-data'
+import GetEnrollmentOutputData from '../contracts/get-enrollment-output-data'
 import EnrollmentRepository from '../repositories/enrollment-repository'
 import ResourceNotFound from '../errors/resource-not-found';
 

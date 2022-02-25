@@ -1,5 +1,5 @@
 import RepositoryMemoryFactory from '../../adapter/output/factories/repository-memory-factory'
-import RegisterModuleInputData from '../data/register-module-input-data'
+import RegisterModuleInputData from '../contracts/register-module-input-data'
 import ResourceNotFound from '../errors/resource-not-found'
 import RepositoryAbstractFactory from '../factories/repository-abstract-factory'
 import ModuleRepository from '../repositories/module-repository'

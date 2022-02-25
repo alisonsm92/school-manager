@@ -1,5 +1,5 @@
-import EnrollStudentInputData from '../../../domain/data/enroll-student-input-data'
-import EnrollStudentOutputData from '../../../domain/data/enroll-student-output-data'
+import EnrollStudentInputData from '../../../domain/contracts/enroll-student-input-data'
+import EnrollStudentOutputData from '../../../domain/contracts/enroll-student-output-data'
 import InvalidInputError from '../../../domain/errors/invalid-input'
 import ResourceNotFound from '../../../domain/errors/resource-not-found'
 import RepositoryAbstractFactory from '../../../domain/factories/repository-abstract-factory'

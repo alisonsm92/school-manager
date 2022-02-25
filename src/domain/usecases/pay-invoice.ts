@@ -1,5 +1,5 @@
 import RepositoryAbstractFactory from '../factories/repository-abstract-factory'
-import PayInvoiceInputData from '../data/pay-invoice-input-data'
+import PayInvoiceInputData from '../contracts/pay-invoice-input-data'
 import EnrollmentRepository from '../repositories/enrollment-repository'
 import ResourceNotFound from '../errors/resource-not-found';
 

@@ -1,4 +1,4 @@
-import RegisterLevelInputData from '../data/register-level-input-data'
+import RegisterLevelInputData from '../contracts/register-level-input-data'
 import Level from '../entities/level'
 import RepositoryAbstractFactory from '../factories/repository-abstract-factory'
 import LevelRepository from '../repositories/level-repository'

@@ -1,4 +1,4 @@
-import RegisterModuleInputData from '../data/register-module-input-data'
+import RegisterModuleInputData from '../contracts/register-module-input-data'
 import Module from '../entities/module'
 import ResourceNotFound from '../errors/resource-not-found'
 import RepositoryAbstractFactory from '../factories/repository-abstract-factory'

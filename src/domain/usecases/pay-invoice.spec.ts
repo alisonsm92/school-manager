@@ -3,12 +3,12 @@ import RepositoryMemoryFactory from '../../adapter/output/factories/repository-m
 import EnrollStudent from './enroll-student'
 import GetEnrollment from './get-enrollment'
 import PayInvoice from './pay-invoice'
-import EnrollStudentInputData from '../data/enroll-student-input-data'
-import PayInvoiceInputData from '../data/pay-invoice-input-data'
+import EnrollStudentInputData from '../contracts/enroll-student-input-data'
+import PayInvoiceInputData from '../contracts/pay-invoice-input-data'
 import ClassroomBuilder from '../../../test/builders/classroom-builder'
 import LevelBuilder from '../../../test/builders/level-builder'
 import ModuleBuilder from '../../../test/builders/module-builder'
-import GetEnrollmentOutputData from '../data/get-enrollment-output-data'
+import GetEnrollmentOutputData from '../contracts/get-enrollment-output-data'
 import { InvoiceStatus } from '../entities/invoice'
 
 const enrollStudentInputData = new EnrollStudentInputData({

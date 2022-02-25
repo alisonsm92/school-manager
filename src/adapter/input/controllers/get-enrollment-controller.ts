@@ -1,5 +1,5 @@
 import RepositoryAbstractFactory from '../../../domain/factories/repository-abstract-factory'
-import GetEnrollmentOutputData from '../../../domain/data/get-enrollment-output-data'
+import GetEnrollmentOutputData from '../../../domain/contracts/get-enrollment-output-data'
 import GetEnrollment from '../../../domain/usecases/get-enrollment'
 import { HttpRequest } from '../http/http-request'
 import Controller from './controller'

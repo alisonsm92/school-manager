@@ -14,7 +14,7 @@ import ModuleInputDataBuilder from '../../builders/module-input-data-builder'
 import ClassroomInputDataBuilder from '../../builders/classroom-input-data-builder'
 import EnrollStudentInputDataBuilder from '../../builders/enroll-student-input-data-builder'
 import Database from '../../helpers/database'
-import GetEnrollmentOutputData from '../../../src/domain/data/get-enrollment-output-data'
+import GetEnrollmentOutputData from '../../../src/domain/contracts/get-enrollment-output-data'
 
 let enrollmentOutputData: Either<Error, GetEnrollmentOutputData>
 
