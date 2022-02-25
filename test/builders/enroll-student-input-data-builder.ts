@@ -28,6 +28,11 @@ export default class EnrollmentBuilder {
     return this
   }
 
+  withInstallments (value: number) {
+    this.defaultData.installments = value
+    return this
+  }
+
   build () {
     return this.defaultData
   }

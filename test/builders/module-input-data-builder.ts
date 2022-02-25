@@ -17,6 +17,11 @@ export default class ModuleInputDataBuilder {
     return this
   }
 
+  withPrice (value: number) {
+    this.defaultData.price = value
+    return this
+  }
+
   build () {
     return this.defaultData
   }

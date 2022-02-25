@@ -5,6 +5,8 @@ import RegisterLevelInputData from '../../../src/domain/contracts/register-level
 import RegisterModuleInputData from '../../../src/domain/contracts/register-module-input-data'
 import environment from '../config/environment'
 import { handleError } from '../../helpers/error-handler'
+import GetEnrollmentOutputData from '../../../src/domain/contracts/get-enrollment-output-data'
+import EnrollStudentOutputData from '../../../src/domain/contracts/enroll-student-output-data'
 const SERVICE_URL = environment.schoolManagerService.url
 
 export async function registerLevel (inputData: RegisterLevelInputData) {
@@ -13,6 +15,7 @@ export async function registerLevel (inputData: RegisterLevelInputData) {
     return inputData
   } catch (e) {
     if (e instanceof Error) handleError(e)
+    throw e
   }
 }
 
@@ -22,6 +25,7 @@ export async function registerModule (inputData: RegisterModuleInputData) {
     return inputData
   } catch (e) {
     if (e instanceof Error) handleError(e)
+    throw e
   }
 }
 
@@ -31,23 +35,26 @@ export async function registerClassroom (inputData: RegisterClassroomInputData) 
     return inputData
   } catch (e) {
     if (e instanceof Error) handleError(e)
+    throw e
   }
 }
 
-export async function enrollStudent (inputData: EnrollStudentInputData) {
+export async function enrollStudent (inputData: EnrollStudentInputData): Promise<EnrollStudentOutputData> {
   try {
     const { data } = await axios.post(`${SERVICE_URL}/enrollments`, inputData)
-    return data
+    return data as EnrollStudentOutputData
   } catch (e) {
     if (e instanceof Error) handleError(e)
+    throw e
   }
 }
 
-export async function getEnrollment (code: string) {
+export async function getEnrollment (code: string): Promise<GetEnrollmentOutputData> {
   try {
     const { data } = await axios.get(`${SERVICE_URL}/enrollments/${code}`)
-    return data
+    return data as GetEnrollmentOutputData
   } catch (e) {
     if (e instanceof Error) handleError(e)
+    throw e
   }
 }
