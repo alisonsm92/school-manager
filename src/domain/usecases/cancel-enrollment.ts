@@ -1,4 +1,4 @@
-import ResourceNotFound from '../errors/resource-not-found';
+import ResourceNotFound from '../errors/resource-not-found'
 import RepositoryAbstractFactory from '../factories/repository-abstract-factory'
 import EnrollmentRepository from '../repositories/enrollment-repository'
 

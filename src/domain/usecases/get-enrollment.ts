@@ -2,7 +2,7 @@ import RepositoryAbstractFactory from '../factories/repository-abstract-factory'
 import GetEnrollmentInputData from '../contracts/get-enrollment-input-data'
 import GetEnrollmentOutputData from '../contracts/get-enrollment-output-data'
 import EnrollmentRepository from '../repositories/enrollment-repository'
-import ResourceNotFound from '../errors/resource-not-found';
+import ResourceNotFound from '../errors/resource-not-found'
 
 export default class GetEnrollment {
     private readonly enrollmentRepository: EnrollmentRepository;
