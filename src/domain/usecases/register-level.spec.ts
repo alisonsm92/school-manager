@@ -2,7 +2,7 @@ import RepositoryMemoryFactory from '../../adapter/output/factories/repository-m
 import RegisterLevelInputData from '../data/register-level-input-data'
 import RepositoryAbstractFactory from '../factories/repository-abstract-factory'
 import LevelRepository from '../repositories/level-repository'
-import LevelBuilder from '../__test__/builders/level-builder'
+import LevelBuilder from '../../../test/builders/level-builder'
 import RegisterLevel from './register-level'
 
 const inputData = new RegisterLevelInputData({

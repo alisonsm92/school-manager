@@ -1,7 +1,8 @@
-import Classroom from '../../entities/classroom'
-import Enrollment from '../../entities/enrollment'
-import Level from '../../entities/level'
-import Module from '../../entities/module'
+
+import Classroom from '../../src/domain/entities/classroom'
+import Enrollment from '../../src/domain/entities/enrollment'
+import Level from '../../src/domain/entities/level'
+import Module from '../../src/domain/entities/module'
 import ClassroomBuilder from './classroom-builder'
 import LevelBuilder from './level-builder'
 import ModuleBuilder from './module-builder'

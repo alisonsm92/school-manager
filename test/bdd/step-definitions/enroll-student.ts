@@ -1,6 +1,6 @@
 import assert from 'assert'
 import { Given, When, Then, DataTable, After } from '@cucumber/cucumber'
-import { Either, success, fail } from '../helpers/either'
+import { Either, success, fail } from '../../helpers/either'
 import {
   registerModule,
   registerLevel,
@@ -8,12 +8,12 @@ import {
   enrollStudent,
   getEnrollment
 } from '../infra/service-api'
-import DataTableParser from '../helpers/datatable-parser'
-import LevelInputDataBuilder from '../builders/level-input-data-builder'
-import ModuleInputDataBuilder from '../builders/module-input-data-builder'
-import ClassroomInputDataBuilder from '../builders/classroom-input-data-builder'
-import EnrollStudentInputDataBuilder from '../builders/enroll-student-input-data-builder'
-import Database from '../helpers/database'
+import DataTableParser from '../../helpers/datatable-parser'
+import LevelInputDataBuilder from '../../builders/level-input-data-builder'
+import ModuleInputDataBuilder from '../../builders/module-input-data-builder'
+import ClassroomInputDataBuilder from '../../builders/classroom-input-data-builder'
+import EnrollStudentInputDataBuilder from '../../builders/enroll-student-input-data-builder'
+import Database from '../../helpers/database'
 import GetEnrollmentOutputData from '../../../domain/data/get-enrollment-output-data'
 
 let enrollmentOutputData: Either<Error, GetEnrollmentOutputData>

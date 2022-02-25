@@ -3,10 +3,10 @@ import RegisterClassroomInputData from '../data/register-classroom-input-data'
 import ResourceNotFound from '../errors/resource-not-found'
 import RepositoryAbstractFactory from '../factories/repository-abstract-factory'
 import ClassroomRepository from '../repositories/classroom-repository'
-import LevelBuilder from '../__test__/builders/level-builder'
-import ModuleBuilder from '../__test__/builders/module-builder'
-import DateHelper from '../__test__/date-helper'
+import DateHelper from '../../../test/helpers/date'
 import RegisterClassroom from './register-classroom'
+import LevelBuilder from '../../../test/builders/level-builder'
+import ModuleBuilder from '../../../test/builders/module-builder'
 
 const inputData = new RegisterClassroomInputData({
   level: 'EM',

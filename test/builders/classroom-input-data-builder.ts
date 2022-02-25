@@ -1,5 +1,4 @@
-import DateHelper from '../date-helper'
-import Classroom from '../../entities/classroom'
+import DateHelper from '../helpers/date'
 
 export default class ClassroomBuilder {
     defaultData = {
@@ -42,6 +41,6 @@ export default class ClassroomBuilder {
     }
 
     build () {
-      return new Classroom(this.defaultData)
+      return this.defaultData
     }
 }

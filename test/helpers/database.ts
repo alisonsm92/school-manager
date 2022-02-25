@@ -1,8 +1,8 @@
-import ClassroomRepositoryDatabase from '../../../adapter/output/repositories/database/classroom-repository-database'
-import EnrollmentRepositoryDatabase from '../../../adapter/output/repositories/database/enrollment-repository-database'
-import LevelRepositoryDatabase from '../../../adapter/output/repositories/database/level-repository-database'
-import ModuleRepositoryDatabase from '../../../adapter/output/repositories/database/module-repository-database'
-import ConnectionPool from '../../../infra/database/postgresql'
+import ClassroomRepositoryDatabase from '../../adapter/output/repositories/database/classroom-repository-database'
+import EnrollmentRepositoryDatabase from '../../adapter/output/repositories/database/enrollment-repository-database'
+import LevelRepositoryDatabase from '../../adapter/output/repositories/database/level-repository-database'
+import ModuleRepositoryDatabase from '../../adapter/output/repositories/database/module-repository-database'
+import ConnectionPool from '../../infra/database/postgresql'
 const connectionPool = new ConnectionPool()
 
 export default class Database {

@@ -5,9 +5,9 @@ import CancelEnrollment from './cancel-enrollment'
 import EnrollStudent from './enroll-student'
 import GetEnrollment from './get-enrollment'
 import EnrollStudentInputData from '../data/enroll-student-input-data'
-import ClassroomBuilder from '../__test__/builders/classroom-builder'
-import LevelBuilder from '../__test__/builders/level-builder'
-import ModuleBuilder from '../__test__/builders/module-builder'
+import ClassroomBuilder from '../../../test/builders/classroom-builder'
+import LevelBuilder from '../../../test/builders/level-builder'
+import ModuleBuilder from '../../../test/builders/module-builder'
 
 const inputData = new EnrollStudentInputData({
   student: {

@@ -3,7 +3,7 @@ import RegisterModuleInputData from '../data/register-module-input-data'
 import ResourceNotFound from '../errors/resource-not-found'
 import RepositoryAbstractFactory from '../factories/repository-abstract-factory'
 import ModuleRepository from '../repositories/module-repository'
-import LevelBuilder from '../__test__/builders/level-builder'
+import LevelBuilder from '../../../test/builders/level-builder'
 import RegisterModule from './register-module'
 
 const inputData = new RegisterModuleInputData({

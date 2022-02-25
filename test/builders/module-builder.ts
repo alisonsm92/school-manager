@@ -1,4 +1,4 @@
-import Module from '../../entities/module'
+import Module from '../../src/domain/entities/module'
 
 export default class ModuleBuilder {
   defaultData = {

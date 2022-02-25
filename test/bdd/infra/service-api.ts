@@ -1,11 +1,10 @@
 import axios from 'axios'
 import EnrollStudentInputData from '../../../domain/data/enroll-student-input-data'
-import GetEnrollmentInputData from '../../../domain/data/get-enrollment-input-data'
 import RegisterClassroomInputData from '../../../domain/data/register-classroom-input-data'
 import RegisterLevelInputData from '../../../domain/data/register-level-input-data'
 import RegisterModuleInputData from '../../../domain/data/register-module-input-data'
 import environment from '../config/environment'
-import { handleError } from '../helpers/error-handler'
+import { handleError } from '../../helpers/error-handler'
 const SERVICE_URL = environment.schoolManagerService.url
 
 export async function registerLevel (inputData: RegisterLevelInputData) {

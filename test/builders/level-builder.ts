@@ -1,4 +1,4 @@
-import Level from '../../entities/level'
+import Level from '../../src/domain/entities/level'
 
 export default class LevelBuilder {
   defaultData = {

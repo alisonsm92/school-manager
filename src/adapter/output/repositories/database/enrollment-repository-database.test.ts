@@ -1,5 +1,5 @@
 import { EnrollmentStatus } from '../../../../domain/entities/enrollment'
-import EnrollmentBuilder from '../../../../domain/__test__/builders/enrollment-builder'
+import EnrollmentBuilder from '../../../../../test/builders/enrollment-builder'
 import ConnectionPool from '../../../../infra/database/postgresql'
 import ClassroomRepositoryDatabase from './classroom-repository-database'
 import EnrollmentRepositoryDatabase from './enrollment-repository-database'

@@ -1,4 +1,4 @@
-import Student from '../../entities/student'
+import Student from '../../src/domain/entities/student'
 
 export default class StudentBuilder {
   defaultData = {
