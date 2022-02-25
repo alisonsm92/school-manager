@@ -5,11 +5,11 @@
   "scripts": {
     "tsc:init": "tsc --init",
     "build": "rimraf dist && tsc",
-    "start": "node dist/main/main.js",
+    "start": "node dist/src/main/main.js",
     "test": "jest --runInBand",
     "test:unit": "npm run test -- -c jest.unit.config.js",
     "test:integration": "npm run test -- -c jest.integration.config.js",
-    "test:bdd": "cucumber-js ./src/test/bdd",
+    "test:bdd": "cucumber-js ./test/bdd",
     "test:coverage": "npm run test -- --collect-coverage",
     "lint": "eslint \"src/**\"",
     "lint:fix": "npm run lint -- --fix"
