@@ -105,12 +105,12 @@ Comando   | Descrição
 --------- | ------
 `npm run start` | Inicializa aplicação
 `npm run build` | Executa o build do projeto transpilando o código em TypeScript
-`npm run test` | Executa todos os testes do projeto
+`npm run test` | Executa todos os testes unitários e de integração do projeto`*`
 `npm run test:unit` | Executa os testes unitários
-`npm run test:integration` | Executa os testes de integração de baixo nível (integração com a base de dados)`*`
-`npm run test:bdd` | Executa todos os cenários de testes integração de alto nível`*`
-`npm run test:coverage` | Executa todos os testes do projeto e gera relatório de coberta de testes`*`
-`npm run lint` | Executa validação de lint nos arquivos do projeto
+`npm run test:integration` | Executa os testes de integração`*`
+`npm run test:feature` | Executa os cenários de testes de aceitação das funcionalidades da aplicação`*`
+`npm run test:coverage` | Gera relatório de coberta dos testes unitários e de integração do projeto`*`
+`npm run lint` | Executa validação de lint nos arquivos de código fonte do projeto
 
 `*` _Necessário possuir conexão com uma base de dados_
 
