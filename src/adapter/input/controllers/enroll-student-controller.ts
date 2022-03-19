@@ -5,7 +5,7 @@ import ResourceNotFound from '../../../domain/errors/resource-not-found'
 import RepositoryAbstractFactory from '../../../domain/factories/repository-abstract-factory'
 import EnrollStudent from '../../../domain/usecases/enroll-student'
 import BadRequest from '../../output/http/bad-request'
-import { HttpRequest } from '../http/http-request'
+import HttpRequest from '../http/http-request'
 import Controller from './controller'
 
 interface EnrollStudentRequest extends HttpRequest {

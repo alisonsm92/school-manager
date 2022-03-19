@@ -3,7 +3,7 @@ import ResourceNotFound from '../../../domain/errors/resource-not-found'
 import RepositoryAbstractFactory from '../../../domain/factories/repository-abstract-factory'
 import RegisterClassroom from '../../../domain/usecases/register-classroom'
 import BadRequest from '../../output/http/bad-request'
-import { HttpRequest } from '../http/http-request'
+import HttpRequest from '../http/http-request'
 import Controller from './controller'
 
 interface RegisterClassroomRequest extends HttpRequest {

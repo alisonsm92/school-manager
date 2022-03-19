@@ -1,7 +1,7 @@
 import RepositoryAbstractFactory from '../../../domain/factories/repository-abstract-factory'
 import GetEnrollmentOutputData from '../../../domain/contracts/get-enrollment-output-data'
 import GetEnrollment from '../../../domain/usecases/get-enrollment'
-import { HttpRequest } from '../http/http-request'
+import HttpRequest from '../http/http-request'
 import Controller from './controller'
 import ResourceNotFound from '../../../domain/errors/resource-not-found'
 import NotFound from '../../output/http/not-found'

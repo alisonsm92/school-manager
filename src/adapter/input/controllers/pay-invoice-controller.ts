@@ -3,7 +3,7 @@ import ResourceNotFound from '../../../domain/errors/resource-not-found'
 import RepositoryAbstractFactory from '../../../domain/factories/repository-abstract-factory'
 import PayInvoice from '../../../domain/usecases/pay-invoice'
 import NotFound from '../../output/http/not-found'
-import { HttpRequest } from '../http/http-request'
+import HttpRequest from '../http/http-request'
 import Controller from './controller'
 
 interface PayInvoiceRequest extends HttpRequest {

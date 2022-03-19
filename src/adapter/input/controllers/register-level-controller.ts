@@ -1,7 +1,7 @@
 import RegisterLevelInputData from '../../../domain/contracts/register-level-input-data'
 import RepositoryAbstractFactory from '../../../domain/factories/repository-abstract-factory'
 import RegisterLevel from '../../../domain/usecases/register-level'
-import { HttpRequest } from '../http/http-request'
+import HttpRequest from '../http/http-request'
 import Controller from './controller'
 
 interface RegisterLevelRequest extends HttpRequest {
